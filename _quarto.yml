@@ -1,0 +1,60 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Logistic Regression with R"
+  subtitle: "医療・福祉・スポーツ科学のための実践ガイド"
+  date: "2026-05-28"
+  chapters:
+    - index.qmd
+
+    # Part 1: Foundations
+    - part: "Part 1: Foundations"
+      chapters:
+        - intro.qmd
+        - 01_risk_ratio_and_odds_ratio.qmd
+        - 02_prevalence.qmd
+        - 03_logistic_regression.qmd
+        - 04_multiple_regression_vs_logistic_regression.qmd
+
+    # Part 2: Model Building
+    - part: "Part 2: Model Building"
+      chapters:
+        - 05_variable_selection.qmd
+        - 06_sample_size.qmd
+        - 07_interaction.qmd
+        # - 08_reporting_logistic_regression.qmd
+
+    # Part 3: Practical Issues
+    # - part: "Part 3: Practical Issues"
+      # chapters:
+        # - 09_missing_data_and_multiple_imputation.qmd
+        # - 10_multinomial_logistic_regression.qmd
+        # - 11_propensity_score.qmd
+
+    # Part 4: Evaluation and Extensions
+    # - part: "Part 4: Evaluation and Extensions"
+      # chapters:
+        # - 12_sensitivity_and_specificity.qmd
+        # - 13_roc_curve.qmd
+        # - 14_risk_score_development.qmd
+        # - 15_machine_learning.qmd
+
+    - summary.qmd
+    - references.qmd
+
+
+bibliography: references.bib
+
+format:
+  html:
+    mathjax: true
+    theme:
+      - cosmo
+      - brand
+  pdf:
+    documentclass: scrreprt
+
+editor: source
+

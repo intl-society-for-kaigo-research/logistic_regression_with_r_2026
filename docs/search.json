@@ -1,0 +1,1287 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Logistic Regression with R",
+    "section": "",
+    "text": "序\n作者\n\n馬場美彦",
+    "crumbs": [
+      "序"
+    ]
+  },
+  {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "1  はじめに",
+    "section": "",
+    "text": "ロジスティック回帰",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>はじめに</span>"
+    ]
+  },
+  {
+    "objectID": "01_risk_ratio_and_odds_ratio.html",
+    "href": "01_risk_ratio_and_odds_ratio.html",
+    "title": "2  リスク比とオッズ比",
+    "section": "",
+    "text": "2.1 はじめに\n医療・保健・スポーツ科学分野では、\nなど、「ある要因」と「ある結果」の関連を調べることが多い。\nこのとき、関連の強さを表す代表的な指標として、\nが用いられる。\n特にロジスティック回帰では、結果としてオッズ比が出力されるため、オッズ比を正しく理解することは非常に重要である。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>リスク比とオッズ比</span>"
+    ]
+  },
+  {
+    "objectID": "01_risk_ratio_and_odds_ratio.html#はじめに",
+    "href": "01_risk_ratio_and_odds_ratio.html#はじめに",
+    "title": "2  リスク比とオッズ比",
+    "section": "",
+    "text": "「喫煙者は肺がんリスクが高い」\n「運動習慣がある人は糖尿病になりにくい」\n「転倒リスクが2倍になる」\n\n\n\n\nリスク比（risk ratio）\nオッズ比（odds ratio）",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>リスク比とオッズ比</span>"
+    ]
+  },
+  {
+    "objectID": "01_risk_ratio_and_odds_ratio.html#リスクとは",
+    "href": "01_risk_ratio_and_odds_ratio.html#リスクとは",
+    "title": "2  リスク比とオッズ比",
+    "section": "2.2 リスクとは",
+    "text": "2.2 リスクとは\nリスク（risk）とは、\n\n「ある出来事が起こる割合」\n\nを意味する。\n例えば、100人中20人が転倒した場合、\n\\[ \\text{リスク} = \\frac{20}{100} = 0.20 \\]\nとなる。\nリスクは、確率（probability）とほぼ同じ意味で使われることが多い。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>リスク比とオッズ比</span>"
+    ]
+  },
+  {
+    "objectID": "01_risk_ratio_and_odds_ratio.html#リスク比risk-ratio",
+    "href": "01_risk_ratio_and_odds_ratio.html#リスク比risk-ratio",
+    "title": "2  リスク比とオッズ比",
+    "section": "2.3 リスク比（Risk Ratio）",
+    "text": "2.3 リスク比（Risk Ratio）\nリスク比（risk ratio: RR）は、\n\n2つの群のリスクを比較した値\n\nである。\n例えば：\n\n\n\n群\n転倒あり\n合計\n\n\n\n\n運動なし\n40\n100\n\n\n運動あり\n20\n100\n\n\n\n運動なし群のリスク：\n\\[ \\frac{40}{100} = 0.40 \\]\n運動あり群のリスク：\n\\[ \\frac{20}{100} = 0.20 \\]\nしたがって、リスク比は：\n\\[ RR = \\frac{0.40}{0.20} = 2.0 \\]\nとなる。\nこれは、\n\n運動していない群では、転倒リスクが2倍である\n\nと解釈できる。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>リスク比とオッズ比</span>"
+    ]
+  },
+  {
+    "objectID": "01_risk_ratio_and_odds_ratio.html#オッズとは",
+    "href": "01_risk_ratio_and_odds_ratio.html#オッズとは",
+    "title": "2  リスク比とオッズ比",
+    "section": "2.4 オッズとは",
+    "text": "2.4 オッズとは\nオッズ（odds）は、\n\n「起こる確率」と「起こらない確率」の比\n\nである。\n例えば、100人中20人が転倒した場合：\n\n転倒する確率：20/100 = 0.20\n転倒しない確率：80/100 = 0.80\n\nしたがってオッズは：\n\\[ \\text{オッズ} = \\frac{0.20}{0.80} = 0.25 \\]\nとなる。\n別の書き方をすると：\n\\[ \\text{オッズ} = \\frac{20}{80} \\]\nである。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>リスク比とオッズ比</span>"
+    ]
+  },
+  {
+    "objectID": "01_risk_ratio_and_odds_ratio.html#オッズ比odds-ratio",
+    "href": "01_risk_ratio_and_odds_ratio.html#オッズ比odds-ratio",
+    "title": "2  リスク比とオッズ比",
+    "section": "2.5 オッズ比（Odds Ratio）",
+    "text": "2.5 オッズ比（Odds Ratio）\nオッズ比（odds ratio: OR）は、\n\n2つの群のオッズを比較した値\n\nである。\n先ほどの例を用いる。\n\n2.5.1 運動なし群\n\\[ \\text{オッズ} = \\frac{40}{60} = 0.67 \\]\n\n\n2.5.2 運動あり群\n\\[ \\text{オッズ} = \\frac{20}{80} = 0.25 \\]\nしたがって、オッズ比は：\n\\[ OR = \\frac{0.67}{0.25} \\approx 2.67 \\]\nとなる。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>リスク比とオッズ比</span>"
+    ]
+  },
+  {
+    "objectID": "01_risk_ratio_and_odds_ratio.html#リスク比とオッズ比の違い",
+    "href": "01_risk_ratio_and_odds_ratio.html#リスク比とオッズ比の違い",
+    "title": "2  リスク比とオッズ比",
+    "section": "2.6 リスク比とオッズ比の違い",
+    "text": "2.6 リスク比とオッズ比の違い\n先ほどの例では：\n\nリスク比（RR） = 2.0\nオッズ比（OR） = 2.67\n\nとなった。\nつまり、オッズ比のほうが大きくなる。\nこれは非常に重要である。\n特に、オッズ比をそのまま「リスクが◯倍」と解釈してしまう誤りが多い。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>リスク比とオッズ比</span>"
+    ]
+  },
+  {
+    "objectID": "01_risk_ratio_and_odds_ratio.html#なぜオッズ比は大きくなるのか",
+    "href": "01_risk_ratio_and_odds_ratio.html#なぜオッズ比は大きくなるのか",
+    "title": "2  リスク比とオッズ比",
+    "section": "2.7 なぜオッズ比は大きくなるのか",
+    "text": "2.7 なぜオッズ比は大きくなるのか\nオッズは、\n\\[ \\frac{\\text{起こる確率}}{\\text{起こらない確率}} \\]\nで定義される。\nそのため、出来事の頻度が高くなるほど、オッズは急激に大きくなる。\n例えば：\n\n\n\nリスク\nオッズ\n\n\n\n\n0.1\n0.11\n\n\n0.2\n0.25\n\n\n0.5\n1.00\n\n\n0.8\n4.00\n\n\n\nこのため、オッズ比はリスク比より大きく見えやすい。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>リスク比とオッズ比</span>"
+    ]
+  },
+  {
+    "objectID": "01_risk_ratio_and_odds_ratio.html#rare-disease-assumption",
+    "href": "01_risk_ratio_and_odds_ratio.html#rare-disease-assumption",
+    "title": "2  リスク比とオッズ比",
+    "section": "2.8 rare disease assumption",
+    "text": "2.8 rare disease assumption\n疾患やイベントが稀である場合、\n\\[ OR \\approx RR \\]\nとなることが知られている。\nこれを rare disease assumption という。\n例えば、有病率が1%や2%程度であれば、オッズ比とリスク比はほぼ同じ値になる。\nしかし、有病率が高い場合には、オッズ比はリスク比よりかなり大きくなることがある。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>リスク比とオッズ比</span>"
+    ]
+  },
+  {
+    "objectID": "01_risk_ratio_and_odds_ratio.html#ロジスティック回帰との関係",
+    "href": "01_risk_ratio_and_odds_ratio.html#ロジスティック回帰との関係",
+    "title": "2  リスク比とオッズ比",
+    "section": "2.9 ロジスティック回帰との関係",
+    "text": "2.9 ロジスティック回帰との関係\nロジスティック回帰では、\n\nオッズの対数（log odds）\n\nをモデル化する。\nそのため、ロジスティック回帰の結果として得られる回帰係数を指数変換すると、オッズ比になる。\nつまり、\n\\[ e\\^\\beta \\]\nがオッズ比として解釈される。\nこの点は、後の章で詳しく説明する。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>リスク比とオッズ比</span>"
+    ]
+  },
+  {
+    "objectID": "01_risk_ratio_and_odds_ratio.html#まとめ",
+    "href": "01_risk_ratio_and_odds_ratio.html#まとめ",
+    "title": "2  リスク比とオッズ比",
+    "section": "2.10 まとめ",
+    "text": "2.10 まとめ\n\nリスクは「出来事が起こる割合」である\nリスク比は「2群のリスクの比」である\nオッズは「起こる確率」と「起こらない確率」の比である\nオッズ比は「2群のオッズの比」である\nオッズ比はリスク比より大きくなりやすい\nロジスティック回帰ではオッズ比が出力される",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>リスク比とオッズ比</span>"
+    ]
+  },
+  {
+    "objectID": "02_prevalence.html",
+    "href": "02_prevalence.html",
+    "title": "3  有病率",
+    "section": "",
+    "text": "3.1 はじめに\n医療・保健・公衆衛生分野では、\nを調べることが重要である。\nこのとき用いられる代表的な指標が、有病率（prevalence）である。\nまた、有病率は単なる記述統計ではなく、\nなど、多くの統計解析と深く関係している。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>有病率</span>"
+    ]
+  },
+  {
+    "objectID": "02_prevalence.html#はじめに",
+    "href": "02_prevalence.html#はじめに",
+    "title": "3  有病率",
+    "section": "",
+    "text": "どのくらいの人が病気を持っているか\nどのくらいの頻度で症状が存在するか\n地域差や年代差があるか\n\n\n\n\n\nオッズ比の解釈\nスクリーニング検査\n感度・特異度\n予測モデル",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>有病率</span>"
+    ]
+  },
+  {
+    "objectID": "02_prevalence.html#有病率とは",
+    "href": "02_prevalence.html#有病率とは",
+    "title": "3  有病率",
+    "section": "3.2 有病率とは",
+    "text": "3.2 有病率とは\n有病率（prevalence）とは、\n\n「ある時点で、病気や状態を有している人の割合」\n\nである。\n例えば、1000人を調査し、そのうち120人が糖尿病であった場合：\n\\[ \\text{有病率} = \\frac{120}{1000} = 0.12 \\]\nつまり、有病率は12%である。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>有病率</span>"
+    ]
+  },
+  {
+    "objectID": "02_prevalence.html#point-prevalence-と-period-prevalence",
+    "href": "02_prevalence.html#point-prevalence-と-period-prevalence",
+    "title": "3  有病率",
+    "section": "3.3 point prevalence と period prevalence",
+    "text": "3.3 point prevalence と period prevalence\n有病率にはいくつか種類がある。\n\n3.3.1 point prevalence\nある時点における有病率。\n例： - 2026年5月1日時点での認知症有病率\n\n\n3.3.2 period prevalence\nある期間内に病気を有していた割合。\n例： - 過去1年間のうつ症状有病率",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>有病率</span>"
+    ]
+  },
+  {
+    "objectID": "02_prevalence.html#有病率と発生率の違い",
+    "href": "02_prevalence.html#有病率と発生率の違い",
+    "title": "3  有病率",
+    "section": "3.4 有病率と発生率の違い",
+    "text": "3.4 有病率と発生率の違い\n有病率（prevalence）と発生率（incidence）は異なる概念である。\n\n3.4.1 有病率\n\n「現在どれくらい病気を持っているか」\n\n\n\n3.4.2 発生率\n\n「新しく病気になる人がどれくらいいるか」\n\n例えば、認知症のように治癒しにくい疾患では、有病率は高くなりやすい。\n一方、風邪のように短期間で回復する疾患では、有病率は比較的低くなる。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>有病率</span>"
+    ]
+  },
+  {
+    "objectID": "02_prevalence.html#有病率に影響する要因",
+    "href": "02_prevalence.html#有病率に影響する要因",
+    "title": "3  有病率",
+    "section": "3.5 有病率に影響する要因",
+    "text": "3.5 有病率に影響する要因\n有病率は、\n\\[ \\text{有病率} \\approx \\text{発生率} \\times \\text{罹病期間} \\]\nと考えることができる。\nつまり：\n\n新規患者が増える\n長期間生存する\n治癒しにくい\n\n場合には、有病率は高くなる。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>有病率</span>"
+    ]
+  },
+  {
+    "objectID": "02_prevalence.html#有病率とオッズ比",
+    "href": "02_prevalence.html#有病率とオッズ比",
+    "title": "3  有病率",
+    "section": "3.6 有病率とオッズ比",
+    "text": "3.6 有病率とオッズ比\n有病率は、オッズ比（OR）の解釈に大きく影響する。\n前章で説明したように、\n\\[ OR \\approx RR \\]\nとなるのは、疾患やイベントが稀な場合である。\nこれを rare disease assumption という。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>有病率</span>"
+    ]
+  },
+  {
+    "objectID": "02_prevalence.html#rare-disease-assumption",
+    "href": "02_prevalence.html#rare-disease-assumption",
+    "title": "3  有病率",
+    "section": "3.7 rare disease assumption",
+    "text": "3.7 rare disease assumption\n例えば、有病率が1%程度であれば：\n\nリスク\nオッズ\n\nの値はほぼ同じになる。\n\n3.7.1 例\n\\[ \\text{リスク} = 0.01 \\]\nこのときオッズは：\n\\[ \\frac{0.01}{0.99} \\approx 0.0101 \\]\nであり、ほぼ同じである。\nしかし、有病率が高くなると差が大きくなる。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>有病率</span>"
+    ]
+  },
+  {
+    "objectID": "02_prevalence.html#有病率が高い場合の問題",
+    "href": "02_prevalence.html#有病率が高い場合の問題",
+    "title": "3  有病率",
+    "section": "3.8 有病率が高い場合の問題",
+    "text": "3.8 有病率が高い場合の問題\n例えば、有病率が50%の場合：\n\\[ \\text{オッズ} = \\frac{0.5}{0.5} = 1 \\]\nとなる。\nさらに80%なら：\n\\[ \\text{オッズ} = \\frac{0.8}{0.2} = 4 \\]\nとなる。\nこのため、有病率が高い状況では、オッズ比はリスク比よりかなり大きく見えることがある。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>有病率</span>"
+    ]
+  },
+  {
+    "objectID": "02_prevalence.html#オッズ比の誤解",
+    "href": "02_prevalence.html#オッズ比の誤解",
+    "title": "3  有病率",
+    "section": "3.9 オッズ比の誤解",
+    "text": "3.9 オッズ比の誤解\n論文では、\n\nOR = 2.5\n\nのような結果が報告されることが多い。\nしかし、これを単純に：\n\n「リスクが2.5倍」\n\nと解釈してはいけない。\n特に、\n\n横断研究\n有病率が高い疾患\n高頻度イベント\n\nでは、オッズ比はリスク比より大きくなる。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>有病率</span>"
+    ]
+  },
+  {
+    "objectID": "02_prevalence.html#横断研究と有病率",
+    "href": "02_prevalence.html#横断研究と有病率",
+    "title": "3  有病率",
+    "section": "3.10 横断研究と有病率",
+    "text": "3.10 横断研究と有病率\n横断研究（cross-sectional study）では、\n\n「ある時点で病気を持っているか」\n\nを調べるため、有病率を扱うことが多い。\nそのため、横断研究でロジスティック回帰を行う場合、\n\n有病率\nオッズ比\nリスク比との差\n\nを理解しておく必要がある。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>有病率</span>"
+    ]
+  },
+  {
+    "objectID": "02_prevalence.html#ロジスティック回帰との関係",
+    "href": "02_prevalence.html#ロジスティック回帰との関係",
+    "title": "3  有病率",
+    "section": "3.11 ロジスティック回帰との関係",
+    "text": "3.11 ロジスティック回帰との関係\nロジスティック回帰は、二値アウトカムを扱う代表的な解析手法である。\nしかし、ロジスティック回帰が直接モデル化しているのは、\n\n有病率そのもの\n\nではなく、\n\nオッズの対数（log odds）\n\nである。\nそのため、ロジスティック回帰の結果はオッズ比として解釈される。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>有病率</span>"
+    ]
+  },
+  {
+    "objectID": "02_prevalence.html#まとめ",
+    "href": "02_prevalence.html#まとめ",
+    "title": "3  有病率",
+    "section": "3.12 まとめ",
+    "text": "3.12 まとめ\n\n有病率は「病気を有している人の割合」である\npoint prevalence と period prevalence がある\n有病率と発生率は異なる\n有病率が高いとオッズ比は大きく見えやすい\nrare disease assumption では OR ≈ RR となる\n横断研究では有病率の理解が重要である\nロジスティック回帰ではオッズ比が用いられる",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>有病率</span>"
+    ]
+  },
+  {
+    "objectID": "03_logistic_regression.html",
+    "href": "03_logistic_regression.html",
+    "title": "4  ロジスティック回帰",
+    "section": "",
+    "text": "4.1 はじめに\n医療・保健・スポーツ科学分野では、\nのように、\nで表されるアウトカムを扱うことが多い。\nこのようなアウトカムを、二値アウトカム（binary outcome）という。\nロジスティック回帰（logistic regression）は、二値アウトカムを解析する代表的な統計手法である。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "03_logistic_regression.html#はじめに",
+    "href": "03_logistic_regression.html#はじめに",
+    "title": "4  ロジスティック回帰",
+    "section": "",
+    "text": "転倒したか\n死亡したか\n入院したか\n疾患を有するか\n\n\n\n「はい / いいえ」",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "03_logistic_regression.html#二値アウトカム",
+    "href": "03_logistic_regression.html#二値アウトカム",
+    "title": "4  ロジスティック回帰",
+    "section": "4.2 二値アウトカム",
+    "text": "4.2 二値アウトカム\n二値アウトカムとは、結果が2種類しかない変数である。\n例：\n\n\n\nアウトカム\n値\n\n\n\n\n生存\n1\n\n\n死亡\n0\n\n\n\n\n\n\nアウトカム\n値\n\n\n\n\n転倒あり\n1\n\n\n転倒なし\n0\n\n\n\n\n\n\nアウトカム\n値\n\n\n\n\n糖尿病あり\n1\n\n\n糖尿病なし\n0\n\n\n\n通常、解析では：\n\n1 = イベントあり\n0 = イベントなし\n\nとして扱うことが多い。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "03_logistic_regression.html#なぜ線形回帰ではいけないのか",
+    "href": "03_logistic_regression.html#なぜ線形回帰ではいけないのか",
+    "title": "4  ロジスティック回帰",
+    "section": "4.3 なぜ線形回帰ではいけないのか",
+    "text": "4.3 なぜ線形回帰ではいけないのか\n二値アウトカムに対して、通常の線形回帰（linear regression）を用いることには問題がある。\n例えば：\n\\[ Y = \\beta\\_0 + \\beta\\_1X \\]\nをそのまま適用すると、予測値が：\n\n0未満\n1を超える\n\n可能性がある。\nしかし、確率は：\n\\[ 0 \\leq p \\leq 1 \\]\nでなければならない。\nまた、二値データでは誤差分布も正規分布を仮定しにくい。\nこのため、二値アウトカムには別のモデルが必要となる。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "03_logistic_regression.html#ロジスティック回帰の考え方",
+    "href": "03_logistic_regression.html#ロジスティック回帰の考え方",
+    "title": "4  ロジスティック回帰",
+    "section": "4.4 ロジスティック回帰の考え方",
+    "text": "4.4 ロジスティック回帰の考え方\nロジスティック回帰では、\n\n確率そのもの\n\nではなく、\n\nオッズの対数（log odds）\n\nをモデル化する。\nまず、確率を (p) とする。\nオッズは：\n\\[ \\frac{p}{1-p} \\]\nである。\nさらに、その対数を取る：\n\\[ \\log\\left(\\frac{p}{1-p}\\right) \\]\nこれをロジット（logit）という。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "03_logistic_regression.html#ロジスティック回帰モデル",
+    "href": "03_logistic_regression.html#ロジスティック回帰モデル",
+    "title": "4  ロジスティック回帰",
+    "section": "4.5 ロジスティック回帰モデル",
+    "text": "4.5 ロジスティック回帰モデル\nロジスティック回帰では、\n()=_0+_1X\nというモデルを用いる。\nここで：\n\n(p)：イベントが起こる確率\n(_0)：切片\n(_1)：回帰係数\n(X)：説明変数\n\nである。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "03_logistic_regression.html#ロジット変換",
+    "href": "03_logistic_regression.html#ロジット変換",
+    "title": "4  ロジスティック回帰",
+    "section": "4.6 ロジット変換",
+    "text": "4.6 ロジット変換\nロジット変換を行うことで、\n\\[ 0 \\leq p \\leq 1 \\]\nという制約を回避できる。\nロジット値は：\n\\[ -\\infty \\sim +\\infty \\]\nを取りうるため、通常の回帰モデルの形で扱いやすくなる。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "03_logistic_regression.html#回帰係数の意味",
+    "href": "03_logistic_regression.html#回帰係数の意味",
+    "title": "4  ロジスティック回帰",
+    "section": "4.7 回帰係数の意味",
+    "text": "4.7 回帰係数の意味\nロジスティック回帰では、回帰係数 () は：\n\nlog odds の変化量\n\nを意味する。\nしかし、log odds は直感的ではない。\nそこで通常は、指数変換を行う。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "03_logistic_regression.html#オッズ比への変換",
+    "href": "03_logistic_regression.html#オッズ比への変換",
+    "title": "4  ロジスティック回帰",
+    "section": "4.8 オッズ比への変換",
+    "text": "4.8 オッズ比への変換\n回帰係数を指数変換すると：\nOR=e^{}\nとなる。\nつまり、ロジスティック回帰の結果は、オッズ比として解釈できる。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "03_logistic_regression.html#例年齢と転倒",
+    "href": "03_logistic_regression.html#例年齢と転倒",
+    "title": "4  ロジスティック回帰",
+    "section": "4.9 例：年齢と転倒",
+    "text": "4.9 例：年齢と転倒\n例えば：\n\nアウトカム：転倒の有無\n説明変数：年齢\n\nを解析したとする。\n結果が：\n\\[ \\beta = 0.08 \\]\nであれば：\n\\[ e\\^{0.08} \\approx 1.08 \\]\nとなる。\nこれは：\n\n年齢が1歳上がるごとに、転倒オッズが1.08倍になる\n\nと解釈できる。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "03_logistic_regression.html#単変量と多変量",
+    "href": "03_logistic_regression.html#単変量と多変量",
+    "title": "4  ロジスティック回帰",
+    "section": "4.10 単変量と多変量",
+    "text": "4.10 単変量と多変量\n\n4.10.1 単変量ロジスティック回帰\n1つの説明変数のみを用いる。\n例：\n\n年齢 → 転倒\n\n\n\n\n4.10.2 多変量ロジスティック回帰\n複数の説明変数を同時に扱う。\n例：\n\n年齢\n性別\nBMI\n運動習慣\n\nを同時に投入する。\nこれにより、\n\n他の変数を調整した上での関連\n\nを評価できる。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "03_logistic_regression.html#ロジスティック回帰の出力",
+    "href": "03_logistic_regression.html#ロジスティック回帰の出力",
+    "title": "4  ロジスティック回帰",
+    "section": "4.11 ロジスティック回帰の出力",
+    "text": "4.11 ロジスティック回帰の出力\n一般的には：\n\n回帰係数（β）\nオッズ比（OR）\n95%信頼区間\np値\n\nが出力される。\n例：\n\n\n\n変数\nOR\n95%CI\np\n\n\n\n\n年齢\n1.08\n1.03–1.13\n&lt;0.001",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "03_logistic_regression.html#ロジスティック回帰の特徴",
+    "href": "03_logistic_regression.html#ロジスティック回帰の特徴",
+    "title": "4  ロジスティック回帰",
+    "section": "4.12 ロジスティック回帰の特徴",
+    "text": "4.12 ロジスティック回帰の特徴\nロジスティック回帰には、以下の特徴がある。\n\n4.12.1 長所\n\n二値アウトカムを扱える\n解釈しやすい\n医学論文で広く用いられる\n調整解析が可能\n\n\n\n4.12.2 短所\n\nオッズ比の誤解が起こりやすい\n非線形関係に弱い場合がある\n希少イベントでは不安定になることがある",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "03_logistic_regression.html#ロジスティック回帰と因果関係",
+    "href": "03_logistic_regression.html#ロジスティック回帰と因果関係",
+    "title": "4  ロジスティック回帰",
+    "section": "4.13 ロジスティック回帰と因果関係",
+    "text": "4.13 ロジスティック回帰と因果関係\nロジスティック回帰は、\n\n関連（association）\n\nを評価する手法である。\nしたがって、\n\nロジスティック回帰を行っただけでは因果関係は証明できない\n\n点に注意が必要である。\n交絡因子や研究デザインを考慮する必要がある。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "03_logistic_regression.html#まとめ",
+    "href": "03_logistic_regression.html#まとめ",
+    "title": "4  ロジスティック回帰",
+    "section": "4.14 まとめ",
+    "text": "4.14 まとめ\n\nロジスティック回帰は二値アウトカムを扱う手法である\n確率ではなく log odds をモデル化する\nロジット変換を用いる\n回帰係数を指数変換するとオッズ比になる\n多変量解析により調整が可能である\nロジスティック回帰は関連を評価する手法である",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "04_multiple_regression_vs_logistic_regression.html",
+    "href": "04_multiple_regression_vs_logistic_regression.html",
+    "title": "5  重回帰とロジスティック回帰",
+    "section": "",
+    "text": "5.1 はじめに\n統計解析では、複数の説明変数を同時に扱うことが多い。\n例えば：\nなどを同時に考慮しながら、\nとの関連を調べたい場合がある。\nこのとき代表的な方法が、\nである。\nどちらも「複数の説明変数を同時に扱う」という点では共通しているが、扱うアウトカムや解釈方法が異なる。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>重回帰とロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "04_multiple_regression_vs_logistic_regression.html#はじめに",
+    "href": "04_multiple_regression_vs_logistic_regression.html#はじめに",
+    "title": "5  重回帰とロジスティック回帰",
+    "section": "",
+    "text": "年齢\n性別\nBMI\n喫煙\n運動習慣\n\n\n\n血圧\n歩行速度\n転倒\n死亡\n\n\n\n\n重回帰分析（multiple regression）\nロジスティック回帰（logistic regression）",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>重回帰とロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "04_multiple_regression_vs_logistic_regression.html#重回帰分析とは",
+    "href": "04_multiple_regression_vs_logistic_regression.html#重回帰分析とは",
+    "title": "5  重回帰とロジスティック回帰",
+    "section": "5.2 重回帰分析とは",
+    "text": "5.2 重回帰分析とは\n重回帰分析（multiple linear regression）は、\n\n連続値アウトカム\n\nを扱う解析手法である。\n例えば：\n\n血圧\n歩行速度\nBMI\nQOLスコア\n\nなどである。\nモデルは：\nY=_0+_1X_1+_2X_2++_pX_p\nで表される。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>重回帰とロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "04_multiple_regression_vs_logistic_regression.html#ロジスティック回帰とは",
+    "href": "04_multiple_regression_vs_logistic_regression.html#ロジスティック回帰とは",
+    "title": "5  重回帰とロジスティック回帰",
+    "section": "5.3 ロジスティック回帰とは",
+    "text": "5.3 ロジスティック回帰とは\nロジスティック回帰は、\n\n二値アウトカム\n\nを扱う解析手法である。\n例えば：\n\n死亡したか\n転倒したか\n糖尿病があるか\n\nなどである。\nモデルは：\n()=_0+_1X_1+_2X_2++_pX_p\nで表される。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>重回帰とロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "04_multiple_regression_vs_logistic_regression.html#共通点",
+    "href": "04_multiple_regression_vs_logistic_regression.html#共通点",
+    "title": "5  重回帰とロジスティック回帰",
+    "section": "5.4 共通点",
+    "text": "5.4 共通点\n重回帰分析とロジスティック回帰には多くの共通点がある。\n\n5.4.1 複数の説明変数を扱える\nどちらも：\n\n年齢\n性別\nBMI\n喫煙\n\nなどを同時に投入できる。\n\n\n\n5.4.2 調整（adjustment）が可能\n例えば：\n\n高齢者ほど転倒しやすい\n女性は骨粗鬆症が多い\n\n場合、単純比較では真の関連が分からないことがある。\nこのとき、複数の変数を同時に投入することで、\n\n他の要因を調整した上での関連\n\nを評価できる。\n\n\n\n5.4.3 回帰係数を推定する\nどちらも、\n\n回帰係数\n信頼区間\np値\n\nを推定する。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>重回帰とロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "04_multiple_regression_vs_logistic_regression.html#最大の違いアウトカム",
+    "href": "04_multiple_regression_vs_logistic_regression.html#最大の違いアウトカム",
+    "title": "5  重回帰とロジスティック回帰",
+    "section": "5.5 最大の違い：アウトカム",
+    "text": "5.5 最大の違い：アウトカム\n最も重要な違いは、アウトカムの種類である。\n\n\n\n手法\nアウトカム\n\n\n\n\n重回帰分析\n連続値\n\n\nロジスティック回帰\n二値",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>重回帰とロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "04_multiple_regression_vs_logistic_regression.html#重回帰分析の例",
+    "href": "04_multiple_regression_vs_logistic_regression.html#重回帰分析の例",
+    "title": "5  重回帰とロジスティック回帰",
+    "section": "5.6 重回帰分析の例",
+    "text": "5.6 重回帰分析の例\n例：\n\nアウトカム：収縮期血圧\n説明変数：\n\n年齢\nBMI\n喫煙\n\n\nこの場合：\n[ = 3.2 ]\nであれば、\n\nBMIが1増えると、血圧が3.2 mmHg高くなる\n\nと解釈できる。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>重回帰とロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "04_multiple_regression_vs_logistic_regression.html#ロジスティック回帰の例",
+    "href": "04_multiple_regression_vs_logistic_regression.html#ロジスティック回帰の例",
+    "title": "5  重回帰とロジスティック回帰",
+    "section": "5.7 ロジスティック回帰の例",
+    "text": "5.7 ロジスティック回帰の例\n例：\n\nアウトカム：転倒の有無\n説明変数：\n\n年齢\n性別\nBMI\n\n\nこの場合：\n[ OR = 1.20 ]\nであれば、\n\nBMIが1増えると、転倒オッズが1.20倍になる\n\nと解釈する。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>重回帰とロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "04_multiple_regression_vs_logistic_regression.html#予測値の違い",
+    "href": "04_multiple_regression_vs_logistic_regression.html#予測値の違い",
+    "title": "5  重回帰とロジスティック回帰",
+    "section": "5.8 予測値の違い",
+    "text": "5.8 予測値の違い\n\n5.8.1 重回帰分析\n予測値は連続値である。\n例：\n\n血圧 132 mmHg\n歩行速度 1.1 m/s\n\n\n\n\n5.8.2 ロジスティック回帰\n予測値は確率である。\n例：\n\n転倒確率 0.25\n死亡確率 0.08",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>重回帰とロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "04_multiple_regression_vs_logistic_regression.html#誤差構造の違い",
+    "href": "04_multiple_regression_vs_logistic_regression.html#誤差構造の違い",
+    "title": "5  重回帰とロジスティック回帰",
+    "section": "5.9 誤差構造の違い",
+    "text": "5.9 誤差構造の違い\n\n5.9.1 重回帰分析\n通常、\n\n正規分布\n等分散性\n\nを仮定する。\n\n\n\n5.9.2 ロジスティック回帰\nアウトカムが0/1であるため、正規分布を仮定しない。\n通常、二項分布を前提とする。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>重回帰とロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "04_multiple_regression_vs_logistic_regression.html#調整とは何か",
+    "href": "04_multiple_regression_vs_logistic_regression.html#調整とは何か",
+    "title": "5  重回帰とロジスティック回帰",
+    "section": "5.10 調整とは何か",
+    "text": "5.10 調整とは何か\n医学研究では、\n\n「他の要因の影響を取り除く」\n\nことが重要である。\nこれを調整（adjustment）という。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>重回帰とロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "04_multiple_regression_vs_logistic_regression.html#交絡confounding",
+    "href": "04_multiple_regression_vs_logistic_regression.html#交絡confounding",
+    "title": "5  重回帰とロジスティック回帰",
+    "section": "5.11 交絡（confounding）",
+    "text": "5.11 交絡（confounding）\n例えば、\n\n運動習慣\n転倒\n\nの関連を調べたいとする。\nしかし、高齢者ほど：\n\n運動しない\n転倒しやすい\n\nのであれば、「年齢」が影響している可能性がある。\nこのように、\n\n曝露とアウトカムの両方に関連する要因\n\nを交絡因子（confounder）という。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>重回帰とロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "04_multiple_regression_vs_logistic_regression.html#多変量解析の役割",
+    "href": "04_multiple_regression_vs_logistic_regression.html#多変量解析の役割",
+    "title": "5  重回帰とロジスティック回帰",
+    "section": "5.12 多変量解析の役割",
+    "text": "5.12 多変量解析の役割\n重回帰分析やロジスティック回帰では、\n\n年齢\n性別\nBMI\n\nなどを同時に投入することで、交絡の影響を減らそうとする。\nこれが多変量解析の重要な役割である。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>重回帰とロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "04_multiple_regression_vs_logistic_regression.html#注意点",
+    "href": "04_multiple_regression_vs_logistic_regression.html#注意点",
+    "title": "5  重回帰とロジスティック回帰",
+    "section": "5.13 注意点",
+    "text": "5.13 注意点\nただし、\n\n統計学的に調整しただけで因果関係が証明されるわけではない\n\n点に注意が必要である。\n\n測定していない交絡\n選択バイアス\n情報バイアス\n\nなどは残る可能性がある。",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>重回帰とロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "04_multiple_regression_vs_logistic_regression.html#どちらを使うべきか",
+    "href": "04_multiple_regression_vs_logistic_regression.html#どちらを使うべきか",
+    "title": "5  重回帰とロジスティック回帰",
+    "section": "5.14 どちらを使うべきか",
+    "text": "5.14 どちらを使うべきか\n基本的には、アウトカムの種類で決まる。\n\n\n\nアウトカム\n手法\n\n\n\n\n連続値\n重回帰分析\n\n\n二値\nロジスティック回帰",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>重回帰とロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "04_multiple_regression_vs_logistic_regression.html#まとめ",
+    "href": "04_multiple_regression_vs_logistic_regression.html#まとめ",
+    "title": "5  重回帰とロジスティック回帰",
+    "section": "5.15 まとめ",
+    "text": "5.15 まとめ\n\n重回帰分析は連続値アウトカムを扱う\nロジスティック回帰は二値アウトカムを扱う\nどちらも複数の説明変数を同時に扱える\n多変量解析により調整が可能である\nロジスティック回帰ではオッズ比を解釈する\n調整だけでは因果関係は証明できない",
+    "crumbs": [
+      "Part 1: Foundations",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>重回帰とロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "05_variable_selection.html",
+    "href": "05_variable_selection.html",
+    "title": "6  独立変数の選び方",
+    "section": "",
+    "text": "6.1 はじめに\nロジスティック回帰では、\nが重要な問題となる。\n例えば、\nなど、多数の候補変数が存在する場合が多い。\nしかし、\nあるいは、\nという方法には問題がある。\nこの章では、独立変数の選択方法について学ぶ。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>独立変数の選び方</span>"
+    ]
+  },
+  {
+    "objectID": "05_variable_selection.html#はじめに",
+    "href": "05_variable_selection.html#はじめに",
+    "title": "6  独立変数の選び方",
+    "section": "",
+    "text": "どの変数をモデルに入れるか\nどの変数を除外するか\n\n\n\n\n年齢\n性別\nBMI\n喫煙\n既往歴\n運動習慣\n\n\n\n\n「とりあえず全部入れる」\n\n\n\n「p値が有意なものだけ入れる」",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>独立変数の選び方</span>"
+    ]
+  },
+  {
+    "objectID": "05_variable_selection.html#独立変数とは",
+    "href": "05_variable_selection.html#独立変数とは",
+    "title": "6  独立変数の選び方",
+    "section": "6.2 独立変数とは",
+    "text": "6.2 独立変数とは\nロジスティック回帰では、\n\n説明変数\n独立変数\npredictor\ncovariate\n\nなど、さまざまな呼び方がある。\n本書では、主に「独立変数」という表現を用いる。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>独立変数の選び方</span>"
+    ]
+  },
+  {
+    "objectID": "05_variable_selection.html#なぜ変数選択が重要なのか",
+    "href": "05_variable_selection.html#なぜ変数選択が重要なのか",
+    "title": "6  独立変数の選び方",
+    "section": "6.3 なぜ変数選択が重要なのか",
+    "text": "6.3 なぜ変数選択が重要なのか\n変数選択は、\n\n結果の解釈\n交絡調整\nモデルの安定性\n過学習\n\nに影響する。\n特に医学研究では、\n\n何を調整するか\n\nが研究結果を大きく左右する。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>独立変数の選び方</span>"
+    ]
+  },
+  {
+    "objectID": "05_variable_selection.html#理論ベースの選択",
+    "href": "05_variable_selection.html#理論ベースの選択",
+    "title": "6  独立変数の選び方",
+    "section": "6.4 理論ベースの選択",
+    "text": "6.4 理論ベースの選択\n最も重要なのは、\n\n研究目的や先行研究に基づいて変数を選ぶ\n\nことである。\n例えば、\n\n年齢\n性別\n\nは、多くの疾患研究で重要な交絡因子である。\nたとえp値が有意でなくても、理論的に重要であればモデルに含めることがある。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>独立変数の選び方</span>"
+    ]
+  },
+  {
+    "objectID": "05_variable_selection.html#先行研究を参考にする",
+    "href": "05_variable_selection.html#先行研究を参考にする",
+    "title": "6  独立変数の選び方",
+    "section": "6.5 先行研究を参考にする",
+    "text": "6.5 先行研究を参考にする\n既存研究では、\n\nどの変数が調整されているか\nどの変数が交絡因子と考えられているか\n\nを確認することが重要である。\n特に：\n\nsystematic review\nmeta-analysis\n大規模コホート研究\n\nは参考になる。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>独立変数の選び方</span>"
+    ]
+  },
+  {
+    "objectID": "05_variable_selection.html#p値だけで選ばない",
+    "href": "05_variable_selection.html#p値だけで選ばない",
+    "title": "6  独立変数の選び方",
+    "section": "6.6 p値だけで選ばない",
+    "text": "6.6 p値だけで選ばない\n初心者によく見られるのが、\n\n有意だった変数だけモデルに入れる\n\nという方法である。\nしかし、これは推奨されない。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>独立変数の選び方</span>"
+    ]
+  },
+  {
+    "objectID": "05_variable_selection.html#stepwise-selection-の問題",
+    "href": "05_variable_selection.html#stepwise-selection-の問題",
+    "title": "6  独立変数の選び方",
+    "section": "6.7 stepwise selection の問題",
+    "text": "6.7 stepwise selection の問題\n自動的に変数を選択する方法として、\n\nforward selection\nbackward elimination\nstepwise selection\n\nなどがある。\nしかし、これらには問題がある。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>独立変数の選び方</span>"
+    ]
+  },
+  {
+    "objectID": "05_variable_selection.html#stepwise-法の問題点",
+    "href": "05_variable_selection.html#stepwise-法の問題点",
+    "title": "6  独立変数の選び方",
+    "section": "6.8 stepwise 法の問題点",
+    "text": "6.8 stepwise 法の問題点\n\n6.8.1 結果が不安定\nサンプルが少し変わるだけで、選ばれる変数が変わることがある。\n\n\n\n6.8.2 p値に依存しすぎる\n理論的に重要な変数が除外される可能性がある。\n\n\n\n6.8.3 過学習\nモデルがデータに過剰適合しやすくなる。\n\n\n\n6.8.4 回帰係数が不安定\nオッズ比が極端になる場合がある。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>独立変数の選び方</span>"
+    ]
+  },
+  {
+    "objectID": "05_variable_selection.html#交絡因子を考える",
+    "href": "05_variable_selection.html#交絡因子を考える",
+    "title": "6  独立変数の選び方",
+    "section": "6.9 交絡因子を考える",
+    "text": "6.9 交絡因子を考える\n交絡因子とは、\n\n曝露とアウトカムの両方に関連する変数\n\nである。\n例えば：\n\n年齢\n喫煙\n社会経済状態\n\nなどが典型的である。\n交絡因子を適切に調整しないと、関連を誤って解釈する可能性がある。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>独立変数の選び方</span>"
+    ]
+  },
+  {
+    "objectID": "05_variable_selection.html#交絡調整の考え方",
+    "href": "05_variable_selection.html#交絡調整の考え方",
+    "title": "6  独立変数の選び方",
+    "section": "6.10 交絡調整の考え方",
+    "text": "6.10 交絡調整の考え方\n例えば、\n\n運動習慣\n糖尿病\n\nの関連を調べたいとする。\nしかし、高齢者ほど：\n\n運動しない\n糖尿病が多い\n\nのであれば、「年齢」が交絡している可能性がある。\nこの場合、年齢をモデルに含める必要がある。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>独立変数の選び方</span>"
+    ]
+  },
+  {
+    "objectID": "05_variable_selection.html#媒介変数に注意する",
+    "href": "05_variable_selection.html#媒介変数に注意する",
+    "title": "6  独立変数の選び方",
+    "section": "6.11 媒介変数に注意する",
+    "text": "6.11 媒介変数に注意する\nすべての変数を調整すれば良いわけではない。\n例えば：\n\n運動 → BMI → 糖尿病\n\nという関係がある場合、BMIは媒介変数（mediator）かもしれない。\n媒介変数を調整すると、\n\n本来の効果を過小評価する\n\nことがある。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>独立変数の選び方</span>"
+    ]
+  },
+  {
+    "objectID": "05_variable_selection.html#dag-の考え方",
+    "href": "05_variable_selection.html#dag-の考え方",
+    "title": "6  独立変数の選び方",
+    "section": "6.12 DAG の考え方",
+    "text": "6.12 DAG の考え方\n近年では、\n\nDAG（Directed Acyclic Graph）\n\nを用いて交絡構造を考える方法が広く用いられている。\nDAGでは：\n\n何を調整すべきか\n何を調整してはいけないか\n\nを整理できる。\n本書では詳細には扱わないが、\n\n「むやみに全部調整しない」\n\nという考え方は重要である。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>独立変数の選び方</span>"
+    ]
+  },
+  {
+    "objectID": "05_variable_selection.html#多重共線性",
+    "href": "05_variable_selection.html#多重共線性",
+    "title": "6  独立変数の選び方",
+    "section": "6.13 多重共線性",
+    "text": "6.13 多重共線性\n独立変数同士が強く相関している場合、\n\n多重共線性（multicollinearity）\n\nが問題となる。\n例えば：\n\nBMI\n腹囲\n\nを同時に投入すると、高い相関がある可能性がある。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>独立変数の選び方</span>"
+    ]
+  },
+  {
+    "objectID": "05_variable_selection.html#多重共線性の問題",
+    "href": "05_variable_selection.html#多重共線性の問題",
+    "title": "6  独立変数の選び方",
+    "section": "6.14 多重共線性の問題",
+    "text": "6.14 多重共線性の問題\n多重共線性があると：\n\n回帰係数が不安定になる\n標準誤差が大きくなる\n解釈が難しくなる\n\nことがある。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>独立変数の選び方</span>"
+    ]
+  },
+  {
+    "objectID": "05_variable_selection.html#サンプルサイズとの関係",
+    "href": "05_variable_selection.html#サンプルサイズとの関係",
+    "title": "6  独立変数の選び方",
+    "section": "6.15 サンプルサイズとの関係",
+    "text": "6.15 サンプルサイズとの関係\n変数を増やしすぎると、\n\n過学習\n推定不安定\n\nが起こる。\n特にイベント数が少ない場合は注意が必要である。\nこの点は次章で詳しく扱う。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>独立変数の選び方</span>"
+    ]
+  },
+  {
+    "objectID": "05_variable_selection.html#実務的な考え方",
+    "href": "05_variable_selection.html#実務的な考え方",
+    "title": "6  独立変数の選び方",
+    "section": "6.16 実務的な考え方",
+    "text": "6.16 実務的な考え方\n実際の研究では、\n以下を組み合わせて変数を選択することが多い。\n\n研究目的\n先行研究\n臨床的重要性\n交絡\nサンプルサイズ\n\n単純にp値だけで決めないことが重要である。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>独立変数の選び方</span>"
+    ]
+  },
+  {
+    "objectID": "05_variable_selection.html#例転倒研究",
+    "href": "05_variable_selection.html#例転倒研究",
+    "title": "6  独立変数の選び方",
+    "section": "6.17 例：転倒研究",
+    "text": "6.17 例：転倒研究\n例えば、転倒をアウトカムとする研究で：\n\n年齢\n性別\nBMI\n運動習慣\n認知機能\n\nを投入するとする。\nこの場合、\n\n年齢\n性別\n\nは理論的に重要なため、通常は調整する。\n一方、\n\nBMI\n認知機能\n\nなどは研究目的に応じて検討する。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>独立変数の選び方</span>"
+    ]
+  },
+  {
+    "objectID": "05_variable_selection.html#まとめ",
+    "href": "05_variable_selection.html#まとめ",
+    "title": "6  独立変数の選び方",
+    "section": "6.18 まとめ",
+    "text": "6.18 まとめ\n\n独立変数の選択は非常に重要である\n理論や先行研究に基づく選択が重要である\np値だけで変数選択してはいけない\nstepwise 法には問題がある\n交絡因子を適切に調整する必要がある\n媒介変数の調整には注意が必要である\n多重共線性や過学習にも注意する",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>独立変数の選び方</span>"
+    ]
+  },
+  {
+    "objectID": "06_sample_size.html",
+    "href": "06_sample_size.html",
+    "title": "7  サンプルサイズ",
+    "section": "",
+    "text": "7.1 はじめに\nロジスティック回帰では、\nというサンプルサイズの問題が非常に重要である。\nサンプルサイズが不足すると、\nなどの問題が生じる。\n特にロジスティック回帰では、\nである。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>サンプルサイズ</span>"
+    ]
+  },
+  {
+    "objectID": "06_sample_size.html#はじめに",
+    "href": "06_sample_size.html#はじめに",
+    "title": "7  サンプルサイズ",
+    "section": "",
+    "text": "何人必要か\n何イベント必要か\n\n\n\n\n推定が不安定になる\nオッズ比が極端になる\n再現性が低下する\n過学習（overfitting）が起こる\n\n\n\n\n総サンプル数よりも「イベント数」が重要",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>サンプルサイズ</span>"
+    ]
+  },
+  {
+    "objectID": "06_sample_size.html#イベントとは",
+    "href": "06_sample_size.html#イベントとは",
+    "title": "7  サンプルサイズ",
+    "section": "7.2 イベントとは",
+    "text": "7.2 イベントとは\nイベント（event）とは、\n\nアウトカム = 1\n\nとなるケースである。\n例えば：\n\n\n\nアウトカム\nイベント\n\n\n\n\n死亡\n死亡した人\n\n\n転倒\n転倒した人\n\n\n糖尿病\n糖尿病あり\n\n\n\nである。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>サンプルサイズ</span>"
+    ]
+  },
+  {
+    "objectID": "06_sample_size.html#なぜイベント数が重要なのか",
+    "href": "06_sample_size.html#なぜイベント数が重要なのか",
+    "title": "7  サンプルサイズ",
+    "section": "7.3 なぜイベント数が重要なのか",
+    "text": "7.3 なぜイベント数が重要なのか\nロジスティック回帰は、\n\nイベントがどのように発生するか\n\nをモデル化する。\nそのため、\n\nイベントが少ない\n非イベントばかり\n\nの場合、推定が不安定になる。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>サンプルサイズ</span>"
+    ]
+  },
+  {
+    "objectID": "06_sample_size.html#events-per-variable-epv",
+    "href": "06_sample_size.html#events-per-variable-epv",
+    "title": "7  サンプルサイズ",
+    "section": "7.4 events per variable (EPV)",
+    "text": "7.4 events per variable (EPV)\nロジスティック回帰で有名な経験則として：\n\nevents per variable（EPV）\n\nがある。\nこれは：\n\\[ EPV = \\frac{\\text{イベント数}}{\\text{独立変数数}} \\]\nで表される。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>サンプルサイズ</span>"
+    ]
+  },
+  {
+    "objectID": "06_sample_size.html#epv-10-の経験則",
+    "href": "06_sample_size.html#epv-10-の経験則",
+    "title": "7  サンプルサイズ",
+    "section": "7.5 EPV = 10 の経験則",
+    "text": "7.5 EPV = 10 の経験則\n古典的には、\n\nEPV ≥ 10\n\nが推奨されてきた。\n例えば：\n\nイベント数 = 100\n独立変数 = 10\n\nなら：\n\\[ EPV = \\frac{100}{10} = 10 \\]\nとなる。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>サンプルサイズ</span>"
+    ]
+  },
+  {
+    "objectID": "06_sample_size.html#なぜ-epv-が必要なのか",
+    "href": "06_sample_size.html#なぜ-epv-が必要なのか",
+    "title": "7  サンプルサイズ",
+    "section": "7.6 なぜ EPV が必要なのか",
+    "text": "7.6 なぜ EPV が必要なのか\nEPV が低いと：\n\n回帰係数が不安定\n標準誤差が大きい\nOR が極端になる\np値が不安定\n\nなどの問題が起こる。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>サンプルサイズ</span>"
+    ]
+  },
+  {
+    "objectID": "06_sample_size.html#epv-10-は絶対ではない",
+    "href": "06_sample_size.html#epv-10-は絶対ではない",
+    "title": "7  サンプルサイズ",
+    "section": "7.7 EPV = 10 は絶対ではない",
+    "text": "7.7 EPV = 10 は絶対ではない\n近年では、\n\nEPV = 10 は単純すぎる\n\nとも言われている。\n実際には：\n\nイベント率\n効果量\n相関構造\n欠損\nモデル複雑性\n\nなども影響する。\nただし、\n\n「変数を増やしすぎない」\n\nという原則は現在でも重要である。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>サンプルサイズ</span>"
+    ]
+  },
+  {
+    "objectID": "06_sample_size.html#過学習overfitting",
+    "href": "06_sample_size.html#過学習overfitting",
+    "title": "7  サンプルサイズ",
+    "section": "7.8 過学習（overfitting）",
+    "text": "7.8 過学習（overfitting）\nサンプルサイズ不足で重要なのが、\n\n過学習（overfitting）\n\nである。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>サンプルサイズ</span>"
+    ]
+  },
+  {
+    "objectID": "06_sample_size.html#過学習とは",
+    "href": "06_sample_size.html#過学習とは",
+    "title": "7  サンプルサイズ",
+    "section": "7.9 過学習とは",
+    "text": "7.9 過学習とは\n過学習とは、\n\nモデルが現在のデータに適合しすぎる状態\n\nである。\nその結果：\n\n学習データでは性能が高い\n新しいデータでは性能が低い\n\nという問題が起こる。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>サンプルサイズ</span>"
+    ]
+  },
+  {
+    "objectID": "06_sample_size.html#過学習の原因",
+    "href": "06_sample_size.html#過学習の原因",
+    "title": "7  サンプルサイズ",
+    "section": "7.10 過学習の原因",
+    "text": "7.10 過学習の原因\n過学習は：\n\nサンプルサイズ不足\n変数が多すぎる\n複雑すぎるモデル\n\nで起こりやすい。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>サンプルサイズ</span>"
+    ]
+  },
+  {
+    "objectID": "06_sample_size.html#希少イベントrare-event",
+    "href": "06_sample_size.html#希少イベントrare-event",
+    "title": "7  サンプルサイズ",
+    "section": "7.11 希少イベント（rare event）",
+    "text": "7.11 希少イベント（rare event）\nイベント数が非常に少ない場合、\n\nrare event logistic regression\n\nの問題が生じる。\n例えば：\n\n死亡率 1%\n重篤合併症 0.5%\n\nなどである。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>サンプルサイズ</span>"
+    ]
+  },
+  {
+    "objectID": "06_sample_size.html#完全分離complete-separation",
+    "href": "06_sample_size.html#完全分離complete-separation",
+    "title": "7  サンプルサイズ",
+    "section": "7.12 完全分離（complete separation）",
+    "text": "7.12 完全分離（complete separation）\n希少イベントでは、\n\nある変数でイベントが完全に分離される\n\n場合がある。\n例：\n\n\n\n喫煙\n死亡\n\n\n\n\nあり\n全員死亡\n\n\nなし\n全員生存\n\n\n\nこの場合、通常のロジスティック回帰では推定が不安定になる。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>サンプルサイズ</span>"
+    ]
+  },
+  {
+    "objectID": "06_sample_size.html#firth-法",
+    "href": "06_sample_size.html#firth-法",
+    "title": "7  サンプルサイズ",
+    "section": "7.13 Firth 法",
+    "text": "7.13 Firth 法\n希少イベントでは、\n\nFirth logistic regression\n\nなどが用いられることがある。\nこれはバイアスを減らす方法である。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>サンプルサイズ</span>"
+    ]
+  },
+  {
+    "objectID": "06_sample_size.html#サンプルサイズ設計",
+    "href": "06_sample_size.html#サンプルサイズ設計",
+    "title": "7  サンプルサイズ",
+    "section": "7.14 サンプルサイズ設計",
+    "text": "7.14 サンプルサイズ設計\n研究計画段階では、\n\n想定イベント率\n使用変数数\n期待効果量\n\nを考慮してサンプルサイズを決定する。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>サンプルサイズ</span>"
+    ]
+  },
+  {
+    "objectID": "06_sample_size.html#実務上の注意",
+    "href": "06_sample_size.html#実務上の注意",
+    "title": "7  サンプルサイズ",
+    "section": "7.15 実務上の注意",
+    "text": "7.15 実務上の注意\n初心者に多い問題として：\n\n「とりあえず変数を全部入れる」\n\nというケースがある。\nしかし：\n\nイベント数が少ない\n変数が多い\n\n場合、モデルは不安定になりやすい。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>サンプルサイズ</span>"
+    ]
+  },
+  {
+    "objectID": "06_sample_size.html#例転倒研究",
+    "href": "06_sample_size.html#例転倒研究",
+    "title": "7  サンプルサイズ",
+    "section": "7.16 例：転倒研究",
+    "text": "7.16 例：転倒研究\n例えば：\n\n対象者 120人\n転倒あり 18人\n\nであるとする。\nこの場合、イベント数は18である。\nもし：\n\n年齢\n性別\nBMI\n喫煙\n運動習慣\n認知機能\n服薬数\n\nなど7変数を投入すると：\n\\[ EPV = \\frac{18}{7} \\approx 2.6 \\]\nとなる。\nこれはかなり低く、不安定な推定になる可能性がある。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>サンプルサイズ</span>"
+    ]
+  },
+  {
+    "objectID": "06_sample_size.html#予測モデルではさらに重要",
+    "href": "06_sample_size.html#予測モデルではさらに重要",
+    "title": "7  サンプルサイズ",
+    "section": "7.17 予測モデルではさらに重要",
+    "text": "7.17 予測モデルではさらに重要\nリスクスコアや予測モデル開発では、\n\n外部データで再現できるか\n\nが重要である。\nそのため：\n\n十分なサンプルサイズ\n過学習対策\nvalidation\n\nが特に重要となる。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>サンプルサイズ</span>"
+    ]
+  },
+  {
+    "objectID": "06_sample_size.html#近年の考え方",
+    "href": "06_sample_size.html#近年の考え方",
+    "title": "7  サンプルサイズ",
+    "section": "7.18 近年の考え方",
+    "text": "7.18 近年の考え方\n近年では、\n\npenalized regression\nLASSO\nridge regression\n\nなど、過学習を抑える方法も用いられている。\nしかし、十分なサンプルサイズが重要であることは変わらない。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>サンプルサイズ</span>"
+    ]
+  },
+  {
+    "objectID": "06_sample_size.html#まとめ",
+    "href": "06_sample_size.html#まとめ",
+    "title": "7  サンプルサイズ",
+    "section": "7.19 まとめ",
+    "text": "7.19 まとめ\n\nロジスティック回帰ではイベント数が重要である\nEPV は代表的な指標である\nEPV ≥ 10 は古典的な経験則である\nサンプルサイズ不足では過学習が起こる\n希少イベントでは推定が不安定になる\n変数を増やしすぎないことが重要である\n予測モデルでは特に validation が重要である",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>サンプルサイズ</span>"
+    ]
+  },
+  {
+    "objectID": "07_interaction.html",
+    "href": "07_interaction.html",
+    "title": "8  交互作用",
+    "section": "",
+    "text": "8.1 はじめに\nロジスティック回帰では、\n場合がある。\nこれを交互作用（interaction）という。\n例えば：\nといった状況である。\n交互作用は、\nとも呼ばれる。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>交互作用</span>"
+    ]
+  },
+  {
+    "objectID": "07_interaction.html#はじめに",
+    "href": "07_interaction.html#はじめに",
+    "title": "8  交互作用",
+    "section": "",
+    "text": "「ある要因の効果が、別の要因によって変化する」\n\n\n\n\n\n運動の効果は男性と女性で異なる\n薬剤の効果は若年者と高齢者で異なる\n\n\n\n\neffect modification\ninteraction effect",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>交互作用</span>"
+    ]
+  },
+  {
+    "objectID": "07_interaction.html#主効果main-effect",
+    "href": "07_interaction.html#主効果main-effect",
+    "title": "8  交互作用",
+    "section": "8.2 主効果（main effect）",
+    "text": "8.2 主効果（main effect）\nまず、交互作用のない通常のモデルを考える。\n例えば：\n\nアウトカム：転倒\n説明変数：\n\n年齢\n運動習慣\n\n\nを解析する場合：\n()=_0+_1+_2\nとなる。\nここで：\n\n(_1)：年齢の効果\n(_2)：運動習慣の効果\n\nを表す。\nこれらを主効果（main effect）という。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>交互作用</span>"
+    ]
+  },
+  {
+    "objectID": "07_interaction.html#交互作用とは",
+    "href": "07_interaction.html#交互作用とは",
+    "title": "8  交互作用",
+    "section": "8.3 交互作用とは",
+    "text": "8.3 交互作用とは\n交互作用とは、\n\n「一方の変数の効果が、もう一方の変数によって変化する」\n\nことである。\n例えば：\n\n若年者では運動効果が小さい\n高齢者では運動効果が大きい\n\n場合、「年齢 × 運動」の交互作用が存在する可能性がある。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>交互作用</span>"
+    ]
+  },
+  {
+    "objectID": "07_interaction.html#交互作用項",
+    "href": "07_interaction.html#交互作用項",
+    "title": "8  交互作用",
+    "section": "8.4 交互作用項",
+    "text": "8.4 交互作用項\nロジスティック回帰では、交互作用項を追加する。\n例えば：\n()=_0+_1+_2+_3()\nここで：\n\\[\n\\beta_3\n\\]\nが交互作用を表す。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>交互作用</span>"
+    ]
+  },
+  {
+    "objectID": "07_interaction.html#解釈",
+    "href": "07_interaction.html#解釈",
+    "title": "8  交互作用",
+    "section": "8.5 解釈",
+    "text": "8.5 解釈\n交互作用がある場合、\n\n「Exercise の効果は一定ではない」\n\nことを意味する。\nつまり、\n\n年齢によって運動効果が変わる\n性別によって薬剤効果が変わる\n\nなどである。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>交互作用</span>"
+    ]
+  },
+  {
+    "objectID": "07_interaction.html#例性別と運動",
+    "href": "07_interaction.html#例性別と運動",
+    "title": "8  交互作用",
+    "section": "8.6 例：性別と運動",
+    "text": "8.6 例：性別と運動\n例えば：\n\n男性では OR = 0.95\n女性では OR = 0.60\n\nであれば、\n\n女性のほうが運動効果が大きい\n\n可能性がある。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>交互作用</span>"
+    ]
+  },
+  {
+    "objectID": "07_interaction.html#effect-modification",
+    "href": "07_interaction.html#effect-modification",
+    "title": "8  交互作用",
+    "section": "8.7 effect modification",
+    "text": "8.7 effect modification\n疫学では、交互作用は：\n\neffect modification\n\nとして重要視される。\nこれは：\n\n「効果が集団によって異なる」\n\nことを意味する。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>交互作用</span>"
+    ]
+  },
+  {
+    "objectID": "07_interaction.html#層別解析との関係",
+    "href": "07_interaction.html#層別解析との関係",
+    "title": "8  交互作用",
+    "section": "8.8 層別解析との関係",
+    "text": "8.8 層別解析との関係\n交互作用は、層別解析（stratified analysis）とも関係する。\n例えば：\n\n男性だけ解析\n女性だけ解析\n\nを行う方法である。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>交互作用</span>"
+    ]
+  },
+  {
+    "objectID": "07_interaction.html#交互作用がない場合",
+    "href": "07_interaction.html#交互作用がない場合",
+    "title": "8  交互作用",
+    "section": "8.9 交互作用がない場合",
+    "text": "8.9 交互作用がない場合\nもし：\n\n男性 OR = 0.80\n女性 OR = 0.82\n\nのようにほぼ同じであれば、交互作用は小さい可能性がある。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>交互作用</span>"
+    ]
+  },
+  {
+    "objectID": "07_interaction.html#p値だけに依存しない",
+    "href": "07_interaction.html#p値だけに依存しない",
+    "title": "8  交互作用",
+    "section": "8.10 p値だけに依存しない",
+    "text": "8.10 p値だけに依存しない\n交互作用では、\n\np値だけで判断しない\n\nことが重要である。\nなぜなら：\n\nサンプルサイズ不足\n検出力不足\n\nで、有意差が出にくいからである。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>交互作用</span>"
+    ]
+  },
+  {
+    "objectID": "07_interaction.html#交互作用は検出が難しい",
+    "href": "07_interaction.html#交互作用は検出が難しい",
+    "title": "8  交互作用",
+    "section": "8.11 交互作用は検出が難しい",
+    "text": "8.11 交互作用は検出が難しい\n一般に、\n\n交互作用の検出には大きなサンプルサイズが必要\n\nである。\n主効果よりも不安定になりやすい。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>交互作用</span>"
+    ]
+  },
+  {
+    "objectID": "07_interaction.html#交互作用を入れすぎない",
+    "href": "07_interaction.html#交互作用を入れすぎない",
+    "title": "8  交互作用",
+    "section": "8.12 交互作用を入れすぎない",
+    "text": "8.12 交互作用を入れすぎない\n初心者によくある問題として、\n\nすべての組み合わせの交互作用を入れる\n\nケースがある。\nしかし：\n\nモデルが複雑になる\n過学習しやすい\n解釈が困難\n\nになる。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>交互作用</span>"
+    ]
+  },
+  {
+    "objectID": "07_interaction.html#臨床的妥当性",
+    "href": "07_interaction.html#臨床的妥当性",
+    "title": "8  交互作用",
+    "section": "8.13 臨床的妥当性",
+    "text": "8.13 臨床的妥当性\n交互作用を検討する際には、\n\n「なぜ効果が異なるのか」\n\nという臨床的・理論的背景が重要である。\n例えば：\n\n性別\n年齢\n重症度\n\nなどは、effect modification を起こしやすい。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>交互作用</span>"
+    ]
+  },
+  {
+    "objectID": "07_interaction.html#加法交互作用と乗法交互作用",
+    "href": "07_interaction.html#加法交互作用と乗法交互作用",
+    "title": "8  交互作用",
+    "section": "8.14 加法交互作用と乗法交互作用",
+    "text": "8.14 加法交互作用と乗法交互作用\n疫学では：\n\nadditive interaction\nmultiplicative interaction\n\nを区別することがある。\n通常のロジスティック回帰で扱うのは、\n\nmultiplicative interaction\n\nである。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>交互作用</span>"
+    ]
+  },
+  {
+    "objectID": "07_interaction.html#解釈の注意",
+    "href": "07_interaction.html#解釈の注意",
+    "title": "8  交互作用",
+    "section": "8.15 解釈の注意",
+    "text": "8.15 解釈の注意\n交互作用がある場合、\n\n主効果だけを単独で解釈できない\n\nことがある。\n例えば：\n\nExercise の OR\n\nだけを見ても、年齢によって効果が異なる可能性がある。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>交互作用</span>"
+    ]
+  },
+  {
+    "objectID": "07_interaction.html#可視化の重要性",
+    "href": "07_interaction.html#可視化の重要性",
+    "title": "8  交互作用",
+    "section": "8.16 可視化の重要性",
+    "text": "8.16 可視化の重要性\n交互作用は文章だけでは理解しにくい。\nそのため：\n\n層別表\n予測確率\ninteraction plot\n\nなどで可視化すると理解しやすい。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>交互作用</span>"
+    ]
+  },
+  {
+    "objectID": "07_interaction.html#実務的な考え方",
+    "href": "07_interaction.html#実務的な考え方",
+    "title": "8  交互作用",
+    "section": "8.17 実務的な考え方",
+    "text": "8.17 実務的な考え方\n実際の研究では：\n\n理論的に重要な交互作用\n臨床的に意味のある交互作用\n\nを事前に決めて検討することが多い。\n探索的に大量の交互作用を試すことは慎重であるべきである。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>交互作用</span>"
+    ]
+  },
+  {
+    "objectID": "07_interaction.html#例高齢者研究",
+    "href": "07_interaction.html#例高齢者研究",
+    "title": "8  交互作用",
+    "section": "8.18 例：高齢者研究",
+    "text": "8.18 例：高齢者研究\n例えば：\n\n運動\nフレイル\n\nの関連を調べる場合、\n年齢によって効果が異なる可能性がある。\nこの場合：\n\n65–74歳\n75–84歳\n85歳以上\n\nなどで層別解析を行うこともある。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>交互作用</span>"
+    ]
+  },
+  {
+    "objectID": "07_interaction.html#まとめ",
+    "href": "07_interaction.html#まとめ",
+    "title": "8  交互作用",
+    "section": "8.19 まとめ",
+    "text": "8.19 まとめ\n\n交互作用とは「効果が別の変数によって変化する」ことである\nロジスティック回帰では interaction term を追加して解析する\neffect modification は疫学で重要な概念である\n交互作用の検出には大きなサンプルサイズが必要である\np値だけで判断しないことが重要である\n交互作用を入れすぎると過学習につながる\n臨床的妥当性を考慮する必要がある",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>交互作用</span>"
+    ]
+  },
+  {
+    "objectID": "summary.html",
+    "href": "summary.html",
+    "title": "9  Summary",
+    "section": "",
+    "text": "In summary, this book has no content whatsoever.\n\n1 + 1\n\n[1] 2",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Summary</span>"
+    ]
+  }
+]
