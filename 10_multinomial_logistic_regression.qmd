@@ -59,15 +59,15 @@
 
 ## 数学的表現
 
-カテゴリ \(k\) に対して：
+カテゴリ $$k$$ に対して：
 
-\log\left(\frac{P(Y=k)}{P(Y=0)}\right)=\beta_{0k}+\beta_{1k}X_1+\cdots+\beta_{pk}X_p
+$$ \log\left(\frac{P(Y=k)}{P(Y=0)}\right)=\beta_{0k}+\beta_{1k}X_1+\cdots+\beta_{pk}X_p $$
 
 ここで：
 
-- \(Y=0\)：基準カテゴリ
-- \(k\)：比較するカテゴリ
-- \(\beta_k\)：カテゴリごとの係数
+- $$Y=0$$：基準カテゴリ
+- $$k$$：比較するカテゴリ
+- $$\beta_k$$：カテゴリごとの係数
 
 である。
 

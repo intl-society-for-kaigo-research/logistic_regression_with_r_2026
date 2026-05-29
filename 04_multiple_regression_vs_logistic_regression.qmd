@@ -51,7 +51,7 @@
 
 モデルは：
 
-Y=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p
+$$ Y=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p $$
 
 で表される。
 
@@ -68,14 +68,14 @@ Y=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p
 例えば：
 
 - 死亡したか
-- 転倒したか
+- 転倒したことがあるか
 - 糖尿病があるか
 
 などである。
 
 モデルは：
 
-\log\left(\frac{p}{1-p}\right)=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p
+$$ \log\left(\frac{p}{1-p}\right)=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p $$
 
 で表される。
 
@@ -150,9 +150,7 @@ Y=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p
 
 この場合：
 
-\[
-\beta = 3.2
-\]
+$$ \beta = 3.2 $$
 
 であれば、
 
@@ -174,9 +172,7 @@ Y=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p
 
 この場合：
 
-\[
-OR = 1.20
-\]
+$$ OR = 1.20 $$
 
 であれば、
 
