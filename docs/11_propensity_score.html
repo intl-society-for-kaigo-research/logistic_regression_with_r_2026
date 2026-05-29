@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; ロジスティック回帰 – Logistic Regression with R</title>
+<title>12&nbsp; 傾向スコア – Logistic Regression with R</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -33,8 +33,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./04_multiple_regression_vs_logistic_regression.html" rel="next">
-<link href="./02_prevalence.html" rel="prev">
+<link href="./12_sensitivity_and_specificity.html" rel="next">
+<link href="./10_multinomial_logistic_regression.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -73,35 +73,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -114,7 +85,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro.html">Part 1: Foundations</a></li><li class="breadcrumb-item"><a href="./03_logistic_regression.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ロジスティック回帰</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./09_missing_data_and_multiple_imputation.html">Part 3: Practical Issues</a></li><li class="breadcrumb-item"><a href="./11_propensity_score.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">傾向スコア</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -174,7 +145,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03_logistic_regression.html" class="sidebar-item-text sidebar-link active">
+  <a href="./03_logistic_regression.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ロジスティック回帰</span></span></a>
   </div>
 </li>
@@ -244,7 +215,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./11_propensity_score.html" class="sidebar-item-text sidebar-link">
+  <a href="./11_propensity_score.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">傾向スコア</span></span></a>
   </div>
 </li>
@@ -307,37 +278,34 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#はじめに" id="toc-はじめに" class="nav-link active" data-scroll-target="#はじめに"><span class="header-section-number">4.1</span> はじめに</a></li>
-  <li><a href="#二値アウトカム" id="toc-二値アウトカム" class="nav-link" data-scroll-target="#二値アウトカム"><span class="header-section-number">4.2</span> 二値アウトカム</a></li>
-  <li><a href="#なぜ線形回帰ではいけないのか" id="toc-なぜ線形回帰ではいけないのか" class="nav-link" data-scroll-target="#なぜ線形回帰ではいけないのか"><span class="header-section-number">4.3</span> なぜ線形回帰ではいけないのか</a></li>
-  <li><a href="#ロジスティック回帰の考え方" id="toc-ロジスティック回帰の考え方" class="nav-link" data-scroll-target="#ロジスティック回帰の考え方"><span class="header-section-number">4.4</span> ロジスティック回帰の考え方</a></li>
-  <li><a href="#ロジスティック回帰モデル" id="toc-ロジスティック回帰モデル" class="nav-link" data-scroll-target="#ロジスティック回帰モデル"><span class="header-section-number">4.5</span> ロジスティック回帰モデル</a></li>
-  <li><a href="#ロジット変換" id="toc-ロジット変換" class="nav-link" data-scroll-target="#ロジット変換"><span class="header-section-number">4.6</span> ロジット変換</a></li>
-  <li><a href="#回帰係数の意味" id="toc-回帰係数の意味" class="nav-link" data-scroll-target="#回帰係数の意味"><span class="header-section-number">4.7</span> 回帰係数の意味</a></li>
-  <li><a href="#オッズ比への変換" id="toc-オッズ比への変換" class="nav-link" data-scroll-target="#オッズ比への変換"><span class="header-section-number">4.8</span> オッズ比への変換</a></li>
-  <li><a href="#例年齢と転倒" id="toc-例年齢と転倒" class="nav-link" data-scroll-target="#例年齢と転倒"><span class="header-section-number">4.9</span> 例：年齢と転倒</a></li>
-  <li><a href="#単変量と多変量" id="toc-単変量と多変量" class="nav-link" data-scroll-target="#単変量と多変量"><span class="header-section-number">4.10</span> 単変量と多変量</a>
+  <li><a href="#はじめに" id="toc-はじめに" class="nav-link active" data-scroll-target="#はじめに"><span class="header-section-number">12.1</span> はじめに</a></li>
+  <li><a href="#傾向スコアとは" id="toc-傾向スコアとは" class="nav-link" data-scroll-target="#傾向スコアとは"><span class="header-section-number">12.2</span> 傾向スコアとは</a></li>
+  <li><a href="#なぜ傾向スコアを使うのか" id="toc-なぜ傾向スコアを使うのか" class="nav-link" data-scroll-target="#なぜ傾向スコアを使うのか"><span class="header-section-number">12.3</span> なぜ傾向スコアを使うのか</a></li>
+  <li><a href="#傾向スコアの推定" id="toc-傾向スコアの推定" class="nav-link" data-scroll-target="#傾向スコアの推定"><span class="header-section-number">12.4</span> 傾向スコアの推定</a></li>
+  <li><a href="#傾向スコアの使い方" id="toc-傾向スコアの使い方" class="nav-link" data-scroll-target="#傾向スコアの使い方"><span class="header-section-number">12.5</span> 傾向スコアの使い方</a>
   <ul class="collapse">
-  <li><a href="#単変量ロジスティック回帰" id="toc-単変量ロジスティック回帰" class="nav-link" data-scroll-target="#単変量ロジスティック回帰"><span class="header-section-number">4.10.1</span> 単変量ロジスティック回帰</a></li>
-  <li><a href="#多変量ロジスティック回帰" id="toc-多変量ロジスティック回帰" class="nav-link" data-scroll-target="#多変量ロジスティック回帰"><span class="header-section-number">4.10.2</span> 多変量ロジスティック回帰</a></li>
+  <li><a href="#マッチングmatching" id="toc-マッチングmatching" class="nav-link" data-scroll-target="#マッチングmatching"><span class="header-section-number">12.5.1</span> 1. マッチング（matching）</a></li>
+  <li><a href="#層別化stratification" id="toc-層別化stratification" class="nav-link" data-scroll-target="#層別化stratification"><span class="header-section-number">12.5.2</span> 2. 層別化（stratification）</a></li>
+  <li><a href="#重み付けiptw" id="toc-重み付けiptw" class="nav-link" data-scroll-target="#重み付けiptw"><span class="header-section-number">12.5.3</span> 3. 重み付け（IPTW）</a></li>
   </ul></li>
-  <li><a href="#ロジスティック回帰の出力" id="toc-ロジスティック回帰の出力" class="nav-link" data-scroll-target="#ロジスティック回帰の出力"><span class="header-section-number">4.11</span> ロジスティック回帰の出力</a></li>
-  <li><a href="#ロジスティック回帰の特徴" id="toc-ロジスティック回帰の特徴" class="nav-link" data-scroll-target="#ロジスティック回帰の特徴"><span class="header-section-number">4.12</span> ロジスティック回帰の特徴</a>
-  <ul class="collapse">
-  <li><a href="#長所" id="toc-長所" class="nav-link" data-scroll-target="#長所"><span class="header-section-number">4.12.1</span> 長所</a></li>
-  <li><a href="#短所" id="toc-短所" class="nav-link" data-scroll-target="#短所"><span class="header-section-number">4.12.2</span> 短所</a></li>
-  </ul></li>
-  <li><a href="#ロジスティック回帰と因果関係" id="toc-ロジスティック回帰と因果関係" class="nav-link" data-scroll-target="#ロジスティック回帰と因果関係"><span class="header-section-number">4.13</span> ロジスティック回帰と因果関係</a></li>
-  <li><a href="#まとめ" id="toc-まとめ" class="nav-link" data-scroll-target="#まとめ"><span class="header-section-number">4.14</span> まとめ</a></li>
+  <li><a href="#ロジスティック回帰との関係" id="toc-ロジスティック回帰との関係" class="nav-link" data-scroll-target="#ロジスティック回帰との関係"><span class="header-section-number">12.6</span> ロジスティック回帰との関係</a></li>
+  <li><a href="#傾向スコアの利点" id="toc-傾向スコアの利点" class="nav-link" data-scroll-target="#傾向スコアの利点"><span class="header-section-number">12.7</span> 傾向スコアの利点</a></li>
+  <li><a href="#限界" id="toc-限界" class="nav-link" data-scroll-target="#限界"><span class="header-section-number">12.8</span> 限界</a></li>
+  <li><a href="#overlap共通サポート" id="toc-overlap共通サポート" class="nav-link" data-scroll-target="#overlap共通サポート"><span class="header-section-number">12.9</span> overlap（共通サポート）</a></li>
+  <li><a href="#バランスの確認" id="toc-バランスの確認" class="nav-link" data-scroll-target="#バランスの確認"><span class="header-section-number">12.10</span> バランスの確認</a></li>
+  <li><a href="#実務的な考え方" id="toc-実務的な考え方" class="nav-link" data-scroll-target="#実務的な考え方"><span class="header-section-number">12.11</span> 実務的な考え方</a></li>
+  <li><a href="#例運動と転倒" id="toc-例運動と転倒" class="nav-link" data-scroll-target="#例運動と転倒"><span class="header-section-number">12.12</span> 例：運動と転倒</a></li>
+  <li><a href="#傾向スコアと因果推論" id="toc-傾向スコアと因果推論" class="nav-link" data-scroll-target="#傾向スコアと因果推論"><span class="header-section-number">12.13</span> 傾向スコアと因果推論</a></li>
+  <li><a href="#まとめ" id="toc-まとめ" class="nav-link" data-scroll-target="#まとめ"><span class="header-section-number">12.14</span> まとめ</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro.html">Part 1: Foundations</a></li><li class="breadcrumb-item"><a href="./03_logistic_regression.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ロジスティック回帰</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./09_missing_data_and_multiple_imputation.html">Part 3: Practical Issues</a></li><li class="breadcrumb-item"><a href="./11_propensity_score.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">傾向スコア</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-logistic-regression" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ロジスティック回帰</span></span></h1>
+<h1 class="title"><span id="sec-propensity-score" class="quarto-section-identifier"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">傾向スコア</span></span></h1>
 </div>
 
 
@@ -354,299 +322,210 @@ window.Quarto = {
 </header>
 
 
-<section id="はじめに" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="はじめに"><span class="header-section-number">4.1</span> はじめに</h2>
-<p>医療・保健・スポーツ科学分野では、</p>
-<ul>
-<li>転倒したか</li>
-<li>死亡したか</li>
-<li>入院したか</li>
-<li>疾患を有するか</li>
-</ul>
-<p>のように、</p>
+<section id="はじめに" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="はじめに"><span class="header-section-number">12.1</span> はじめに</h2>
+<p>観察研究では、</p>
 <blockquote class="blockquote">
-<p>「はい / いいえ」</p>
+<p>介入（exposure）はランダムに割り付けられない</p>
 </blockquote>
-<p>で表されるアウトカムを扱うことが多い。</p>
-<p>このようなアウトカムを、二値アウトカム（binary outcome）という。</p>
-<p>ロジスティック回帰（logistic regression）は、二値アウトカムを解析する代表的な統計手法である。</p>
+<p>という特徴がある。</p>
+<p>そのため、</p>
+<ul>
+<li>年齢</li>
+<li>性別</li>
+<li>疾患重症度</li>
+<li>社会経済状況</li>
+</ul>
+<p>などが、介入の有無とアウトカムの両方に影響する可能性がある。</p>
+<p>このような状況では、単純なロジスティック回帰だけでは交絡を十分に調整できないことがある。</p>
+<p>そこで用いられる方法の一つが傾向スコア（propensity score）である。</p>
 <hr>
 </section>
-<section id="二値アウトカム" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="二値アウトカム"><span class="header-section-number">4.2</span> 二値アウトカム</h2>
-<p>二値アウトカムとは、結果が2種類しかない変数である。</p>
-<p>例：</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>アウトカム</th>
-<th>値</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>生存</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td>死亡</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>アウトカム</th>
-<th>値</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>転倒あり</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td>転倒なし</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>アウトカム</th>
-<th>値</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>糖尿病あり</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td>糖尿病なし</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-<p>通常、解析では：</p>
-<ul>
-<li>1 = イベントあり</li>
-<li>0 = イベントなし</li>
-</ul>
-<p>として扱うことが多い。</p>
-<hr>
-</section>
-<section id="なぜ線形回帰ではいけないのか" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="なぜ線形回帰ではいけないのか"><span class="header-section-number">4.3</span> なぜ線形回帰ではいけないのか</h2>
-<p>二値アウトカムに対して、通常の線形回帰（linear regression）を用いることには問題がある。</p>
-<p>例えば：</p>
-<p><span class="math display">\[ Y = \beta\_0 + \beta\_1X \]</span></p>
-<p>をそのまま適用すると、予測値が：</p>
-<ul>
-<li>0未満</li>
-<li>1を超える</li>
-</ul>
-<p>可能性がある。</p>
-<p>しかし、確率は：</p>
-<p><span class="math display">\[ 0 \leq p \leq 1 \]</span></p>
-<p>でなければならない。</p>
-<p>また、二値データでは誤差分布も正規分布を仮定しにくい。</p>
-<p>このため、二値アウトカムには別のモデルが必要となる。</p>
-<hr>
-</section>
-<section id="ロジスティック回帰の考え方" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="ロジスティック回帰の考え方"><span class="header-section-number">4.4</span> ロジスティック回帰の考え方</h2>
-<p>ロジスティック回帰では、</p>
+<section id="傾向スコアとは" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="傾向スコアとは"><span class="header-section-number">12.2</span> 傾向スコアとは</h2>
+<p>傾向スコアとは、</p>
 <blockquote class="blockquote">
-<p>確率そのもの</p>
+<p>「ある介入を受ける確率」</p>
 </blockquote>
-<p>ではなく、</p>
-<blockquote class="blockquote">
-<p>オッズの対数（log odds）</p>
-</blockquote>
-<p>をモデル化する。</p>
-<p>まず、確率を (p) とする。</p>
-<p>オッズは：</p>
-<p><span class="math display">\[ \frac{p}{1-p} \]</span></p>
 <p>である。</p>
-<p>さらに、その対数を取る：</p>
-<p><span class="math display">\[ \log\left(\frac{p}{1-p}\right) \]</span></p>
-<p>これをロジット（logit）という。</p>
-<hr>
-</section>
-<section id="ロジスティック回帰モデル" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="ロジスティック回帰モデル"><span class="header-section-number">4.5</span> ロジスティック回帰モデル</h2>
-<p>ロジスティック回帰では、</p>
-<p>()=_0+_1X</p>
-<p>というモデルを用いる。</p>
+<p>例えば：</p>
+<ul>
+<li>運動習慣あり（1）</li>
+<li>運動習慣なし（0）</li>
+</ul>
+<p>という介入があるとき、</p>
+<p>e(X)=P(T=1X)</p>
 <p>ここで：</p>
 <ul>
-<li>(p)：イベントが起こる確率</li>
-<li>(_0)：切片</li>
-<li>(_1)：回帰係数</li>
-<li>(X)：説明変数</li>
+<li>(T)：介入の有無</li>
+<li>(X)：共変量（年齢・性別など）</li>
 </ul>
 <p>である。</p>
 <hr>
 </section>
-<section id="ロジット変換" class="level2" data-number="4.6">
-<h2 data-number="4.6" class="anchored" data-anchor-id="ロジット変換"><span class="header-section-number">4.6</span> ロジット変換</h2>
-<p>ロジット変換を行うことで、</p>
-<p><span class="math display">\[ 0 \leq p \leq 1 \]</span></p>
-<p>という制約を回避できる。</p>
-<p>ロジット値は：</p>
-<p><span class="math display">\[ -\infty \sim +\infty \]</span></p>
-<p>を取りうるため、通常の回帰モデルの形で扱いやすくなる。</p>
-<hr>
-</section>
-<section id="回帰係数の意味" class="level2" data-number="4.7">
-<h2 data-number="4.7" class="anchored" data-anchor-id="回帰係数の意味"><span class="header-section-number">4.7</span> 回帰係数の意味</h2>
-<p>ロジスティック回帰では、回帰係数 () は：</p>
+<section id="なぜ傾向スコアを使うのか" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="なぜ傾向スコアを使うのか"><span class="header-section-number">12.3</span> なぜ傾向スコアを使うのか</h2>
+<p>通常のロジスティック回帰では、</p>
+<ul>
+<li>多くの共変量を直接モデルに入れる必要がある</li>
+<li>サンプルサイズが小さいと不安定になる</li>
+<li>モデル依存性が強い</li>
+</ul>
+<p>という問題がある。</p>
+<p>傾向スコアは、</p>
 <blockquote class="blockquote">
-<p>log odds の変化量</p>
+<p>多数の共変量を1つのスコアに要約する</p>
 </blockquote>
-<p>を意味する。</p>
-<p>しかし、log odds は直感的ではない。</p>
-<p>そこで通常は、指数変換を行う。</p>
+<p>という利点がある。</p>
 <hr>
 </section>
-<section id="オッズ比への変換" class="level2" data-number="4.8">
-<h2 data-number="4.8" class="anchored" data-anchor-id="オッズ比への変換"><span class="header-section-number">4.8</span> オッズ比への変換</h2>
-<p>回帰係数を指数変換すると：</p>
-<p>OR=e^{}</p>
-<p>となる。</p>
-<p>つまり、ロジスティック回帰の結果は、オッズ比として解釈できる。</p>
-<hr>
-</section>
-<section id="例年齢と転倒" class="level2" data-number="4.9">
-<h2 data-number="4.9" class="anchored" data-anchor-id="例年齢と転倒"><span class="header-section-number">4.9</span> 例：年齢と転倒</h2>
+<section id="傾向スコアの推定" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="傾向スコアの推定"><span class="header-section-number">12.4</span> 傾向スコアの推定</h2>
+<p>傾向スコアは通常、</p>
+<ul>
+<li>ロジスティック回帰</li>
+</ul>
+<p>を用いて推定する。</p>
 <p>例えば：</p>
 <ul>
-<li>アウトカム：転倒の有無</li>
-<li>説明変数：年齢</li>
+<li>介入（運動習慣）を目的変数</li>
+<li>年齢・性別・BMIなどを説明変数</li>
 </ul>
-<p>を解析したとする。</p>
-<p>結果が：</p>
-<p><span class="math display">\[ \beta = 0.08 \]</span></p>
-<p>であれば：</p>
-<p><span class="math display">\[ e\^{0.08} \approx 1.08 \]</span></p>
-<p>となる。</p>
-<p>これは：</p>
-<blockquote class="blockquote">
-<p>年齢が1歳上がるごとに、転倒オッズが1.08倍になる</p>
-</blockquote>
-<p>と解釈できる。</p>
+<p>としてモデルを構築する。</p>
 <hr>
 </section>
-<section id="単変量と多変量" class="level2" data-number="4.10">
-<h2 data-number="4.10" class="anchored" data-anchor-id="単変量と多変量"><span class="header-section-number">4.10</span> 単変量と多変量</h2>
-<section id="単変量ロジスティック回帰" class="level3" data-number="4.10.1">
-<h3 data-number="4.10.1" class="anchored" data-anchor-id="単変量ロジスティック回帰"><span class="header-section-number">4.10.1</span> 単変量ロジスティック回帰</h3>
-<p>1つの説明変数のみを用いる。</p>
+<section id="傾向スコアの使い方" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="傾向スコアの使い方"><span class="header-section-number">12.5</span> 傾向スコアの使い方</h2>
+<p>傾向スコアは主に3つの方法で使われる。</p>
+<hr>
+<section id="マッチングmatching" class="level3" data-number="12.5.1">
+<h3 data-number="12.5.1" class="anchored" data-anchor-id="マッチングmatching"><span class="header-section-number">12.5.1</span> 1. マッチング（matching）</h3>
+<p>傾向スコアが似ている人同士をペアにする方法である。</p>
 <p>例：</p>
 <ul>
-<li>年齢 → 転倒</li>
+<li>運動あり群となし群で</li>
+<li>同じような傾向スコアの人を比較</li>
 </ul>
 <hr>
 </section>
-<section id="多変量ロジスティック回帰" class="level3" data-number="4.10.2">
-<h3 data-number="4.10.2" class="anchored" data-anchor-id="多変量ロジスティック回帰"><span class="header-section-number">4.10.2</span> 多変量ロジスティック回帰</h3>
-<p>複数の説明変数を同時に扱う。</p>
+<section id="層別化stratification" class="level3" data-number="12.5.2">
+<h3 data-number="12.5.2" class="anchored" data-anchor-id="層別化stratification"><span class="header-section-number">12.5.2</span> 2. 層別化（stratification）</h3>
+<p>傾向スコアをいくつかの層に分けて比較する方法である。</p>
 <p>例：</p>
+<ul>
+<li>傾向スコアを5分位に分割</li>
+<li>各層で効果を評価</li>
+</ul>
+<hr>
+</section>
+<section id="重み付けiptw" class="level3" data-number="12.5.3">
+<h3 data-number="12.5.3" class="anchored" data-anchor-id="重み付けiptw"><span class="header-section-number">12.5.3</span> 3. 重み付け（IPTW）</h3>
+<p>Inverse Probability of Treatment Weighting による方法である。</p>
+<p>w_i = (T=1), w_i = (T=0)</p>
+<p>これにより、擬似的なランダム化に近い状況を作ることができる。</p>
+<hr>
+</section>
+</section>
+<section id="ロジスティック回帰との関係" class="level2" data-number="12.6">
+<h2 data-number="12.6" class="anchored" data-anchor-id="ロジスティック回帰との関係"><span class="header-section-number">12.6</span> ロジスティック回帰との関係</h2>
+<p>傾向スコア分析では、ロジスティック回帰が2回登場することが多い：</p>
+<ol type="1">
+<li>傾向スコア推定（介入モデル）</li>
+<li>アウトカム解析（効果推定）</li>
+</ol>
+<p>この点が重要である。</p>
+<hr>
+</section>
+<section id="傾向スコアの利点" class="level2" data-number="12.7">
+<h2 data-number="12.7" class="anchored" data-anchor-id="傾向スコアの利点"><span class="header-section-number">12.7</span> 傾向スコアの利点</h2>
+<ul>
+<li>多数の交絡因子を要約できる</li>
+<li>モデル依存性を減らせる</li>
+<li>観察研究での比較可能性を高める</li>
+</ul>
+<hr>
+</section>
+<section id="限界" class="level2" data-number="12.8">
+<h2 data-number="12.8" class="anchored" data-anchor-id="限界"><span class="header-section-number">12.8</span> 限界</h2>
+<p>傾向スコアには以下の限界がある：</p>
+<ul>
+<li>未測定交絡には対応できない</li>
+<li>モデルの仕様に依存する</li>
+<li>極端なスコアで不安定になる</li>
+</ul>
+<hr>
+</section>
+<section id="overlap共通サポート" class="level2" data-number="12.9">
+<h2 data-number="12.9" class="anchored" data-anchor-id="overlap共通サポート"><span class="header-section-number">12.9</span> overlap（共通サポート）</h2>
+<p>傾向スコア分析では、</p>
+<blockquote class="blockquote">
+<p>介入群と対照群の分布が重なっていること</p>
+</blockquote>
+<p>が重要である。</p>
+<p>これを overlap（共通サポート）という。</p>
+<hr>
+</section>
+<section id="バランスの確認" class="level2" data-number="12.10">
+<h2 data-number="12.10" class="anchored" data-anchor-id="バランスの確認"><span class="header-section-number">12.10</span> バランスの確認</h2>
+<p>傾向スコアを用いた後は、</p>
+<ul>
+<li>standardized mean difference（SMD）</li>
+</ul>
+<p>などを用いて共変量のバランスを確認する。</p>
+<hr>
+</section>
+<section id="実務的な考え方" class="level2" data-number="12.11">
+<h2 data-number="12.11" class="anchored" data-anchor-id="実務的な考え方"><span class="header-section-number">12.11</span> 実務的な考え方</h2>
+<p>傾向スコアは万能ではなく、</p>
+<ul>
+<li>回帰調整</li>
+<li>感度分析</li>
+</ul>
+<p>と併用されることが多い。</p>
+<hr>
+</section>
+<section id="例運動と転倒" class="level2" data-number="12.12">
+<h2 data-number="12.12" class="anchored" data-anchor-id="例運動と転倒"><span class="header-section-number">12.12</span> 例：運動と転倒</h2>
+<p>例として：</p>
+<ul>
+<li>介入：運動習慣</li>
+<li>アウトカム：転倒</li>
+</ul>
+<p>を考える。</p>
+<p>傾向スコアにより：</p>
 <ul>
 <li>年齢</li>
 <li>性別</li>
 <li>BMI</li>
-<li>運動習慣</li>
+<li>既往歴</li>
 </ul>
-<p>を同時に投入する。</p>
-<p>これにより、</p>
+<p>をまとめて調整し、比較可能性を高める。</p>
+<hr>
+</section>
+<section id="傾向スコアと因果推論" class="level2" data-number="12.13">
+<h2 data-number="12.13" class="anchored" data-anchor-id="傾向スコアと因果推論"><span class="header-section-number">12.13</span> 傾向スコアと因果推論</h2>
+<p>傾向スコアは、</p>
 <blockquote class="blockquote">
-<p>他の変数を調整した上での関連</p>
+<p>観察研究における因果推論の重要なツール</p>
 </blockquote>
-<p>を評価できる。</p>
-<hr>
-</section>
-</section>
-<section id="ロジスティック回帰の出力" class="level2" data-number="4.11">
-<h2 data-number="4.11" class="anchored" data-anchor-id="ロジスティック回帰の出力"><span class="header-section-number">4.11</span> ロジスティック回帰の出力</h2>
-<p>一般的には：</p>
+<p>である。</p>
+<p>ただし、</p>
 <ul>
-<li>回帰係数（β）</li>
-<li>オッズ比（OR）</li>
-<li>95%信頼区間</li>
-<li>p値</li>
+<li>ランダム化試験の代替ではない</li>
+<li>仮定に依存する</li>
 </ul>
-<p>が出力される。</p>
-<p>例：</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>変数</th>
-<th>OR</th>
-<th>95%CI</th>
-<th>p</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>年齢</td>
-<td>1.08</td>
-<td>1.03–1.13</td>
-<td>&lt;0.001</td>
-</tr>
-</tbody>
-</table>
+<p>ことに注意が必要である。</p>
 <hr>
 </section>
-<section id="ロジスティック回帰の特徴" class="level2" data-number="4.12">
-<h2 data-number="4.12" class="anchored" data-anchor-id="ロジスティック回帰の特徴"><span class="header-section-number">4.12</span> ロジスティック回帰の特徴</h2>
-<p>ロジスティック回帰には、以下の特徴がある。</p>
-<section id="長所" class="level3" data-number="4.12.1">
-<h3 data-number="4.12.1" class="anchored" data-anchor-id="長所"><span class="header-section-number">4.12.1</span> 長所</h3>
+<section id="まとめ" class="level2" data-number="12.14">
+<h2 data-number="12.14" class="anchored" data-anchor-id="まとめ"><span class="header-section-number">12.14</span> まとめ</h2>
 <ul>
-<li>二値アウトカムを扱える</li>
-<li>解釈しやすい</li>
-<li>医学論文で広く用いられる</li>
-<li>調整解析が可能</li>
-</ul>
-</section>
-<section id="短所" class="level3" data-number="4.12.2">
-<h3 data-number="4.12.2" class="anchored" data-anchor-id="短所"><span class="header-section-number">4.12.2</span> 短所</h3>
-<ul>
-<li>オッズ比の誤解が起こりやすい</li>
-<li>非線形関係に弱い場合がある</li>
-<li>希少イベントでは不安定になることがある</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="ロジスティック回帰と因果関係" class="level2" data-number="4.13">
-<h2 data-number="4.13" class="anchored" data-anchor-id="ロジスティック回帰と因果関係"><span class="header-section-number">4.13</span> ロジスティック回帰と因果関係</h2>
-<p>ロジスティック回帰は、</p>
-<blockquote class="blockquote">
-<p>関連（association）</p>
-</blockquote>
-<p>を評価する手法である。</p>
-<p>したがって、</p>
-<blockquote class="blockquote">
-<p>ロジスティック回帰を行っただけでは因果関係は証明できない</p>
-</blockquote>
-<p>点に注意が必要である。</p>
-<p>交絡因子や研究デザインを考慮する必要がある。</p>
-<hr>
-</section>
-<section id="まとめ" class="level2" data-number="4.14">
-<h2 data-number="4.14" class="anchored" data-anchor-id="まとめ"><span class="header-section-number">4.14</span> まとめ</h2>
-<ul>
-<li>ロジスティック回帰は二値アウトカムを扱う手法である</li>
-<li>確率ではなく log odds をモデル化する</li>
-<li>ロジット変換を用いる</li>
-<li>回帰係数を指数変換するとオッズ比になる</li>
-<li>多変量解析により調整が可能である</li>
-<li>ロジスティック回帰は関連を評価する手法である</li>
+<li>傾向スコアは介入を受ける確率である</li>
+<li>多数の共変量を1つのスコアに要約する</li>
+<li>マッチング・層別化・重み付けで使用する</li>
+<li>ロジスティック回帰が基盤となる</li>
+<li>未測定交絡には対応できない</li>
+<li>共通サポートとバランス確認が重要である</li>
 </ul>
 
 
@@ -1055,13 +934,13 @@ window.Quarto = {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./02_prevalence.html" class="pagination-link" aria-label="有病率">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">有病率</span></span>
+      <a href="./10_multinomial_logistic_regression.html" class="pagination-link" aria-label="多項ロジスティック回帰">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">多項ロジスティック回帰</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./04_multiple_regression_vs_logistic_regression.html" class="pagination-link" aria-label="重回帰とロジスティック回帰">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">重回帰とロジスティック回帰</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./12_sensitivity_and_specificity.html" class="pagination-link" aria-label="感度と特異度">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">感度と特異度</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

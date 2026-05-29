@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; ロジスティック回帰 – Logistic Regression with R</title>
+<title>14&nbsp; ROC曲線 – Logistic Regression with R</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -33,8 +33,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./04_multiple_regression_vs_logistic_regression.html" rel="next">
-<link href="./02_prevalence.html" rel="prev">
+<link href="./14_risk_score_development.html" rel="next">
+<link href="./12_sensitivity_and_specificity.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -73,35 +73,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -114,7 +85,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro.html">Part 1: Foundations</a></li><li class="breadcrumb-item"><a href="./03_logistic_regression.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ロジスティック回帰</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./12_sensitivity_and_specificity.html">Part 4: Evaluation and Extensions</a></li><li class="breadcrumb-item"><a href="./13_roc_curve.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">ROC曲線</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -174,7 +145,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03_logistic_regression.html" class="sidebar-item-text sidebar-link active">
+  <a href="./03_logistic_regression.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ロジスティック回帰</span></span></a>
   </div>
 </li>
@@ -267,7 +238,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./13_roc_curve.html" class="sidebar-item-text sidebar-link">
+  <a href="./13_roc_curve.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">ROC曲線</span></span></a>
   </div>
 </li>
@@ -307,37 +278,33 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#はじめに" id="toc-はじめに" class="nav-link active" data-scroll-target="#はじめに"><span class="header-section-number">4.1</span> はじめに</a></li>
-  <li><a href="#二値アウトカム" id="toc-二値アウトカム" class="nav-link" data-scroll-target="#二値アウトカム"><span class="header-section-number">4.2</span> 二値アウトカム</a></li>
-  <li><a href="#なぜ線形回帰ではいけないのか" id="toc-なぜ線形回帰ではいけないのか" class="nav-link" data-scroll-target="#なぜ線形回帰ではいけないのか"><span class="header-section-number">4.3</span> なぜ線形回帰ではいけないのか</a></li>
-  <li><a href="#ロジスティック回帰の考え方" id="toc-ロジスティック回帰の考え方" class="nav-link" data-scroll-target="#ロジスティック回帰の考え方"><span class="header-section-number">4.4</span> ロジスティック回帰の考え方</a></li>
-  <li><a href="#ロジスティック回帰モデル" id="toc-ロジスティック回帰モデル" class="nav-link" data-scroll-target="#ロジスティック回帰モデル"><span class="header-section-number">4.5</span> ロジスティック回帰モデル</a></li>
-  <li><a href="#ロジット変換" id="toc-ロジット変換" class="nav-link" data-scroll-target="#ロジット変換"><span class="header-section-number">4.6</span> ロジット変換</a></li>
-  <li><a href="#回帰係数の意味" id="toc-回帰係数の意味" class="nav-link" data-scroll-target="#回帰係数の意味"><span class="header-section-number">4.7</span> 回帰係数の意味</a></li>
-  <li><a href="#オッズ比への変換" id="toc-オッズ比への変換" class="nav-link" data-scroll-target="#オッズ比への変換"><span class="header-section-number">4.8</span> オッズ比への変換</a></li>
-  <li><a href="#例年齢と転倒" id="toc-例年齢と転倒" class="nav-link" data-scroll-target="#例年齢と転倒"><span class="header-section-number">4.9</span> 例：年齢と転倒</a></li>
-  <li><a href="#単変量と多変量" id="toc-単変量と多変量" class="nav-link" data-scroll-target="#単変量と多変量"><span class="header-section-number">4.10</span> 単変量と多変量</a>
+  <li><a href="#はじめに" id="toc-はじめに" class="nav-link active" data-scroll-target="#はじめに"><span class="header-section-number">14.1</span> はじめに</a></li>
+  <li><a href="#roc曲線とは" id="toc-roc曲線とは" class="nav-link" data-scroll-target="#roc曲線とは"><span class="header-section-number">14.2</span> ROC曲線とは</a></li>
+  <li><a href="#roc曲線の構造" id="toc-roc曲線の構造" class="nav-link" data-scroll-target="#roc曲線の構造"><span class="header-section-number">14.3</span> ROC曲線の構造</a></li>
+  <li><a href="#roc曲線の意味" id="toc-roc曲線の意味" class="nav-link" data-scroll-target="#roc曲線の意味"><span class="header-section-number">14.4</span> ROC曲線の意味</a></li>
+  <li><a href="#aucarea-under-the-curve" id="toc-aucarea-under-the-curve" class="nav-link" data-scroll-target="#aucarea-under-the-curve"><span class="header-section-number">14.5</span> AUC（Area Under the Curve）</a></li>
+  <li><a href="#aucの解釈" id="toc-aucの解釈" class="nav-link" data-scroll-target="#aucの解釈"><span class="header-section-number">14.6</span> AUCの解釈</a></li>
+  <li><a href="#roc曲線の利点" id="toc-roc曲線の利点" class="nav-link" data-scroll-target="#roc曲線の利点"><span class="header-section-number">14.7</span> ROC曲線の利点</a></li>
+  <li><a href="#roc曲線の限界" id="toc-roc曲線の限界" class="nav-link" data-scroll-target="#roc曲線の限界"><span class="header-section-number">14.8</span> ROC曲線の限界</a>
   <ul class="collapse">
-  <li><a href="#単変量ロジスティック回帰" id="toc-単変量ロジスティック回帰" class="nav-link" data-scroll-target="#単変量ロジスティック回帰"><span class="header-section-number">4.10.1</span> 単変量ロジスティック回帰</a></li>
-  <li><a href="#多変量ロジスティック回帰" id="toc-多変量ロジスティック回帰" class="nav-link" data-scroll-target="#多変量ロジスティック回帰"><span class="header-section-number">4.10.2</span> 多変量ロジスティック回帰</a></li>
+  <li><a href="#有病率に依存しない" id="toc-有病率に依存しない" class="nav-link" data-scroll-target="#有病率に依存しない"><span class="header-section-number">14.8.1</span> 有病率に依存しない</a></li>
+  <li><a href="#ppvnpvを反映しない" id="toc-ppvnpvを反映しない" class="nav-link" data-scroll-target="#ppvnpvを反映しない"><span class="header-section-number">14.8.2</span> PPV/NPVを反映しない</a></li>
   </ul></li>
-  <li><a href="#ロジスティック回帰の出力" id="toc-ロジスティック回帰の出力" class="nav-link" data-scroll-target="#ロジスティック回帰の出力"><span class="header-section-number">4.11</span> ロジスティック回帰の出力</a></li>
-  <li><a href="#ロジスティック回帰の特徴" id="toc-ロジスティック回帰の特徴" class="nav-link" data-scroll-target="#ロジスティック回帰の特徴"><span class="header-section-number">4.12</span> ロジスティック回帰の特徴</a>
-  <ul class="collapse">
-  <li><a href="#長所" id="toc-長所" class="nav-link" data-scroll-target="#長所"><span class="header-section-number">4.12.1</span> 長所</a></li>
-  <li><a href="#短所" id="toc-短所" class="nav-link" data-scroll-target="#短所"><span class="header-section-number">4.12.2</span> 短所</a></li>
-  </ul></li>
-  <li><a href="#ロジスティック回帰と因果関係" id="toc-ロジスティック回帰と因果関係" class="nav-link" data-scroll-target="#ロジスティック回帰と因果関係"><span class="header-section-number">4.13</span> ロジスティック回帰と因果関係</a></li>
-  <li><a href="#まとめ" id="toc-まとめ" class="nav-link" data-scroll-target="#まとめ"><span class="header-section-number">4.14</span> まとめ</a></li>
+  <li><a href="#感度特異度との関係" id="toc-感度特異度との関係" class="nav-link" data-scroll-target="#感度特異度との関係"><span class="header-section-number">14.9</span> 感度・特異度との関係</a></li>
+  <li><a href="#最適カットオフの選択" id="toc-最適カットオフの選択" class="nav-link" data-scroll-target="#最適カットオフの選択"><span class="header-section-number">14.10</span> 最適カットオフの選択</a></li>
+  <li><a href="#ロジスティック回帰との関係" id="toc-ロジスティック回帰との関係" class="nav-link" data-scroll-target="#ロジスティック回帰との関係"><span class="header-section-number">14.11</span> ロジスティック回帰との関係</a></li>
+  <li><a href="#モデル比較" id="toc-モデル比較" class="nav-link" data-scroll-target="#モデル比較"><span class="header-section-number">14.12</span> モデル比較</a></li>
+  <li><a href="#例転倒予測" id="toc-例転倒予測" class="nav-link" data-scroll-target="#例転倒予測"><span class="header-section-number">14.13</span> 例：転倒予測</a></li>
+  <li><a href="#まとめ" id="toc-まとめ" class="nav-link" data-scroll-target="#まとめ"><span class="header-section-number">14.14</span> まとめ</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro.html">Part 1: Foundations</a></li><li class="breadcrumb-item"><a href="./03_logistic_regression.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ロジスティック回帰</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./12_sensitivity_and_specificity.html">Part 4: Evaluation and Extensions</a></li><li class="breadcrumb-item"><a href="./13_roc_curve.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">ROC曲線</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-logistic-regression" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ロジスティック回帰</span></span></h1>
+<h1 class="title"><span id="sec-roc-curve" class="quarto-section-identifier"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">ROC曲線</span></span></h1>
 </div>
 
 
@@ -354,299 +321,229 @@ window.Quarto = {
 </header>
 
 
-<section id="はじめに" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="はじめに"><span class="header-section-number">4.1</span> はじめに</h2>
-<p>医療・保健・スポーツ科学分野では、</p>
-<ul>
-<li>転倒したか</li>
-<li>死亡したか</li>
-<li>入院したか</li>
-<li>疾患を有するか</li>
-</ul>
-<p>のように、</p>
+<section id="はじめに" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="はじめに"><span class="header-section-number">14.1</span> はじめに</h2>
+<p>ロジスティック回帰などの予測モデルでは、</p>
 <blockquote class="blockquote">
-<p>「はい / いいえ」</p>
+<p>ある人が「病気である確率」</p>
 </blockquote>
-<p>で表されるアウトカムを扱うことが多い。</p>
-<p>このようなアウトカムを、二値アウトカム（binary outcome）という。</p>
-<p>ロジスティック回帰（logistic regression）は、二値アウトカムを解析する代表的な統計手法である。</p>
+<p>を出力することができる。</p>
+<p>しかし実際の運用では、その確率を使って</p>
+<ul>
+<li>陽性か陰性か</li>
+<li>リスクが高いか低いか</li>
+</ul>
+<p>を分類する必要がある。</p>
+<p>このとき重要になるのがROC曲線（Receiver Operating Characteristic curve）である。</p>
 <hr>
 </section>
-<section id="二値アウトカム" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="二値アウトカム"><span class="header-section-number">4.2</span> 二値アウトカム</h2>
-<p>二値アウトカムとは、結果が2種類しかない変数である。</p>
-<p>例：</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>アウトカム</th>
-<th>値</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>生存</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td>死亡</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>アウトカム</th>
-<th>値</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>転倒あり</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td>転倒なし</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>アウトカム</th>
-<th>値</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>糖尿病あり</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td>糖尿病なし</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-<p>通常、解析では：</p>
-<ul>
-<li>1 = イベントあり</li>
-<li>0 = イベントなし</li>
-</ul>
-<p>として扱うことが多い。</p>
-<hr>
-</section>
-<section id="なぜ線形回帰ではいけないのか" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="なぜ線形回帰ではいけないのか"><span class="header-section-number">4.3</span> なぜ線形回帰ではいけないのか</h2>
-<p>二値アウトカムに対して、通常の線形回帰（linear regression）を用いることには問題がある。</p>
-<p>例えば：</p>
-<p><span class="math display">\[ Y = \beta\_0 + \beta\_1X \]</span></p>
-<p>をそのまま適用すると、予測値が：</p>
-<ul>
-<li>0未満</li>
-<li>1を超える</li>
-</ul>
-<p>可能性がある。</p>
-<p>しかし、確率は：</p>
-<p><span class="math display">\[ 0 \leq p \leq 1 \]</span></p>
-<p>でなければならない。</p>
-<p>また、二値データでは誤差分布も正規分布を仮定しにくい。</p>
-<p>このため、二値アウトカムには別のモデルが必要となる。</p>
-<hr>
-</section>
-<section id="ロジスティック回帰の考え方" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="ロジスティック回帰の考え方"><span class="header-section-number">4.4</span> ロジスティック回帰の考え方</h2>
-<p>ロジスティック回帰では、</p>
+<section id="roc曲線とは" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="roc曲線とは"><span class="header-section-number">14.2</span> ROC曲線とは</h2>
+<p>ROC曲線とは、</p>
 <blockquote class="blockquote">
-<p>確率そのもの</p>
+<p>感度と特異度の関係を可視化した曲線</p>
 </blockquote>
-<p>ではなく、</p>
-<blockquote class="blockquote">
-<p>オッズの対数（log odds）</p>
-</blockquote>
-<p>をモデル化する。</p>
-<p>まず、確率を (p) とする。</p>
-<p>オッズは：</p>
-<p><span class="math display">\[ \frac{p}{1-p} \]</span></p>
 <p>である。</p>
-<p>さらに、その対数を取る：</p>
-<p><span class="math display">\[ \log\left(\frac{p}{1-p}\right) \]</span></p>
-<p>これをロジット（logit）という。</p>
+<p>より正確には、</p>
+<ul>
+<li>縦軸：感度（True Positive Rate）</li>
+<li>横軸：1 − 特異度（False Positive Rate）</li>
+</ul>
+<p>をプロットしたものである。</p>
 <hr>
 </section>
-<section id="ロジスティック回帰モデル" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="ロジスティック回帰モデル"><span class="header-section-number">4.5</span> ロジスティック回帰モデル</h2>
-<p>ロジスティック回帰では、</p>
-<p>()=_0+_1X</p>
-<p>というモデルを用いる。</p>
-<p>ここで：</p>
+<section id="roc曲線の構造" class="level2" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="roc曲線の構造"><span class="header-section-number">14.3</span> ROC曲線の構造</h2>
+<p>ROC曲線は、異なるカットオフ値ごとに計算される。</p>
+<p>例えばロジスティック回帰の予測確率 (p) に対して：</p>
 <ul>
-<li>(p)：イベントが起こる確率</li>
-<li>(_0)：切片</li>
-<li>(_1)：回帰係数</li>
-<li>(X)：説明変数</li>
+<li>0.9以上 → 陽性</li>
+<li>0.8以上 → 陽性</li>
+<li>0.7以上 → 陽性</li>
+</ul>
+<p>というように閾値を変えていく。</p>
+<p>そのたびに：</p>
+<ul>
+<li>感度</li>
+<li>特異度</li>
+</ul>
+<p>が変化する。</p>
+<hr>
+</section>
+<section id="roc曲線の意味" class="level2" data-number="14.4">
+<h2 data-number="14.4" class="anchored" data-anchor-id="roc曲線の意味"><span class="header-section-number">14.4</span> ROC曲線の意味</h2>
+<p>ROC曲線は、</p>
+<blockquote class="blockquote">
+<p>モデルの分類性能全体を表す図</p>
+</blockquote>
+<p>である。</p>
+<p>理想的なモデルは：</p>
+<ul>
+<li>左上に近い曲線（高感度・高特異度）</li>
+</ul>
+<p>となる。</p>
+<p>一方、ランダム分類は対角線になる。</p>
+<hr>
+</section>
+<section id="aucarea-under-the-curve" class="level2" data-number="14.5">
+<h2 data-number="14.5" class="anchored" data-anchor-id="aucarea-under-the-curve"><span class="header-section-number">14.5</span> AUC（Area Under the Curve）</h2>
+<p>ROC曲線の下の面積をAUCという。</p>
+<p>AUC = _0^1 TPR() , d()</p>
+<p>AUCは、</p>
+<blockquote class="blockquote">
+<p>モデルの識別能力を1つの数値で表した指標</p>
+</blockquote>
+<p>である。</p>
+<hr>
+</section>
+<section id="aucの解釈" class="level2" data-number="14.6">
+<h2 data-number="14.6" class="anchored" data-anchor-id="aucの解釈"><span class="header-section-number">14.6</span> AUCの解釈</h2>
+<p>AUCの値は通常0.5〜1の範囲をとる。</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>AUC</th>
+<th>解釈</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.5</td>
+<td>ランダム</td>
+</tr>
+<tr class="even">
+<td>0.6–0.7</td>
+<td>低い性能</td>
+</tr>
+<tr class="odd">
+<td>0.7–0.8</td>
+<td>中程度</td>
+</tr>
+<tr class="even">
+<td>0.8–0.9</td>
+<td>良い</td>
+</tr>
+<tr class="odd">
+<td>0.9以上</td>
+<td>非常に良い</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="roc曲線の利点" class="level2" data-number="14.7">
+<h2 data-number="14.7" class="anchored" data-anchor-id="roc曲線の利点"><span class="header-section-number">14.7</span> ROC曲線の利点</h2>
+<p>ROC曲線の利点は：</p>
+<ul>
+<li>カットオフに依存しない</li>
+<li>感度と特異度を同時に評価できる</li>
+<li>モデル比較が可能</li>
 </ul>
 <p>である。</p>
 <hr>
 </section>
-<section id="ロジット変換" class="level2" data-number="4.6">
-<h2 data-number="4.6" class="anchored" data-anchor-id="ロジット変換"><span class="header-section-number">4.6</span> ロジット変換</h2>
-<p>ロジット変換を行うことで、</p>
-<p><span class="math display">\[ 0 \leq p \leq 1 \]</span></p>
-<p>という制約を回避できる。</p>
-<p>ロジット値は：</p>
-<p><span class="math display">\[ -\infty \sim +\infty \]</span></p>
-<p>を取りうるため、通常の回帰モデルの形で扱いやすくなる。</p>
-<hr>
-</section>
-<section id="回帰係数の意味" class="level2" data-number="4.7">
-<h2 data-number="4.7" class="anchored" data-anchor-id="回帰係数の意味"><span class="header-section-number">4.7</span> 回帰係数の意味</h2>
-<p>ロジスティック回帰では、回帰係数 () は：</p>
+<section id="roc曲線の限界" class="level2" data-number="14.8">
+<h2 data-number="14.8" class="anchored" data-anchor-id="roc曲線の限界"><span class="header-section-number">14.8</span> ROC曲線の限界</h2>
+<p>ROC曲線にはいくつかの限界もある。</p>
+<section id="有病率に依存しない" class="level3" data-number="14.8.1">
+<h3 data-number="14.8.1" class="anchored" data-anchor-id="有病率に依存しない"><span class="header-section-number">14.8.1</span> 有病率に依存しない</h3>
+<p>ROC曲線は有病率に依存しないため、</p>
 <blockquote class="blockquote">
-<p>log odds の変化量</p>
+<p>臨床的な実用性を反映しないことがある</p>
 </blockquote>
-<p>を意味する。</p>
-<p>しかし、log odds は直感的ではない。</p>
-<p>そこで通常は、指数変換を行う。</p>
 <hr>
 </section>
-<section id="オッズ比への変換" class="level2" data-number="4.8">
-<h2 data-number="4.8" class="anchored" data-anchor-id="オッズ比への変換"><span class="header-section-number">4.8</span> オッズ比への変換</h2>
-<p>回帰係数を指数変換すると：</p>
-<p>OR=e^{}</p>
-<p>となる。</p>
-<p>つまり、ロジスティック回帰の結果は、オッズ比として解釈できる。</p>
-<hr>
-</section>
-<section id="例年齢と転倒" class="level2" data-number="4.9">
-<h2 data-number="4.9" class="anchored" data-anchor-id="例年齢と転倒"><span class="header-section-number">4.9</span> 例：年齢と転倒</h2>
-<p>例えば：</p>
+<section id="ppvnpvを反映しない" class="level3" data-number="14.8.2">
+<h3 data-number="14.8.2" class="anchored" data-anchor-id="ppvnpvを反映しない"><span class="header-section-number">14.8.2</span> PPV/NPVを反映しない</h3>
+<p>ROC曲線は：</p>
 <ul>
-<li>アウトカム：転倒の有無</li>
-<li>説明変数：年齢</li>
+<li>陽性的中率</li>
+<li>陰性的中率</li>
 </ul>
-<p>を解析したとする。</p>
-<p>結果が：</p>
-<p><span class="math display">\[ \beta = 0.08 \]</span></p>
-<p>であれば：</p>
-<p><span class="math display">\[ e\^{0.08} \approx 1.08 \]</span></p>
-<p>となる。</p>
-<p>これは：</p>
+<p>を直接反映しない。</p>
+<hr>
+</section>
+</section>
+<section id="感度特異度との関係" class="level2" data-number="14.9">
+<h2 data-number="14.9" class="anchored" data-anchor-id="感度特異度との関係"><span class="header-section-number">14.9</span> 感度・特異度との関係</h2>
+<p>ROC曲線は、</p>
+<ul>
+<li>感度（sensitivity）</li>
+<li>特異度（specificity）</li>
+</ul>
+<p>の全ての組み合わせをまとめたものである。</p>
+<hr>
+</section>
+<section id="最適カットオフの選択" class="level2" data-number="14.10">
+<h2 data-number="14.10" class="anchored" data-anchor-id="最適カットオフの選択"><span class="header-section-number">14.10</span> 最適カットオフの選択</h2>
+<p>ROC曲線を用いて、</p>
 <blockquote class="blockquote">
-<p>年齢が1歳上がるごとに、転倒オッズが1.08倍になる</p>
+<p>最適な閾値（cut-off）</p>
+</blockquote>
+<p>を選ぶことができる。</p>
+<p>代表的な方法は：</p>
+<ul>
+<li>Youden index（感度 + 特異度 − 1）</li>
+<li>臨床的コスト最小化</li>
+<li>感度重視・特異度重視の設定</li>
+</ul>
+<hr>
+</section>
+<section id="ロジスティック回帰との関係" class="level2" data-number="14.11">
+<h2 data-number="14.11" class="anchored" data-anchor-id="ロジスティック回帰との関係"><span class="header-section-number">14.11</span> ロジスティック回帰との関係</h2>
+<p>ロジスティック回帰は：</p>
+<blockquote class="blockquote">
+<p>確率を出力するモデル</p>
+</blockquote>
+<p>である。</p>
+<p>ROC曲線は：</p>
+<blockquote class="blockquote">
+<p>その確率の分類性能を評価する方法</p>
+</blockquote>
+<p>である。</p>
+<p>つまり、</p>
+<ul>
+<li>ロジスティック回帰 → 予測</li>
+<li>ROC曲線 → 評価</li>
+</ul>
+<p>という関係にある。</p>
+<hr>
+</section>
+<section id="モデル比較" class="level2" data-number="14.12">
+<h2 data-number="14.12" class="anchored" data-anchor-id="モデル比較"><span class="header-section-number">14.12</span> モデル比較</h2>
+<p>ROC曲線とAUCを用いることで、</p>
+<ul>
+<li>異なるロジスティック回帰モデル</li>
+<li>他の機械学習モデル</li>
+</ul>
+<p>を比較することができる。</p>
+<hr>
+</section>
+<section id="例転倒予測" class="level2" data-number="14.13">
+<h2 data-number="14.13" class="anchored" data-anchor-id="例転倒予測"><span class="header-section-number">14.13</span> 例：転倒予測</h2>
+<p>例えば転倒予測モデルで：</p>
+<ul>
+<li>年齢</li>
+<li>BMI</li>
+<li>運動習慣</li>
+</ul>
+<p>を使った場合、</p>
+<p>AUCが0.78であれば：</p>
+<blockquote class="blockquote">
+<p>中程度の識別性能を持つモデル</p>
 </blockquote>
 <p>と解釈できる。</p>
 <hr>
 </section>
-<section id="単変量と多変量" class="level2" data-number="4.10">
-<h2 data-number="4.10" class="anchored" data-anchor-id="単変量と多変量"><span class="header-section-number">4.10</span> 単変量と多変量</h2>
-<section id="単変量ロジスティック回帰" class="level3" data-number="4.10.1">
-<h3 data-number="4.10.1" class="anchored" data-anchor-id="単変量ロジスティック回帰"><span class="header-section-number">4.10.1</span> 単変量ロジスティック回帰</h3>
-<p>1つの説明変数のみを用いる。</p>
-<p>例：</p>
+<section id="まとめ" class="level2" data-number="14.14">
+<h2 data-number="14.14" class="anchored" data-anchor-id="まとめ"><span class="header-section-number">14.14</span> まとめ</h2>
 <ul>
-<li>年齢 → 転倒</li>
-</ul>
-<hr>
-</section>
-<section id="多変量ロジスティック回帰" class="level3" data-number="4.10.2">
-<h3 data-number="4.10.2" class="anchored" data-anchor-id="多変量ロジスティック回帰"><span class="header-section-number">4.10.2</span> 多変量ロジスティック回帰</h3>
-<p>複数の説明変数を同時に扱う。</p>
-<p>例：</p>
-<ul>
-<li>年齢</li>
-<li>性別</li>
-<li>BMI</li>
-<li>運動習慣</li>
-</ul>
-<p>を同時に投入する。</p>
-<p>これにより、</p>
-<blockquote class="blockquote">
-<p>他の変数を調整した上での関連</p>
-</blockquote>
-<p>を評価できる。</p>
-<hr>
-</section>
-</section>
-<section id="ロジスティック回帰の出力" class="level2" data-number="4.11">
-<h2 data-number="4.11" class="anchored" data-anchor-id="ロジスティック回帰の出力"><span class="header-section-number">4.11</span> ロジスティック回帰の出力</h2>
-<p>一般的には：</p>
-<ul>
-<li>回帰係数（β）</li>
-<li>オッズ比（OR）</li>
-<li>95%信頼区間</li>
-<li>p値</li>
-</ul>
-<p>が出力される。</p>
-<p>例：</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>変数</th>
-<th>OR</th>
-<th>95%CI</th>
-<th>p</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>年齢</td>
-<td>1.08</td>
-<td>1.03–1.13</td>
-<td>&lt;0.001</td>
-</tr>
-</tbody>
-</table>
-<hr>
-</section>
-<section id="ロジスティック回帰の特徴" class="level2" data-number="4.12">
-<h2 data-number="4.12" class="anchored" data-anchor-id="ロジスティック回帰の特徴"><span class="header-section-number">4.12</span> ロジスティック回帰の特徴</h2>
-<p>ロジスティック回帰には、以下の特徴がある。</p>
-<section id="長所" class="level3" data-number="4.12.1">
-<h3 data-number="4.12.1" class="anchored" data-anchor-id="長所"><span class="header-section-number">4.12.1</span> 長所</h3>
-<ul>
-<li>二値アウトカムを扱える</li>
-<li>解釈しやすい</li>
-<li>医学論文で広く用いられる</li>
-<li>調整解析が可能</li>
-</ul>
-</section>
-<section id="短所" class="level3" data-number="4.12.2">
-<h3 data-number="4.12.2" class="anchored" data-anchor-id="短所"><span class="header-section-number">4.12.2</span> 短所</h3>
-<ul>
-<li>オッズ比の誤解が起こりやすい</li>
-<li>非線形関係に弱い場合がある</li>
-<li>希少イベントでは不安定になることがある</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="ロジスティック回帰と因果関係" class="level2" data-number="4.13">
-<h2 data-number="4.13" class="anchored" data-anchor-id="ロジスティック回帰と因果関係"><span class="header-section-number">4.13</span> ロジスティック回帰と因果関係</h2>
-<p>ロジスティック回帰は、</p>
-<blockquote class="blockquote">
-<p>関連（association）</p>
-</blockquote>
-<p>を評価する手法である。</p>
-<p>したがって、</p>
-<blockquote class="blockquote">
-<p>ロジスティック回帰を行っただけでは因果関係は証明できない</p>
-</blockquote>
-<p>点に注意が必要である。</p>
-<p>交絡因子や研究デザインを考慮する必要がある。</p>
-<hr>
-</section>
-<section id="まとめ" class="level2" data-number="4.14">
-<h2 data-number="4.14" class="anchored" data-anchor-id="まとめ"><span class="header-section-number">4.14</span> まとめ</h2>
-<ul>
-<li>ロジスティック回帰は二値アウトカムを扱う手法である</li>
-<li>確率ではなく log odds をモデル化する</li>
-<li>ロジット変換を用いる</li>
-<li>回帰係数を指数変換するとオッズ比になる</li>
-<li>多変量解析により調整が可能である</li>
-<li>ロジスティック回帰は関連を評価する手法である</li>
+<li>ROC曲線は感度と特異度の関係を表す</li>
+<li>横軸は1−特異度、縦軸は感度である</li>
+<li>AUCはモデルの識別能力を示す指標である</li>
+<li>ROCはカットオフに依存しない評価方法である</li>
+<li>有病率やPPV/NPVは直接反映しない</li>
+<li>ロジスティック回帰の性能評価に広く使われる</li>
 </ul>
 
 
@@ -1055,13 +952,13 @@ window.Quarto = {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./02_prevalence.html" class="pagination-link" aria-label="有病率">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">有病率</span></span>
+      <a href="./12_sensitivity_and_specificity.html" class="pagination-link" aria-label="感度と特異度">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">感度と特異度</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./04_multiple_regression_vs_logistic_regression.html" class="pagination-link" aria-label="重回帰とロジスティック回帰">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">重回帰とロジスティック回帰</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./14_risk_score_development.html" class="pagination-link" aria-label="リスクスコア開発">
+        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">リスクスコア開発</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

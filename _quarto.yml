@@ -24,22 +24,22 @@ book:
         - 05_variable_selection.qmd
         - 06_sample_size.qmd
         - 07_interaction.qmd
-        # - 08_reporting_logistic_regression.qmd
+        - 08_reporting_logistic_regression.qmd
 
     # Part 3: Practical Issues
-    # - part: "Part 3: Practical Issues"
-      # chapters:
-        # - 09_missing_data_and_multiple_imputation.qmd
-        # - 10_multinomial_logistic_regression.qmd
-        # - 11_propensity_score.qmd
+    - part: "Part 3: Practical Issues"
+      chapters:
+        - 09_missing_data_and_multiple_imputation.qmd
+        - 10_multinomial_logistic_regression.qmd
+        - 11_propensity_score.qmd
 
     # Part 4: Evaluation and Extensions
-    # - part: "Part 4: Evaluation and Extensions"
-      # chapters:
-        # - 12_sensitivity_and_specificity.qmd
-        # - 13_roc_curve.qmd
-        # - 14_risk_score_development.qmd
-        # - 15_machine_learning.qmd
+    - part: "Part 4: Evaluation and Extensions"
+      chapters:
+        - 12_sensitivity_and_specificity.qmd
+        - 13_roc_curve.qmd
+        - 14_risk_score_development.qmd
+        - 15_machine_learning.qmd
 
     - summary.qmd
     - references.qmd

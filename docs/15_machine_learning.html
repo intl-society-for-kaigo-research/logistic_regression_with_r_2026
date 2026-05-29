@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; ロジスティック回帰 – Logistic Regression with R</title>
+<title>16&nbsp; 機械学習 – Logistic Regression with R</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -33,8 +33,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./04_multiple_regression_vs_logistic_regression.html" rel="next">
-<link href="./02_prevalence.html" rel="prev">
+<link href="./summary.html" rel="next">
+<link href="./14_risk_score_development.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -73,35 +73,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -114,7 +85,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro.html">Part 1: Foundations</a></li><li class="breadcrumb-item"><a href="./03_logistic_regression.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ロジスティック回帰</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./12_sensitivity_and_specificity.html">Part 4: Evaluation and Extensions</a></li><li class="breadcrumb-item"><a href="./15_machine_learning.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">機械学習</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -174,7 +145,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03_logistic_regression.html" class="sidebar-item-text sidebar-link active">
+  <a href="./03_logistic_regression.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ロジスティック回帰</span></span></a>
   </div>
 </li>
@@ -279,7 +250,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./15_machine_learning.html" class="sidebar-item-text sidebar-link">
+  <a href="./15_machine_learning.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">機械学習</span></span></a>
   </div>
 </li>
@@ -307,37 +278,32 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#はじめに" id="toc-はじめに" class="nav-link active" data-scroll-target="#はじめに"><span class="header-section-number">4.1</span> はじめに</a></li>
-  <li><a href="#二値アウトカム" id="toc-二値アウトカム" class="nav-link" data-scroll-target="#二値アウトカム"><span class="header-section-number">4.2</span> 二値アウトカム</a></li>
-  <li><a href="#なぜ線形回帰ではいけないのか" id="toc-なぜ線形回帰ではいけないのか" class="nav-link" data-scroll-target="#なぜ線形回帰ではいけないのか"><span class="header-section-number">4.3</span> なぜ線形回帰ではいけないのか</a></li>
-  <li><a href="#ロジスティック回帰の考え方" id="toc-ロジスティック回帰の考え方" class="nav-link" data-scroll-target="#ロジスティック回帰の考え方"><span class="header-section-number">4.4</span> ロジスティック回帰の考え方</a></li>
-  <li><a href="#ロジスティック回帰モデル" id="toc-ロジスティック回帰モデル" class="nav-link" data-scroll-target="#ロジスティック回帰モデル"><span class="header-section-number">4.5</span> ロジスティック回帰モデル</a></li>
-  <li><a href="#ロジット変換" id="toc-ロジット変換" class="nav-link" data-scroll-target="#ロジット変換"><span class="header-section-number">4.6</span> ロジット変換</a></li>
-  <li><a href="#回帰係数の意味" id="toc-回帰係数の意味" class="nav-link" data-scroll-target="#回帰係数の意味"><span class="header-section-number">4.7</span> 回帰係数の意味</a></li>
-  <li><a href="#オッズ比への変換" id="toc-オッズ比への変換" class="nav-link" data-scroll-target="#オッズ比への変換"><span class="header-section-number">4.8</span> オッズ比への変換</a></li>
-  <li><a href="#例年齢と転倒" id="toc-例年齢と転倒" class="nav-link" data-scroll-target="#例年齢と転倒"><span class="header-section-number">4.9</span> 例：年齢と転倒</a></li>
-  <li><a href="#単変量と多変量" id="toc-単変量と多変量" class="nav-link" data-scroll-target="#単変量と多変量"><span class="header-section-number">4.10</span> 単変量と多変量</a>
-  <ul class="collapse">
-  <li><a href="#単変量ロジスティック回帰" id="toc-単変量ロジスティック回帰" class="nav-link" data-scroll-target="#単変量ロジスティック回帰"><span class="header-section-number">4.10.1</span> 単変量ロジスティック回帰</a></li>
-  <li><a href="#多変量ロジスティック回帰" id="toc-多変量ロジスティック回帰" class="nav-link" data-scroll-target="#多変量ロジスティック回帰"><span class="header-section-number">4.10.2</span> 多変量ロジスティック回帰</a></li>
-  </ul></li>
-  <li><a href="#ロジスティック回帰の出力" id="toc-ロジスティック回帰の出力" class="nav-link" data-scroll-target="#ロジスティック回帰の出力"><span class="header-section-number">4.11</span> ロジスティック回帰の出力</a></li>
-  <li><a href="#ロジスティック回帰の特徴" id="toc-ロジスティック回帰の特徴" class="nav-link" data-scroll-target="#ロジスティック回帰の特徴"><span class="header-section-number">4.12</span> ロジスティック回帰の特徴</a>
-  <ul class="collapse">
-  <li><a href="#長所" id="toc-長所" class="nav-link" data-scroll-target="#長所"><span class="header-section-number">4.12.1</span> 長所</a></li>
-  <li><a href="#短所" id="toc-短所" class="nav-link" data-scroll-target="#短所"><span class="header-section-number">4.12.2</span> 短所</a></li>
-  </ul></li>
-  <li><a href="#ロジスティック回帰と因果関係" id="toc-ロジスティック回帰と因果関係" class="nav-link" data-scroll-target="#ロジスティック回帰と因果関係"><span class="header-section-number">4.13</span> ロジスティック回帰と因果関係</a></li>
-  <li><a href="#まとめ" id="toc-まとめ" class="nav-link" data-scroll-target="#まとめ"><span class="header-section-number">4.14</span> まとめ</a></li>
+  <li><a href="#はじめに" id="toc-はじめに" class="nav-link active" data-scroll-target="#はじめに"><span class="header-section-number">16.1</span> はじめに</a></li>
+  <li><a href="#ロジスティック回帰との位置づけ" id="toc-ロジスティック回帰との位置づけ" class="nav-link" data-scroll-target="#ロジスティック回帰との位置づけ"><span class="header-section-number">16.2</span> ロジスティック回帰との位置づけ</a></li>
+  <li><a href="#主な機械学習手法" id="toc-主な機械学習手法" class="nav-link" data-scroll-target="#主な機械学習手法"><span class="header-section-number">16.3</span> 主な機械学習手法</a></li>
+  <li><a href="#決定木" id="toc-決定木" class="nav-link" data-scroll-target="#決定木"><span class="header-section-number">16.4</span> 決定木</a></li>
+  <li><a href="#ランダムフォレスト" id="toc-ランダムフォレスト" class="nav-link" data-scroll-target="#ランダムフォレスト"><span class="header-section-number">16.5</span> ランダムフォレスト</a></li>
+  <li><a href="#勾配ブースティング" id="toc-勾配ブースティング" class="nav-link" data-scroll-target="#勾配ブースティング"><span class="header-section-number">16.6</span> 勾配ブースティング</a></li>
+  <li><a href="#svmサポートベクターマシン" id="toc-svmサポートベクターマシン" class="nav-link" data-scroll-target="#svmサポートベクターマシン"><span class="header-section-number">16.7</span> SVM（サポートベクターマシン）</a></li>
+  <li><a href="#ニューラルネットワーク" id="toc-ニューラルネットワーク" class="nav-link" data-scroll-target="#ニューラルネットワーク"><span class="header-section-number">16.8</span> ニューラルネットワーク</a></li>
+  <li><a href="#ロジスティック回帰との比較" id="toc-ロジスティック回帰との比較" class="nav-link" data-scroll-target="#ロジスティック回帰との比較"><span class="header-section-number">16.9</span> ロジスティック回帰との比較</a></li>
+  <li><a href="#過学習と汎化性能" id="toc-過学習と汎化性能" class="nav-link" data-scroll-target="#過学習と汎化性能"><span class="header-section-number">16.10</span> 過学習と汎化性能</a></li>
+  <li><a href="#クロスバリデーション" id="toc-クロスバリデーション" class="nav-link" data-scroll-target="#クロスバリデーション"><span class="header-section-number">16.11</span> クロスバリデーション</a></li>
+  <li><a href="#rocとauc" id="toc-rocとauc" class="nav-link" data-scroll-target="#rocとauc"><span class="header-section-number">16.12</span> ROCとAUC</a></li>
+  <li><a href="#キャリブレーション" id="toc-キャリブレーション" class="nav-link" data-scroll-target="#キャリブレーション"><span class="header-section-number">16.13</span> キャリブレーション</a></li>
+  <li><a href="#変数重要度" id="toc-変数重要度" class="nav-link" data-scroll-target="#変数重要度"><span class="header-section-number">16.14</span> 変数重要度</a></li>
+  <li><a href="#医療分野での利用" id="toc-医療分野での利用" class="nav-link" data-scroll-target="#医療分野での利用"><span class="header-section-number">16.15</span> 医療分野での利用</a></li>
+  <li><a href="#ロジスティック回帰との使い分け" id="toc-ロジスティック回帰との使い分け" class="nav-link" data-scroll-target="#ロジスティック回帰との使い分け"><span class="header-section-number">16.16</span> ロジスティック回帰との使い分け</a></li>
+  <li><a href="#まとめ" id="toc-まとめ" class="nav-link" data-scroll-target="#まとめ"><span class="header-section-number">16.17</span> まとめ</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro.html">Part 1: Foundations</a></li><li class="breadcrumb-item"><a href="./03_logistic_regression.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ロジスティック回帰</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./12_sensitivity_and_specificity.html">Part 4: Evaluation and Extensions</a></li><li class="breadcrumb-item"><a href="./15_machine_learning.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">機械学習</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-logistic-regression" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ロジスティック回帰</span></span></h1>
+<h1 class="title"><span id="sec-machine-learning" class="quarto-section-identifier"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">機械学習</span></span></h1>
 </div>
 
 
@@ -354,299 +320,271 @@ window.Quarto = {
 </header>
 
 
-<section id="はじめに" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="はじめに"><span class="header-section-number">4.1</span> はじめに</h2>
-<p>医療・保健・スポーツ科学分野では、</p>
-<ul>
-<li>転倒したか</li>
-<li>死亡したか</li>
-<li>入院したか</li>
-<li>疾患を有するか</li>
-</ul>
-<p>のように、</p>
-<blockquote class="blockquote">
-<p>「はい / いいえ」</p>
-</blockquote>
-<p>で表されるアウトカムを扱うことが多い。</p>
-<p>このようなアウトカムを、二値アウトカム（binary outcome）という。</p>
-<p>ロジスティック回帰（logistic regression）は、二値アウトカムを解析する代表的な統計手法である。</p>
-<hr>
-</section>
-<section id="二値アウトカム" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="二値アウトカム"><span class="header-section-number">4.2</span> 二値アウトカム</h2>
-<p>二値アウトカムとは、結果が2種類しかない変数である。</p>
-<p>例：</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>アウトカム</th>
-<th>値</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>生存</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td>死亡</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>アウトカム</th>
-<th>値</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>転倒あり</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td>転倒なし</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>アウトカム</th>
-<th>値</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>糖尿病あり</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td>糖尿病なし</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-<p>通常、解析では：</p>
-<ul>
-<li>1 = イベントあり</li>
-<li>0 = イベントなし</li>
-</ul>
-<p>として扱うことが多い。</p>
-<hr>
-</section>
-<section id="なぜ線形回帰ではいけないのか" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="なぜ線形回帰ではいけないのか"><span class="header-section-number">4.3</span> なぜ線形回帰ではいけないのか</h2>
-<p>二値アウトカムに対して、通常の線形回帰（linear regression）を用いることには問題がある。</p>
-<p>例えば：</p>
-<p><span class="math display">\[ Y = \beta\_0 + \beta\_1X \]</span></p>
-<p>をそのまま適用すると、予測値が：</p>
-<ul>
-<li>0未満</li>
-<li>1を超える</li>
-</ul>
-<p>可能性がある。</p>
-<p>しかし、確率は：</p>
-<p><span class="math display">\[ 0 \leq p \leq 1 \]</span></p>
-<p>でなければならない。</p>
-<p>また、二値データでは誤差分布も正規分布を仮定しにくい。</p>
-<p>このため、二値アウトカムには別のモデルが必要となる。</p>
-<hr>
-</section>
-<section id="ロジスティック回帰の考え方" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="ロジスティック回帰の考え方"><span class="header-section-number">4.4</span> ロジスティック回帰の考え方</h2>
-<p>ロジスティック回帰では、</p>
-<blockquote class="blockquote">
-<p>確率そのもの</p>
-</blockquote>
-<p>ではなく、</p>
-<blockquote class="blockquote">
-<p>オッズの対数（log odds）</p>
-</blockquote>
-<p>をモデル化する。</p>
-<p>まず、確率を (p) とする。</p>
-<p>オッズは：</p>
-<p><span class="math display">\[ \frac{p}{1-p} \]</span></p>
-<p>である。</p>
-<p>さらに、その対数を取る：</p>
-<p><span class="math display">\[ \log\left(\frac{p}{1-p}\right) \]</span></p>
-<p>これをロジット（logit）という。</p>
-<hr>
-</section>
-<section id="ロジスティック回帰モデル" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="ロジスティック回帰モデル"><span class="header-section-number">4.5</span> ロジスティック回帰モデル</h2>
-<p>ロジスティック回帰では、</p>
-<p>()=_0+_1X</p>
-<p>というモデルを用いる。</p>
-<p>ここで：</p>
-<ul>
-<li>(p)：イベントが起こる確率</li>
-<li>(_0)：切片</li>
-<li>(_1)：回帰係数</li>
-<li>(X)：説明変数</li>
-</ul>
-<p>である。</p>
-<hr>
-</section>
-<section id="ロジット変換" class="level2" data-number="4.6">
-<h2 data-number="4.6" class="anchored" data-anchor-id="ロジット変換"><span class="header-section-number">4.6</span> ロジット変換</h2>
-<p>ロジット変換を行うことで、</p>
-<p><span class="math display">\[ 0 \leq p \leq 1 \]</span></p>
-<p>という制約を回避できる。</p>
-<p>ロジット値は：</p>
-<p><span class="math display">\[ -\infty \sim +\infty \]</span></p>
-<p>を取りうるため、通常の回帰モデルの形で扱いやすくなる。</p>
-<hr>
-</section>
-<section id="回帰係数の意味" class="level2" data-number="4.7">
-<h2 data-number="4.7" class="anchored" data-anchor-id="回帰係数の意味"><span class="header-section-number">4.7</span> 回帰係数の意味</h2>
-<p>ロジスティック回帰では、回帰係数 () は：</p>
-<blockquote class="blockquote">
-<p>log odds の変化量</p>
-</blockquote>
-<p>を意味する。</p>
-<p>しかし、log odds は直感的ではない。</p>
-<p>そこで通常は、指数変換を行う。</p>
-<hr>
-</section>
-<section id="オッズ比への変換" class="level2" data-number="4.8">
-<h2 data-number="4.8" class="anchored" data-anchor-id="オッズ比への変換"><span class="header-section-number">4.8</span> オッズ比への変換</h2>
-<p>回帰係数を指数変換すると：</p>
-<p>OR=e^{}</p>
-<p>となる。</p>
-<p>つまり、ロジスティック回帰の結果は、オッズ比として解釈できる。</p>
-<hr>
-</section>
-<section id="例年齢と転倒" class="level2" data-number="4.9">
-<h2 data-number="4.9" class="anchored" data-anchor-id="例年齢と転倒"><span class="header-section-number">4.9</span> 例：年齢と転倒</h2>
-<p>例えば：</p>
-<ul>
-<li>アウトカム：転倒の有無</li>
-<li>説明変数：年齢</li>
-</ul>
-<p>を解析したとする。</p>
-<p>結果が：</p>
-<p><span class="math display">\[ \beta = 0.08 \]</span></p>
-<p>であれば：</p>
-<p><span class="math display">\[ e\^{0.08} \approx 1.08 \]</span></p>
-<p>となる。</p>
-<p>これは：</p>
-<blockquote class="blockquote">
-<p>年齢が1歳上がるごとに、転倒オッズが1.08倍になる</p>
-</blockquote>
-<p>と解釈できる。</p>
-<hr>
-</section>
-<section id="単変量と多変量" class="level2" data-number="4.10">
-<h2 data-number="4.10" class="anchored" data-anchor-id="単変量と多変量"><span class="header-section-number">4.10</span> 単変量と多変量</h2>
-<section id="単変量ロジスティック回帰" class="level3" data-number="4.10.1">
-<h3 data-number="4.10.1" class="anchored" data-anchor-id="単変量ロジスティック回帰"><span class="header-section-number">4.10.1</span> 単変量ロジスティック回帰</h3>
-<p>1つの説明変数のみを用いる。</p>
-<p>例：</p>
-<ul>
-<li>年齢 → 転倒</li>
-</ul>
-<hr>
-</section>
-<section id="多変量ロジスティック回帰" class="level3" data-number="4.10.2">
-<h3 data-number="4.10.2" class="anchored" data-anchor-id="多変量ロジスティック回帰"><span class="header-section-number">4.10.2</span> 多変量ロジスティック回帰</h3>
-<p>複数の説明変数を同時に扱う。</p>
-<p>例：</p>
-<ul>
-<li>年齢</li>
-<li>性別</li>
-<li>BMI</li>
-<li>運動習慣</li>
-</ul>
-<p>を同時に投入する。</p>
-<p>これにより、</p>
-<blockquote class="blockquote">
-<p>他の変数を調整した上での関連</p>
-</blockquote>
-<p>を評価できる。</p>
-<hr>
-</section>
-</section>
-<section id="ロジスティック回帰の出力" class="level2" data-number="4.11">
-<h2 data-number="4.11" class="anchored" data-anchor-id="ロジスティック回帰の出力"><span class="header-section-number">4.11</span> ロジスティック回帰の出力</h2>
-<p>一般的には：</p>
-<ul>
-<li>回帰係数（β）</li>
-<li>オッズ比（OR）</li>
-<li>95%信頼区間</li>
-<li>p値</li>
-</ul>
-<p>が出力される。</p>
-<p>例：</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>変数</th>
-<th>OR</th>
-<th>95%CI</th>
-<th>p</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>年齢</td>
-<td>1.08</td>
-<td>1.03–1.13</td>
-<td>&lt;0.001</td>
-</tr>
-</tbody>
-</table>
-<hr>
-</section>
-<section id="ロジスティック回帰の特徴" class="level2" data-number="4.12">
-<h2 data-number="4.12" class="anchored" data-anchor-id="ロジスティック回帰の特徴"><span class="header-section-number">4.12</span> ロジスティック回帰の特徴</h2>
-<p>ロジスティック回帰には、以下の特徴がある。</p>
-<section id="長所" class="level3" data-number="4.12.1">
-<h3 data-number="4.12.1" class="anchored" data-anchor-id="長所"><span class="header-section-number">4.12.1</span> 長所</h3>
-<ul>
-<li>二値アウトカムを扱える</li>
-<li>解釈しやすい</li>
-<li>医学論文で広く用いられる</li>
-<li>調整解析が可能</li>
-</ul>
-</section>
-<section id="短所" class="level3" data-number="4.12.2">
-<h3 data-number="4.12.2" class="anchored" data-anchor-id="短所"><span class="header-section-number">4.12.2</span> 短所</h3>
-<ul>
-<li>オッズ比の誤解が起こりやすい</li>
-<li>非線形関係に弱い場合がある</li>
-<li>希少イベントでは不安定になることがある</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="ロジスティック回帰と因果関係" class="level2" data-number="4.13">
-<h2 data-number="4.13" class="anchored" data-anchor-id="ロジスティック回帰と因果関係"><span class="header-section-number">4.13</span> ロジスティック回帰と因果関係</h2>
+<section id="はじめに" class="level2" data-number="16.1">
+<h2 data-number="16.1" class="anchored" data-anchor-id="はじめに"><span class="header-section-number">16.1</span> はじめに</h2>
 <p>ロジスティック回帰は、</p>
 <blockquote class="blockquote">
-<p>関連（association）</p>
+<p>統計モデルとしての予測手法</p>
 </blockquote>
-<p>を評価する手法である。</p>
-<p>したがって、</p>
-<blockquote class="blockquote">
-<p>ロジスティック回帰を行っただけでは因果関係は証明できない</p>
-</blockquote>
-<p>点に注意が必要である。</p>
-<p>交絡因子や研究デザインを考慮する必要がある。</p>
+<p>である一方、近年ではより複雑な機械学習（machine learning）手法が広く使われている。</p>
+<p>機械学習は主に、</p>
+<ul>
+<li>予測精度の向上</li>
+<li>非線形関係の表現</li>
+<li>大規模データへの対応</li>
+</ul>
+<p>を目的とする。</p>
 <hr>
 </section>
-<section id="まとめ" class="level2" data-number="4.14">
-<h2 data-number="4.14" class="anchored" data-anchor-id="まとめ"><span class="header-section-number">4.14</span> まとめ</h2>
+<section id="ロジスティック回帰との位置づけ" class="level2" data-number="16.2">
+<h2 data-number="16.2" class="anchored" data-anchor-id="ロジスティック回帰との位置づけ"><span class="header-section-number">16.2</span> ロジスティック回帰との位置づけ</h2>
+<p>ロジスティック回帰は機械学習の一種としても扱われるが、</p>
 <ul>
-<li>ロジスティック回帰は二値アウトカムを扱う手法である</li>
-<li>確率ではなく log odds をモデル化する</li>
-<li>ロジット変換を用いる</li>
-<li>回帰係数を指数変換するとオッズ比になる</li>
-<li>多変量解析により調整が可能である</li>
-<li>ロジスティック回帰は関連を評価する手法である</li>
+<li>解釈性が高い</li>
+<li>仮定が明確</li>
+<li>統計的推論が可能</li>
+</ul>
+<p>という特徴を持つ。</p>
+<p>一方、機械学習モデルは：</p>
+<ul>
+<li>精度重視</li>
+<li>ブラックボックス化しやすい</li>
+<li>柔軟性が高い</li>
+</ul>
+<p>という特徴がある。</p>
+<hr>
+</section>
+<section id="主な機械学習手法" class="level2" data-number="16.3">
+<h2 data-number="16.3" class="anchored" data-anchor-id="主な機械学習手法"><span class="header-section-number">16.3</span> 主な機械学習手法</h2>
+<p>分類問題における代表的な手法は以下である：</p>
+<ul>
+<li>決定木（decision tree）</li>
+<li>ランダムフォレスト（random forest）</li>
+<li>勾配ブースティング（gradient boosting）</li>
+<li>サポートベクターマシン（SVM）</li>
+<li>ニューラルネットワーク（neural network）</li>
+</ul>
+<hr>
+</section>
+<section id="決定木" class="level2" data-number="16.4">
+<h2 data-number="16.4" class="anchored" data-anchor-id="決定木"><span class="header-section-number">16.4</span> 決定木</h2>
+<p>決定木は、</p>
+<blockquote class="blockquote">
+<p>ルールベースでデータを分割する方法</p>
+</blockquote>
+<p>である。</p>
+<p>例：</p>
+<ul>
+<li>年齢 &gt; 75</li>
+<li>→ 高リスク</li>
+<li>そうでなければ次の条件へ</li>
+</ul>
+<p>というように階層的に分類する。</p>
+<hr>
+</section>
+<section id="ランダムフォレスト" class="level2" data-number="16.5">
+<h2 data-number="16.5" class="anchored" data-anchor-id="ランダムフォレスト"><span class="header-section-number">16.5</span> ランダムフォレスト</h2>
+<p>ランダムフォレストは、</p>
+<blockquote class="blockquote">
+<p>複数の決定木を組み合わせたモデル</p>
+</blockquote>
+<p>である。</p>
+<p>特徴：</p>
+<ul>
+<li>過学習に強い</li>
+<li>非線形関係を扱える</li>
+<li>変数重要度を出せる</li>
+</ul>
+<hr>
+</section>
+<section id="勾配ブースティング" class="level2" data-number="16.6">
+<h2 data-number="16.6" class="anchored" data-anchor-id="勾配ブースティング"><span class="header-section-number">16.6</span> 勾配ブースティング</h2>
+<p>勾配ブースティングは、</p>
+<blockquote class="blockquote">
+<p>誤差を逐次修正しながら学習する方法</p>
+</blockquote>
+<p>である。</p>
+<p>代表例：</p>
+<ul>
+<li>XGBoost</li>
+<li>LightGBM</li>
+<li>CatBoost</li>
+</ul>
+<p>これらは高い予測性能を持つことが多い。</p>
+<hr>
+</section>
+<section id="svmサポートベクターマシン" class="level2" data-number="16.7">
+<h2 data-number="16.7" class="anchored" data-anchor-id="svmサポートベクターマシン"><span class="header-section-number">16.7</span> SVM（サポートベクターマシン）</h2>
+<p>SVMは、</p>
+<blockquote class="blockquote">
+<p>クラス間の境界を最大化する方法</p>
+</blockquote>
+<p>である。</p>
+<p>特徴：</p>
+<ul>
+<li>高次元データに強い</li>
+<li>カーネル法により非線形対応可能</li>
+<li>解釈性は低い</li>
+</ul>
+<hr>
+</section>
+<section id="ニューラルネットワーク" class="level2" data-number="16.8">
+<h2 data-number="16.8" class="anchored" data-anchor-id="ニューラルネットワーク"><span class="header-section-number">16.8</span> ニューラルネットワーク</h2>
+<p>ニューラルネットワークは、</p>
+<blockquote class="blockquote">
+<p>多層構造で複雑な関係を学習するモデル</p>
+</blockquote>
+<p>である。</p>
+<p>特徴：</p>
+<ul>
+<li>非線形性を強く表現可能</li>
+<li>大規模データで高性能</li>
+<li>ブラックボックス性が強い</li>
+</ul>
+<hr>
+</section>
+<section id="ロジスティック回帰との比較" class="level2" data-number="16.9">
+<h2 data-number="16.9" class="anchored" data-anchor-id="ロジスティック回帰との比較"><span class="header-section-number">16.9</span> ロジスティック回帰との比較</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>項目</th>
+<th>ロジスティック回帰</th>
+<th>機械学習</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>解釈性</td>
+<td>高い</td>
+<td>低い場合が多い</td>
+</tr>
+<tr class="even">
+<td>予測性能</td>
+<td>中程度</td>
+<td>高い場合がある</td>
+</tr>
+<tr class="odd">
+<td>前提</td>
+<td>明確</td>
+<td>柔軟</td>
+</tr>
+<tr class="even">
+<td>推論</td>
+<td>可能</td>
+<td>限定的</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="過学習と汎化性能" class="level2" data-number="16.10">
+<h2 data-number="16.10" class="anchored" data-anchor-id="過学習と汎化性能"><span class="header-section-number">16.10</span> 過学習と汎化性能</h2>
+<p>機械学習では、</p>
+<blockquote class="blockquote">
+<p>過学習（overfitting）</p>
+</blockquote>
+<p>が重要な問題である。</p>
+<p>モデルが複雑になるほど、</p>
+<ul>
+<li>学習データには適合する</li>
+<li>新しいデータには弱くなる</li>
+</ul>
+<p>可能性がある。</p>
+<hr>
+</section>
+<section id="クロスバリデーション" class="level2" data-number="16.11">
+<h2 data-number="16.11" class="anchored" data-anchor-id="クロスバリデーション"><span class="header-section-number">16.11</span> クロスバリデーション</h2>
+<p>機械学習の評価では、</p>
+<blockquote class="blockquote">
+<p>クロスバリデーション（cross-validation）</p>
+</blockquote>
+<p>が標準的である。</p>
+<p>データを分割し、</p>
+<ul>
+<li>学習</li>
+<li>評価</li>
+</ul>
+<p>を繰り返すことで汎化性能を評価する。</p>
+<hr>
+</section>
+<section id="rocとauc" class="level2" data-number="16.12">
+<h2 data-number="16.12" class="anchored" data-anchor-id="rocとauc"><span class="header-section-number">16.12</span> ROCとAUC</h2>
+<p>機械学習でも評価にはROC曲線とAUCが用いられる。</p>
+<p>ただし：</p>
+<ul>
+<li>ROCはランキング性能を評価</li>
+<li>AUCは識別能力を要約</li>
+</ul>
+<p>する指標である。</p>
+<hr>
+</section>
+<section id="キャリブレーション" class="level2" data-number="16.13">
+<h2 data-number="16.13" class="anchored" data-anchor-id="キャリブレーション"><span class="header-section-number">16.13</span> キャリブレーション</h2>
+<p>予測モデルでは、</p>
+<blockquote class="blockquote">
+<p>確率の正確さ（calibration）</p>
+</blockquote>
+<p>も重要である。</p>
+<p>特に医療分野では：</p>
+<ul>
+<li>予測確率＝実際の発生率</li>
+</ul>
+<p>であることが望ましい。</p>
+<hr>
+</section>
+<section id="変数重要度" class="level2" data-number="16.14">
+<h2 data-number="16.14" class="anchored" data-anchor-id="変数重要度"><span class="header-section-number">16.14</span> 変数重要度</h2>
+<p>機械学習では、</p>
+<blockquote class="blockquote">
+<p>どの変数が重要か</p>
+</blockquote>
+<p>を評価することができる。</p>
+<p>例：</p>
+<ul>
+<li>feature importance</li>
+<li>permutation importance</li>
+<li>SHAP値</li>
+</ul>
+<p>ただし解釈には注意が必要である。</p>
+<hr>
+</section>
+<section id="医療分野での利用" class="level2" data-number="16.15">
+<h2 data-number="16.15" class="anchored" data-anchor-id="医療分野での利用"><span class="header-section-number">16.15</span> 医療分野での利用</h2>
+<p>機械学習は以下に応用される：</p>
+<ul>
+<li>疾患予測</li>
+<li>画像診断</li>
+<li>リスク分類</li>
+<li>スクリーニング支援</li>
+</ul>
+<hr>
+</section>
+<section id="ロジスティック回帰との使い分け" class="level2" data-number="16.16">
+<h2 data-number="16.16" class="anchored" data-anchor-id="ロジスティック回帰との使い分け"><span class="header-section-number">16.16</span> ロジスティック回帰との使い分け</h2>
+<p>一般的に：</p>
+<ul>
+<li>説明・推論 → ロジスティック回帰</li>
+<li>高精度予測 → 機械学習</li>
+</ul>
+<p>という使い分けがされる。</p>
+<p>ただし、</p>
+<blockquote class="blockquote">
+<p>医療では解釈性が非常に重要</p>
+</blockquote>
+<p>であるため、単純に機械学習が優れるとは限らない。</p>
+<hr>
+</section>
+<section id="まとめ" class="level2" data-number="16.17">
+<h2 data-number="16.17" class="anchored" data-anchor-id="まとめ"><span class="header-section-number">16.17</span> まとめ</h2>
+<ul>
+<li>機械学習は高い予測性能を目指す手法群である</li>
+<li>ロジスティック回帰は解釈性に優れる統計モデルである</li>
+<li>決定木・RF・GBM・SVM・NNなどが代表的手法である</li>
+<li>過学習の管理が重要である</li>
+<li>クロスバリデーションで評価する</li>
+<li>ROCやAUCは共通の評価指標である</li>
+<li>医療では解釈性と予測性能のバランスが重要である</li>
 </ul>
 
 
@@ -1055,13 +993,13 @@ window.Quarto = {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./02_prevalence.html" class="pagination-link" aria-label="有病率">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">有病率</span></span>
+      <a href="./14_risk_score_development.html" class="pagination-link" aria-label="リスクスコア開発">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">リスクスコア開発</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./04_multiple_regression_vs_logistic_regression.html" class="pagination-link" aria-label="重回帰とロジスティック回帰">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">重回帰とロジスティック回帰</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./summary.html" class="pagination-link" aria-label="Summary">
+        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Summary</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

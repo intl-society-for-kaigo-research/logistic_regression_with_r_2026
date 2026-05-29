@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; ロジスティック回帰 – Logistic Regression with R</title>
+<title>9&nbsp; ロジスティック回帰の報告 – Logistic Regression with R</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -33,8 +33,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./04_multiple_regression_vs_logistic_regression.html" rel="next">
-<link href="./02_prevalence.html" rel="prev">
+<link href="./09_missing_data_and_multiple_imputation.html" rel="next">
+<link href="./07_interaction.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -73,35 +73,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -114,7 +85,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro.html">Part 1: Foundations</a></li><li class="breadcrumb-item"><a href="./03_logistic_regression.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ロジスティック回帰</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05_variable_selection.html">Part 2: Model Building</a></li><li class="breadcrumb-item"><a href="./08_reporting_logistic_regression.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">ロジスティック回帰の報告</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -174,7 +145,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03_logistic_regression.html" class="sidebar-item-text sidebar-link active">
+  <a href="./03_logistic_regression.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ロジスティック回帰</span></span></a>
   </div>
 </li>
@@ -215,7 +186,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./08_reporting_logistic_regression.html" class="sidebar-item-text sidebar-link">
+  <a href="./08_reporting_logistic_regression.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">ロジスティック回帰の報告</span></span></a>
   </div>
 </li>
@@ -307,37 +278,36 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#はじめに" id="toc-はじめに" class="nav-link active" data-scroll-target="#はじめに"><span class="header-section-number">4.1</span> はじめに</a></li>
-  <li><a href="#二値アウトカム" id="toc-二値アウトカム" class="nav-link" data-scroll-target="#二値アウトカム"><span class="header-section-number">4.2</span> 二値アウトカム</a></li>
-  <li><a href="#なぜ線形回帰ではいけないのか" id="toc-なぜ線形回帰ではいけないのか" class="nav-link" data-scroll-target="#なぜ線形回帰ではいけないのか"><span class="header-section-number">4.3</span> なぜ線形回帰ではいけないのか</a></li>
-  <li><a href="#ロジスティック回帰の考え方" id="toc-ロジスティック回帰の考え方" class="nav-link" data-scroll-target="#ロジスティック回帰の考え方"><span class="header-section-number">4.4</span> ロジスティック回帰の考え方</a></li>
-  <li><a href="#ロジスティック回帰モデル" id="toc-ロジスティック回帰モデル" class="nav-link" data-scroll-target="#ロジスティック回帰モデル"><span class="header-section-number">4.5</span> ロジスティック回帰モデル</a></li>
-  <li><a href="#ロジット変換" id="toc-ロジット変換" class="nav-link" data-scroll-target="#ロジット変換"><span class="header-section-number">4.6</span> ロジット変換</a></li>
-  <li><a href="#回帰係数の意味" id="toc-回帰係数の意味" class="nav-link" data-scroll-target="#回帰係数の意味"><span class="header-section-number">4.7</span> 回帰係数の意味</a></li>
-  <li><a href="#オッズ比への変換" id="toc-オッズ比への変換" class="nav-link" data-scroll-target="#オッズ比への変換"><span class="header-section-number">4.8</span> オッズ比への変換</a></li>
-  <li><a href="#例年齢と転倒" id="toc-例年齢と転倒" class="nav-link" data-scroll-target="#例年齢と転倒"><span class="header-section-number">4.9</span> 例：年齢と転倒</a></li>
-  <li><a href="#単変量と多変量" id="toc-単変量と多変量" class="nav-link" data-scroll-target="#単変量と多変量"><span class="header-section-number">4.10</span> 単変量と多変量</a>
+  <li><a href="#はじめに" id="toc-はじめに" class="nav-link active" data-scroll-target="#はじめに"><span class="header-section-number">9.1</span> はじめに</a></li>
+  <li><a href="#基本的な報告項目" id="toc-基本的な報告項目" class="nav-link" data-scroll-target="#基本的な報告項目"><span class="header-section-number">9.2</span> 基本的な報告項目</a></li>
+  <li><a href="#オッズ比の報告" id="toc-オッズ比の報告" class="nav-link" data-scroll-target="#オッズ比の報告"><span class="header-section-number">9.3</span> オッズ比の報告</a></li>
+  <li><a href="#信頼区間の重要性" id="toc-信頼区間の重要性" class="nav-link" data-scroll-target="#信頼区間の重要性"><span class="header-section-number">9.4</span> 95%信頼区間の重要性</a></li>
+  <li><a href="#p値の限界" id="toc-p値の限界" class="nav-link" data-scroll-target="#p値の限界"><span class="header-section-number">9.5</span> p値の限界</a></li>
+  <li><a href="#調整変数の明示" id="toc-調整変数の明示" class="nav-link" data-scroll-target="#調整変数の明示"><span class="header-section-number">9.6</span> 調整変数の明示</a></li>
+  <li><a href="#モデルの種類の明示" id="toc-モデルの種類の明示" class="nav-link" data-scroll-target="#モデルの種類の明示"><span class="header-section-number">9.7</span> モデルの種類の明示</a></li>
+  <li><a href="#変数の扱いの明示" id="toc-変数の扱いの明示" class="nav-link" data-scroll-target="#変数の扱いの明示"><span class="header-section-number">9.8</span> 変数の扱いの明示</a></li>
+  <li><a href="#カテゴリ変数の基準" id="toc-カテゴリ変数の基準" class="nav-link" data-scroll-target="#カテゴリ変数の基準"><span class="header-section-number">9.9</span> カテゴリ変数の基準</a></li>
+  <li><a href="#交互作用の報告" id="toc-交互作用の報告" class="nav-link" data-scroll-target="#交互作用の報告"><span class="header-section-number">9.10</span> 交互作用の報告</a></li>
+  <li><a href="#モデル適合度" id="toc-モデル適合度" class="nav-link" data-scroll-target="#モデル適合度"><span class="header-section-number">9.11</span> モデル適合度</a></li>
+  <li><a href="#予測性能予測モデルの場合" id="toc-予測性能予測モデルの場合" class="nav-link" data-scroll-target="#予測性能予測モデルの場合"><span class="header-section-number">9.12</span> 予測性能（予測モデルの場合）</a></li>
+  <li><a href="#よくある誤り" id="toc-よくある誤り" class="nav-link" data-scroll-target="#よくある誤り"><span class="header-section-number">9.13</span> よくある誤り</a>
   <ul class="collapse">
-  <li><a href="#単変量ロジスティック回帰" id="toc-単変量ロジスティック回帰" class="nav-link" data-scroll-target="#単変量ロジスティック回帰"><span class="header-section-number">4.10.1</span> 単変量ロジスティック回帰</a></li>
-  <li><a href="#多変量ロジスティック回帰" id="toc-多変量ロジスティック回帰" class="nav-link" data-scroll-target="#多変量ロジスティック回帰"><span class="header-section-number">4.10.2</span> 多変量ロジスティック回帰</a></li>
+  <li><a href="#orをrrとして解釈する" id="toc-orをrrとして解釈する" class="nav-link" data-scroll-target="#orをrrとして解釈する"><span class="header-section-number">9.13.1</span> ORをRRとして解釈する</a></li>
+  <li><a href="#p値のみ報告" id="toc-p値のみ報告" class="nav-link" data-scroll-target="#p値のみ報告"><span class="header-section-number">9.13.2</span> p値のみ報告</a></li>
+  <li><a href="#調整内容が不明" id="toc-調整内容が不明" class="nav-link" data-scroll-target="#調整内容が不明"><span class="header-section-number">9.13.3</span> 調整内容が不明</a></li>
   </ul></li>
-  <li><a href="#ロジスティック回帰の出力" id="toc-ロジスティック回帰の出力" class="nav-link" data-scroll-target="#ロジスティック回帰の出力"><span class="header-section-number">4.11</span> ロジスティック回帰の出力</a></li>
-  <li><a href="#ロジスティック回帰の特徴" id="toc-ロジスティック回帰の特徴" class="nav-link" data-scroll-target="#ロジスティック回帰の特徴"><span class="header-section-number">4.12</span> ロジスティック回帰の特徴</a>
-  <ul class="collapse">
-  <li><a href="#長所" id="toc-長所" class="nav-link" data-scroll-target="#長所"><span class="header-section-number">4.12.1</span> 長所</a></li>
-  <li><a href="#短所" id="toc-短所" class="nav-link" data-scroll-target="#短所"><span class="header-section-number">4.12.2</span> 短所</a></li>
-  </ul></li>
-  <li><a href="#ロジスティック回帰と因果関係" id="toc-ロジスティック回帰と因果関係" class="nav-link" data-scroll-target="#ロジスティック回帰と因果関係"><span class="header-section-number">4.13</span> ロジスティック回帰と因果関係</a></li>
-  <li><a href="#まとめ" id="toc-まとめ" class="nav-link" data-scroll-target="#まとめ"><span class="header-section-number">4.14</span> まとめ</a></li>
+  <li><a href="#strobeガイドライン" id="toc-strobeガイドライン" class="nav-link" data-scroll-target="#strobeガイドライン"><span class="header-section-number">9.14</span> STROBEガイドライン</a></li>
+  <li><a href="#論文での典型的な書き方" id="toc-論文での典型的な書き方" class="nav-link" data-scroll-target="#論文での典型的な書き方"><span class="header-section-number">9.15</span> 論文での典型的な書き方</a></li>
+  <li><a href="#まとめ" id="toc-まとめ" class="nav-link" data-scroll-target="#まとめ"><span class="header-section-number">9.16</span> まとめ</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro.html">Part 1: Foundations</a></li><li class="breadcrumb-item"><a href="./03_logistic_regression.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ロジスティック回帰</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05_variable_selection.html">Part 2: Model Building</a></li><li class="breadcrumb-item"><a href="./08_reporting_logistic_regression.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">ロジスティック回帰の報告</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-logistic-regression" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ロジスティック回帰</span></span></h1>
+<h1 class="title"><span id="sec-reporting-logistic-regression" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">ロジスティック回帰の報告</span></span></h1>
 </div>
 
 
@@ -354,240 +324,43 @@ window.Quarto = {
 </header>
 
 
-<section id="はじめに" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="はじめに"><span class="header-section-number">4.1</span> はじめに</h2>
-<p>医療・保健・スポーツ科学分野では、</p>
+<section id="はじめに" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="はじめに"><span class="header-section-number">9.1</span> はじめに</h2>
+<p>ロジスティック回帰の結果は、論文や報告書において非常に頻繁に用いられる。</p>
+<p>しかし、報告の仕方が不適切だと、</p>
 <ul>
-<li>転倒したか</li>
-<li>死亡したか</li>
-<li>入院したか</li>
-<li>疾患を有するか</li>
+<li>解釈が誤る</li>
+<li>再現性が低下する</li>
+<li>読者に誤解を与える</li>
 </ul>
-<p>のように、</p>
-<blockquote class="blockquote">
-<p>「はい / いいえ」</p>
-</blockquote>
-<p>で表されるアウトカムを扱うことが多い。</p>
-<p>このようなアウトカムを、二値アウトカム（binary outcome）という。</p>
-<p>ロジスティック回帰（logistic regression）は、二値アウトカムを解析する代表的な統計手法である。</p>
+<p>といった問題が生じる。</p>
+<p>この章では、ロジスティック回帰の適切な報告方法について整理する。</p>
 <hr>
 </section>
-<section id="二値アウトカム" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="二値アウトカム"><span class="header-section-number">4.2</span> 二値アウトカム</h2>
-<p>二値アウトカムとは、結果が2種類しかない変数である。</p>
-<p>例：</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>アウトカム</th>
-<th>値</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>生存</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td>死亡</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>アウトカム</th>
-<th>値</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>転倒あり</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td>転倒なし</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>アウトカム</th>
-<th>値</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>糖尿病あり</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td>糖尿病なし</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-<p>通常、解析では：</p>
+<section id="基本的な報告項目" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="基本的な報告項目"><span class="header-section-number">9.2</span> 基本的な報告項目</h2>
+<p>ロジスティック回帰の結果では、少なくとも以下を報告する：</p>
 <ul>
-<li>1 = イベントあり</li>
-<li>0 = イベントなし</li>
-</ul>
-<p>として扱うことが多い。</p>
-<hr>
-</section>
-<section id="なぜ線形回帰ではいけないのか" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="なぜ線形回帰ではいけないのか"><span class="header-section-number">4.3</span> なぜ線形回帰ではいけないのか</h2>
-<p>二値アウトカムに対して、通常の線形回帰（linear regression）を用いることには問題がある。</p>
-<p>例えば：</p>
-<p><span class="math display">\[ Y = \beta\_0 + \beta\_1X \]</span></p>
-<p>をそのまま適用すると、予測値が：</p>
-<ul>
-<li>0未満</li>
-<li>1を超える</li>
-</ul>
-<p>可能性がある。</p>
-<p>しかし、確率は：</p>
-<p><span class="math display">\[ 0 \leq p \leq 1 \]</span></p>
-<p>でなければならない。</p>
-<p>また、二値データでは誤差分布も正規分布を仮定しにくい。</p>
-<p>このため、二値アウトカムには別のモデルが必要となる。</p>
-<hr>
-</section>
-<section id="ロジスティック回帰の考え方" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="ロジスティック回帰の考え方"><span class="header-section-number">4.4</span> ロジスティック回帰の考え方</h2>
-<p>ロジスティック回帰では、</p>
-<blockquote class="blockquote">
-<p>確率そのもの</p>
-</blockquote>
-<p>ではなく、</p>
-<blockquote class="blockquote">
-<p>オッズの対数（log odds）</p>
-</blockquote>
-<p>をモデル化する。</p>
-<p>まず、確率を (p) とする。</p>
-<p>オッズは：</p>
-<p><span class="math display">\[ \frac{p}{1-p} \]</span></p>
-<p>である。</p>
-<p>さらに、その対数を取る：</p>
-<p><span class="math display">\[ \log\left(\frac{p}{1-p}\right) \]</span></p>
-<p>これをロジット（logit）という。</p>
-<hr>
-</section>
-<section id="ロジスティック回帰モデル" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="ロジスティック回帰モデル"><span class="header-section-number">4.5</span> ロジスティック回帰モデル</h2>
-<p>ロジスティック回帰では、</p>
-<p>()=_0+_1X</p>
-<p>というモデルを用いる。</p>
-<p>ここで：</p>
-<ul>
-<li>(p)：イベントが起こる確率</li>
-<li>(_0)：切片</li>
-<li>(_1)：回帰係数</li>
-<li>(X)：説明変数</li>
-</ul>
-<p>である。</p>
-<hr>
-</section>
-<section id="ロジット変換" class="level2" data-number="4.6">
-<h2 data-number="4.6" class="anchored" data-anchor-id="ロジット変換"><span class="header-section-number">4.6</span> ロジット変換</h2>
-<p>ロジット変換を行うことで、</p>
-<p><span class="math display">\[ 0 \leq p \leq 1 \]</span></p>
-<p>という制約を回避できる。</p>
-<p>ロジット値は：</p>
-<p><span class="math display">\[ -\infty \sim +\infty \]</span></p>
-<p>を取りうるため、通常の回帰モデルの形で扱いやすくなる。</p>
-<hr>
-</section>
-<section id="回帰係数の意味" class="level2" data-number="4.7">
-<h2 data-number="4.7" class="anchored" data-anchor-id="回帰係数の意味"><span class="header-section-number">4.7</span> 回帰係数の意味</h2>
-<p>ロジスティック回帰では、回帰係数 () は：</p>
-<blockquote class="blockquote">
-<p>log odds の変化量</p>
-</blockquote>
-<p>を意味する。</p>
-<p>しかし、log odds は直感的ではない。</p>
-<p>そこで通常は、指数変換を行う。</p>
-<hr>
-</section>
-<section id="オッズ比への変換" class="level2" data-number="4.8">
-<h2 data-number="4.8" class="anchored" data-anchor-id="オッズ比への変換"><span class="header-section-number">4.8</span> オッズ比への変換</h2>
-<p>回帰係数を指数変換すると：</p>
-<p>OR=e^{}</p>
-<p>となる。</p>
-<p>つまり、ロジスティック回帰の結果は、オッズ比として解釈できる。</p>
-<hr>
-</section>
-<section id="例年齢と転倒" class="level2" data-number="4.9">
-<h2 data-number="4.9" class="anchored" data-anchor-id="例年齢と転倒"><span class="header-section-number">4.9</span> 例：年齢と転倒</h2>
-<p>例えば：</p>
-<ul>
-<li>アウトカム：転倒の有無</li>
-<li>説明変数：年齢</li>
-</ul>
-<p>を解析したとする。</p>
-<p>結果が：</p>
-<p><span class="math display">\[ \beta = 0.08 \]</span></p>
-<p>であれば：</p>
-<p><span class="math display">\[ e\^{0.08} \approx 1.08 \]</span></p>
-<p>となる。</p>
-<p>これは：</p>
-<blockquote class="blockquote">
-<p>年齢が1歳上がるごとに、転倒オッズが1.08倍になる</p>
-</blockquote>
-<p>と解釈できる。</p>
-<hr>
-</section>
-<section id="単変量と多変量" class="level2" data-number="4.10">
-<h2 data-number="4.10" class="anchored" data-anchor-id="単変量と多変量"><span class="header-section-number">4.10</span> 単変量と多変量</h2>
-<section id="単変量ロジスティック回帰" class="level3" data-number="4.10.1">
-<h3 data-number="4.10.1" class="anchored" data-anchor-id="単変量ロジスティック回帰"><span class="header-section-number">4.10.1</span> 単変量ロジスティック回帰</h3>
-<p>1つの説明変数のみを用いる。</p>
-<p>例：</p>
-<ul>
-<li>年齢 → 転倒</li>
-</ul>
-<hr>
-</section>
-<section id="多変量ロジスティック回帰" class="level3" data-number="4.10.2">
-<h3 data-number="4.10.2" class="anchored" data-anchor-id="多変量ロジスティック回帰"><span class="header-section-number">4.10.2</span> 多変量ロジスティック回帰</h3>
-<p>複数の説明変数を同時に扱う。</p>
-<p>例：</p>
-<ul>
-<li>年齢</li>
-<li>性別</li>
-<li>BMI</li>
-<li>運動習慣</li>
-</ul>
-<p>を同時に投入する。</p>
-<p>これにより、</p>
-<blockquote class="blockquote">
-<p>他の変数を調整した上での関連</p>
-</blockquote>
-<p>を評価できる。</p>
-<hr>
-</section>
-</section>
-<section id="ロジスティック回帰の出力" class="level2" data-number="4.11">
-<h2 data-number="4.11" class="anchored" data-anchor-id="ロジスティック回帰の出力"><span class="header-section-number">4.11</span> ロジスティック回帰の出力</h2>
-<p>一般的には：</p>
-<ul>
-<li>回帰係数（β）</li>
-<li>オッズ比（OR）</li>
-<li>95%信頼区間</li>
+<li>回帰係数（β）またはオッズ比（OR）</li>
+<li>95%信頼区間（95% CI）</li>
 <li>p値</li>
+<li>サンプルサイズ</li>
+<li>調整変数</li>
 </ul>
-<p>が出力される。</p>
+<p>通常は、回帰係数よりもオッズ比で報告することが多い。</p>
+<hr>
+</section>
+<section id="オッズ比の報告" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="オッズ比の報告"><span class="header-section-number">9.3</span> オッズ比の報告</h2>
+<p>ロジスティック回帰の結果は、一般にオッズ比として報告される。</p>
 <p>例：</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
 <th>変数</th>
 <th>OR</th>
-<th>95%CI</th>
-<th>p</th>
+<th>95% CI</th>
+<th>p値</th>
 </tr>
 </thead>
 <tbody>
@@ -597,56 +370,202 @@ window.Quarto = {
 <td>1.03–1.13</td>
 <td>&lt;0.001</td>
 </tr>
+<tr class="even">
+<td>性別（女性）</td>
+<td>0.75</td>
+<td>0.50–1.10</td>
+<td>0.12</td>
+</tr>
 </tbody>
 </table>
+<p>このように表形式で示すのが標準的である。</p>
 <hr>
 </section>
-<section id="ロジスティック回帰の特徴" class="level2" data-number="4.12">
-<h2 data-number="4.12" class="anchored" data-anchor-id="ロジスティック回帰の特徴"><span class="header-section-number">4.12</span> ロジスティック回帰の特徴</h2>
-<p>ロジスティック回帰には、以下の特徴がある。</p>
-<section id="長所" class="level3" data-number="4.12.1">
-<h3 data-number="4.12.1" class="anchored" data-anchor-id="長所"><span class="header-section-number">4.12.1</span> 長所</h3>
-<ul>
-<li>二値アウトカムを扱える</li>
-<li>解釈しやすい</li>
-<li>医学論文で広く用いられる</li>
-<li>調整解析が可能</li>
-</ul>
-</section>
-<section id="短所" class="level3" data-number="4.12.2">
-<h3 data-number="4.12.2" class="anchored" data-anchor-id="短所"><span class="header-section-number">4.12.2</span> 短所</h3>
-<ul>
-<li>オッズ比の誤解が起こりやすい</li>
-<li>非線形関係に弱い場合がある</li>
-<li>希少イベントでは不安定になることがある</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="ロジスティック回帰と因果関係" class="level2" data-number="4.13">
-<h2 data-number="4.13" class="anchored" data-anchor-id="ロジスティック回帰と因果関係"><span class="header-section-number">4.13</span> ロジスティック回帰と因果関係</h2>
-<p>ロジスティック回帰は、</p>
+<section id="信頼区間の重要性" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="信頼区間の重要性"><span class="header-section-number">9.4</span> 95%信頼区間の重要性</h2>
+<p>p値だけではなく、</p>
 <blockquote class="blockquote">
-<p>関連（association）</p>
+<p>信頼区間（confidence interval）</p>
 </blockquote>
-<p>を評価する手法である。</p>
-<p>したがって、</p>
-<blockquote class="blockquote">
-<p>ロジスティック回帰を行っただけでは因果関係は証明できない</p>
-</blockquote>
-<p>点に注意が必要である。</p>
-<p>交絡因子や研究デザインを考慮する必要がある。</p>
+<p>を必ず併記する必要がある。</p>
+<p>理由は以下の通り：</p>
+<ul>
+<li>効果の大きさが分かる</li>
+<li>推定の不確実性が分かる</li>
+<li>臨床的意味が解釈できる</li>
+</ul>
+<p>例えば：</p>
+<ul>
+<li>OR = 1.20（1.01–1.43）</li>
+<li>OR = 1.20（0.60–2.50）</li>
+</ul>
+<p>は全く意味が異なる。</p>
 <hr>
 </section>
-<section id="まとめ" class="level2" data-number="4.14">
-<h2 data-number="4.14" class="anchored" data-anchor-id="まとめ"><span class="header-section-number">4.14</span> まとめ</h2>
+<section id="p値の限界" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="p値の限界"><span class="header-section-number">9.5</span> p値の限界</h2>
+<p>p値は以下の点で限界がある：</p>
 <ul>
-<li>ロジスティック回帰は二値アウトカムを扱う手法である</li>
-<li>確率ではなく log odds をモデル化する</li>
-<li>ロジット変換を用いる</li>
-<li>回帰係数を指数変換するとオッズ比になる</li>
-<li>多変量解析により調整が可能である</li>
-<li>ロジスティック回帰は関連を評価する手法である</li>
+<li>効果の大きさを示さない</li>
+<li>サンプルサイズに依存する</li>
+<li>臨床的重要性を示さない</li>
+</ul>
+<p>そのため、</p>
+<blockquote class="blockquote">
+<p>p &lt; 0.05 かどうかだけで判断しない</p>
+</blockquote>
+<p>ことが重要である。</p>
+<hr>
+</section>
+<section id="調整変数の明示" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="調整変数の明示"><span class="header-section-number">9.6</span> 調整変数の明示</h2>
+<p>ロジスティック回帰では、</p>
+<blockquote class="blockquote">
+<p>どの変数で調整したか</p>
+</blockquote>
+<p>を必ず明示する必要がある。</p>
+<p>例：</p>
+<blockquote class="blockquote">
+<p>Adjusted for age, sex, BMI, smoking status.</p>
+</blockquote>
+<p>調整内容が不明だと、結果の解釈ができない。</p>
+<hr>
+</section>
+<section id="モデルの種類の明示" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="モデルの種類の明示"><span class="header-section-number">9.7</span> モデルの種類の明示</h2>
+<p>報告では、以下も明確にする：</p>
+<ul>
+<li>単変量ロジスティック回帰か</li>
+<li>多変量ロジスティック回帰か</li>
+</ul>
+<p>単変量と多変量では、結果が大きく異なることがある。</p>
+<hr>
+</section>
+<section id="変数の扱いの明示" class="level2" data-number="9.8">
+<h2 data-number="9.8" class="anchored" data-anchor-id="変数の扱いの明示"><span class="header-section-number">9.8</span> 変数の扱いの明示</h2>
+<p>連続変数の扱いも重要である。</p>
+<p>例えば：</p>
+<ul>
+<li>年齢（1歳単位）</li>
+<li>BMI（1 kg/m²単位）</li>
+<li>10歳ごと</li>
+</ul>
+<p>など、単位を明確にする必要がある。</p>
+<hr>
+</section>
+<section id="カテゴリ変数の基準" class="level2" data-number="9.9">
+<h2 data-number="9.9" class="anchored" data-anchor-id="カテゴリ変数の基準"><span class="header-section-number">9.9</span> カテゴリ変数の基準</h2>
+<p>カテゴリ変数では：</p>
+<ul>
+<li>参照カテゴリー（reference category）</li>
+</ul>
+<p>を必ず示す必要がある。</p>
+<p>例：</p>
+<ul>
+<li>性別（男性を基準）</li>
+</ul>
+<p>これがないと解釈できない。</p>
+<hr>
+</section>
+<section id="交互作用の報告" class="level2" data-number="9.10">
+<h2 data-number="9.10" class="anchored" data-anchor-id="交互作用の報告"><span class="header-section-number">9.10</span> 交互作用の報告</h2>
+<p>交互作用を含む場合は：</p>
+<ul>
+<li>交互作用項の有無</li>
+<li>層別結果</li>
+<li>p for interaction</li>
+</ul>
+<p>を報告することが望ましい。</p>
+<hr>
+</section>
+<section id="モデル適合度" class="level2" data-number="9.11">
+<h2 data-number="9.11" class="anchored" data-anchor-id="モデル適合度"><span class="header-section-number">9.11</span> モデル適合度</h2>
+<p>ロジスティック回帰では、以下の指標を報告することがある：</p>
+<ul>
+<li>Hosmer–Lemeshow test</li>
+<li>AIC</li>
+<li>pseudo R²</li>
+</ul>
+<p>ただし、これらは必須ではない。</p>
+<hr>
+</section>
+<section id="予測性能予測モデルの場合" class="level2" data-number="9.12">
+<h2 data-number="9.12" class="anchored" data-anchor-id="予測性能予測モデルの場合"><span class="header-section-number">9.12</span> 予測性能（予測モデルの場合）</h2>
+<p>予測目的の場合は、以下も重要になる：</p>
+<ul>
+<li>ROC曲線</li>
+<li>AUC</li>
+<li>calibration</li>
+</ul>
+<p>これらは第4部で詳しく扱う。</p>
+<hr>
+</section>
+<section id="よくある誤り" class="level2" data-number="9.13">
+<h2 data-number="9.13" class="anchored" data-anchor-id="よくある誤り"><span class="header-section-number">9.13</span> よくある誤り</h2>
+<section id="orをrrとして解釈する" class="level3" data-number="9.13.1">
+<h3 data-number="9.13.1" class="anchored" data-anchor-id="orをrrとして解釈する"><span class="header-section-number">9.13.1</span> ORをRRとして解釈する</h3>
+<p>最も多い誤りである。</p>
+<ul>
+<li>OR = 2.0 → リスク2倍と誤解する</li>
+</ul>
+<p>これは正しくない場合が多い。</p>
+<hr>
+</section>
+<section id="p値のみ報告" class="level3" data-number="9.13.2">
+<h3 data-number="9.13.2" class="anchored" data-anchor-id="p値のみ報告"><span class="header-section-number">9.13.2</span> p値のみ報告</h3>
+<p>p値だけを示す報告は不十分である。</p>
+<p>必ず：</p>
+<ul>
+<li>OR</li>
+<li>CI</li>
+</ul>
+<p>を併記する必要がある。</p>
+<hr>
+</section>
+<section id="調整内容が不明" class="level3" data-number="9.13.3">
+<h3 data-number="9.13.3" class="anchored" data-anchor-id="調整内容が不明"><span class="header-section-number">9.13.3</span> 調整内容が不明</h3>
+<p>どの変数を調整したか書かれていない場合、結果の信頼性が低下する。</p>
+<hr>
+</section>
+</section>
+<section id="strobeガイドライン" class="level2" data-number="9.14">
+<h2 data-number="9.14" class="anchored" data-anchor-id="strobeガイドライン"><span class="header-section-number">9.14</span> STROBEガイドライン</h2>
+<p>観察研究では、</p>
+<blockquote class="blockquote">
+<p>STROBE statement</p>
+</blockquote>
+<p>に従った報告が推奨される。</p>
+<p>主なポイント：</p>
+<ul>
+<li>研究デザイン</li>
+<li>変数定義</li>
+<li>統計手法</li>
+<li>調整変数</li>
+<li>結果の完全性</li>
+</ul>
+<hr>
+</section>
+<section id="論文での典型的な書き方" class="level2" data-number="9.15">
+<h2 data-number="9.15" class="anchored" data-anchor-id="論文での典型的な書き方"><span class="header-section-number">9.15</span> 論文での典型的な書き方</h2>
+<p>例：</p>
+<blockquote class="blockquote">
+<p>Multivariable logistic regression was performed to examine the association between physical activity and falls, adjusted for age, sex, and BMI.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Physical activity was associated with lower odds of falls (OR = 0.72, 95% CI 0.58–0.90).</p>
+</blockquote>
+<hr>
+</section>
+<section id="まとめ" class="level2" data-number="9.16">
+<h2 data-number="9.16" class="anchored" data-anchor-id="まとめ"><span class="header-section-number">9.16</span> まとめ</h2>
+<ul>
+<li>ロジスティック回帰ではORと95%CIを報告する</li>
+<li>p値のみでは不十分である</li>
+<li>調整変数を明示する必要がある</li>
+<li>参照カテゴリーを明確にする</li>
+<li>単変量と多変量を区別する</li>
+<li>交互作用がある場合は明示する</li>
+<li>STROBEに従うことが望ましい</li>
 </ul>
 
 
@@ -1055,13 +974,13 @@ window.Quarto = {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./02_prevalence.html" class="pagination-link" aria-label="有病率">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">有病率</span></span>
+      <a href="./07_interaction.html" class="pagination-link" aria-label="交互作用">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">交互作用</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./04_multiple_regression_vs_logistic_regression.html" class="pagination-link" aria-label="重回帰とロジスティック回帰">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">重回帰とロジスティック回帰</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./09_missing_data_and_multiple_imputation.html" class="pagination-link" aria-label="欠損と多重代入">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">欠損と多重代入</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

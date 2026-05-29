@@ -1275,13 +1275,1487 @@
     ]
   },
   {
+    "objectID": "08_reporting_logistic_regression.html",
+    "href": "08_reporting_logistic_regression.html",
+    "title": "9  ロジスティック回帰の報告",
+    "section": "",
+    "text": "9.1 はじめに\nロジスティック回帰の結果は、論文や報告書において非常に頻繁に用いられる。\nしかし、報告の仕方が不適切だと、\nといった問題が生じる。\nこの章では、ロジスティック回帰の適切な報告方法について整理する。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ロジスティック回帰の報告</span>"
+    ]
+  },
+  {
+    "objectID": "08_reporting_logistic_regression.html#はじめに",
+    "href": "08_reporting_logistic_regression.html#はじめに",
+    "title": "9  ロジスティック回帰の報告",
+    "section": "",
+    "text": "解釈が誤る\n再現性が低下する\n読者に誤解を与える",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ロジスティック回帰の報告</span>"
+    ]
+  },
+  {
+    "objectID": "08_reporting_logistic_regression.html#基本的な報告項目",
+    "href": "08_reporting_logistic_regression.html#基本的な報告項目",
+    "title": "9  ロジスティック回帰の報告",
+    "section": "9.2 基本的な報告項目",
+    "text": "9.2 基本的な報告項目\nロジスティック回帰の結果では、少なくとも以下を報告する：\n\n回帰係数（β）またはオッズ比（OR）\n95%信頼区間（95% CI）\np値\nサンプルサイズ\n調整変数\n\n通常は、回帰係数よりもオッズ比で報告することが多い。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ロジスティック回帰の報告</span>"
+    ]
+  },
+  {
+    "objectID": "08_reporting_logistic_regression.html#オッズ比の報告",
+    "href": "08_reporting_logistic_regression.html#オッズ比の報告",
+    "title": "9  ロジスティック回帰の報告",
+    "section": "9.3 オッズ比の報告",
+    "text": "9.3 オッズ比の報告\nロジスティック回帰の結果は、一般にオッズ比として報告される。\n例：\n\n\n\n変数\nOR\n95% CI\np値\n\n\n\n\n年齢\n1.08\n1.03–1.13\n&lt;0.001\n\n\n性別（女性）\n0.75\n0.50–1.10\n0.12\n\n\n\nこのように表形式で示すのが標準的である。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ロジスティック回帰の報告</span>"
+    ]
+  },
+  {
+    "objectID": "08_reporting_logistic_regression.html#信頼区間の重要性",
+    "href": "08_reporting_logistic_regression.html#信頼区間の重要性",
+    "title": "9  ロジスティック回帰の報告",
+    "section": "9.4 95%信頼区間の重要性",
+    "text": "9.4 95%信頼区間の重要性\np値だけではなく、\n\n信頼区間（confidence interval）\n\nを必ず併記する必要がある。\n理由は以下の通り：\n\n効果の大きさが分かる\n推定の不確実性が分かる\n臨床的意味が解釈できる\n\n例えば：\n\nOR = 1.20（1.01–1.43）\nOR = 1.20（0.60–2.50）\n\nは全く意味が異なる。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ロジスティック回帰の報告</span>"
+    ]
+  },
+  {
+    "objectID": "08_reporting_logistic_regression.html#p値の限界",
+    "href": "08_reporting_logistic_regression.html#p値の限界",
+    "title": "9  ロジスティック回帰の報告",
+    "section": "9.5 p値の限界",
+    "text": "9.5 p値の限界\np値は以下の点で限界がある：\n\n効果の大きさを示さない\nサンプルサイズに依存する\n臨床的重要性を示さない\n\nそのため、\n\np &lt; 0.05 かどうかだけで判断しない\n\nことが重要である。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ロジスティック回帰の報告</span>"
+    ]
+  },
+  {
+    "objectID": "08_reporting_logistic_regression.html#調整変数の明示",
+    "href": "08_reporting_logistic_regression.html#調整変数の明示",
+    "title": "9  ロジスティック回帰の報告",
+    "section": "9.6 調整変数の明示",
+    "text": "9.6 調整変数の明示\nロジスティック回帰では、\n\nどの変数で調整したか\n\nを必ず明示する必要がある。\n例：\n\nAdjusted for age, sex, BMI, smoking status.\n\n調整内容が不明だと、結果の解釈ができない。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ロジスティック回帰の報告</span>"
+    ]
+  },
+  {
+    "objectID": "08_reporting_logistic_regression.html#モデルの種類の明示",
+    "href": "08_reporting_logistic_regression.html#モデルの種類の明示",
+    "title": "9  ロジスティック回帰の報告",
+    "section": "9.7 モデルの種類の明示",
+    "text": "9.7 モデルの種類の明示\n報告では、以下も明確にする：\n\n単変量ロジスティック回帰か\n多変量ロジスティック回帰か\n\n単変量と多変量では、結果が大きく異なることがある。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ロジスティック回帰の報告</span>"
+    ]
+  },
+  {
+    "objectID": "08_reporting_logistic_regression.html#変数の扱いの明示",
+    "href": "08_reporting_logistic_regression.html#変数の扱いの明示",
+    "title": "9  ロジスティック回帰の報告",
+    "section": "9.8 変数の扱いの明示",
+    "text": "9.8 変数の扱いの明示\n連続変数の扱いも重要である。\n例えば：\n\n年齢（1歳単位）\nBMI（1 kg/m²単位）\n10歳ごと\n\nなど、単位を明確にする必要がある。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ロジスティック回帰の報告</span>"
+    ]
+  },
+  {
+    "objectID": "08_reporting_logistic_regression.html#カテゴリ変数の基準",
+    "href": "08_reporting_logistic_regression.html#カテゴリ変数の基準",
+    "title": "9  ロジスティック回帰の報告",
+    "section": "9.9 カテゴリ変数の基準",
+    "text": "9.9 カテゴリ変数の基準\nカテゴリ変数では：\n\n参照カテゴリー（reference category）\n\nを必ず示す必要がある。\n例：\n\n性別（男性を基準）\n\nこれがないと解釈できない。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ロジスティック回帰の報告</span>"
+    ]
+  },
+  {
+    "objectID": "08_reporting_logistic_regression.html#交互作用の報告",
+    "href": "08_reporting_logistic_regression.html#交互作用の報告",
+    "title": "9  ロジスティック回帰の報告",
+    "section": "9.10 交互作用の報告",
+    "text": "9.10 交互作用の報告\n交互作用を含む場合は：\n\n交互作用項の有無\n層別結果\np for interaction\n\nを報告することが望ましい。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ロジスティック回帰の報告</span>"
+    ]
+  },
+  {
+    "objectID": "08_reporting_logistic_regression.html#モデル適合度",
+    "href": "08_reporting_logistic_regression.html#モデル適合度",
+    "title": "9  ロジスティック回帰の報告",
+    "section": "9.11 モデル適合度",
+    "text": "9.11 モデル適合度\nロジスティック回帰では、以下の指標を報告することがある：\n\nHosmer–Lemeshow test\nAIC\npseudo R²\n\nただし、これらは必須ではない。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ロジスティック回帰の報告</span>"
+    ]
+  },
+  {
+    "objectID": "08_reporting_logistic_regression.html#予測性能予測モデルの場合",
+    "href": "08_reporting_logistic_regression.html#予測性能予測モデルの場合",
+    "title": "9  ロジスティック回帰の報告",
+    "section": "9.12 予測性能（予測モデルの場合）",
+    "text": "9.12 予測性能（予測モデルの場合）\n予測目的の場合は、以下も重要になる：\n\nROC曲線\nAUC\ncalibration\n\nこれらは第4部で詳しく扱う。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ロジスティック回帰の報告</span>"
+    ]
+  },
+  {
+    "objectID": "08_reporting_logistic_regression.html#よくある誤り",
+    "href": "08_reporting_logistic_regression.html#よくある誤り",
+    "title": "9  ロジスティック回帰の報告",
+    "section": "9.13 よくある誤り",
+    "text": "9.13 よくある誤り\n\n9.13.1 ORをRRとして解釈する\n最も多い誤りである。\n\nOR = 2.0 → リスク2倍と誤解する\n\nこれは正しくない場合が多い。\n\n\n\n9.13.2 p値のみ報告\np値だけを示す報告は不十分である。\n必ず：\n\nOR\nCI\n\nを併記する必要がある。\n\n\n\n9.13.3 調整内容が不明\nどの変数を調整したか書かれていない場合、結果の信頼性が低下する。",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ロジスティック回帰の報告</span>"
+    ]
+  },
+  {
+    "objectID": "08_reporting_logistic_regression.html#strobeガイドライン",
+    "href": "08_reporting_logistic_regression.html#strobeガイドライン",
+    "title": "9  ロジスティック回帰の報告",
+    "section": "9.14 STROBEガイドライン",
+    "text": "9.14 STROBEガイドライン\n観察研究では、\n\nSTROBE statement\n\nに従った報告が推奨される。\n主なポイント：\n\n研究デザイン\n変数定義\n統計手法\n調整変数\n結果の完全性",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ロジスティック回帰の報告</span>"
+    ]
+  },
+  {
+    "objectID": "08_reporting_logistic_regression.html#論文での典型的な書き方",
+    "href": "08_reporting_logistic_regression.html#論文での典型的な書き方",
+    "title": "9  ロジスティック回帰の報告",
+    "section": "9.15 論文での典型的な書き方",
+    "text": "9.15 論文での典型的な書き方\n例：\n\nMultivariable logistic regression was performed to examine the association between physical activity and falls, adjusted for age, sex, and BMI.\n\n\nPhysical activity was associated with lower odds of falls (OR = 0.72, 95% CI 0.58–0.90).",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ロジスティック回帰の報告</span>"
+    ]
+  },
+  {
+    "objectID": "08_reporting_logistic_regression.html#まとめ",
+    "href": "08_reporting_logistic_regression.html#まとめ",
+    "title": "9  ロジスティック回帰の報告",
+    "section": "9.16 まとめ",
+    "text": "9.16 まとめ\n\nロジスティック回帰ではORと95%CIを報告する\np値のみでは不十分である\n調整変数を明示する必要がある\n参照カテゴリーを明確にする\n単変量と多変量を区別する\n交互作用がある場合は明示する\nSTROBEに従うことが望ましい",
+    "crumbs": [
+      "Part 2: Model Building",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ロジスティック回帰の報告</span>"
+    ]
+  },
+  {
+    "objectID": "09_missing_data_and_multiple_imputation.html",
+    "href": "09_missing_data_and_multiple_imputation.html",
+    "title": "10  欠損と多重代入",
+    "section": "",
+    "text": "10.1 はじめに\n実際のデータ分析では、多くの場合で欠損データ（missing data）が発生する。\n例えば：\nなどである。\n欠損を適切に扱わないと、\nといった問題が起こる。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>欠損と多重代入</span>"
+    ]
+  },
+  {
+    "objectID": "09_missing_data_and_multiple_imputation.html#はじめに",
+    "href": "09_missing_data_and_multiple_imputation.html#はじめに",
+    "title": "10  欠損と多重代入",
+    "section": "",
+    "text": "BMIが未測定\n生活習慣の回答が一部欠けている\n認知機能テストが未実施\n\n\n\n\nバイアスが生じる\nサンプルサイズが減少する\n結果の再現性が低下する",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>欠損と多重代入</span>"
+    ]
+  },
+  {
+    "objectID": "09_missing_data_and_multiple_imputation.html#欠損の種類",
+    "href": "09_missing_data_and_multiple_imputation.html#欠損の種類",
+    "title": "10  欠損と多重代入",
+    "section": "10.2 欠損の種類",
+    "text": "10.2 欠損の種類\n欠損データは、発生メカニズムによって分類される。\n\n10.2.1 MCAR（完全にランダムな欠損）\nMissing Completely At Random\n\n欠損が他の変数と無関係に発生する\n\n例： - アンケートの偶発的な未回答\nこの場合、解析への影響は比較的小さい。\n\n\n\n10.2.2 MAR（観測データに依存する欠損）\nMissing At Random\n\n欠損が観測された変数に依存する\n\n例： - 高齢者ほどBMI未回答が多い\n多くの統計手法は、この仮定を前提としている。\n\n\n\n10.2.3 MNAR（非ランダム欠損）\nMissing Not At Random\n\n欠損が欠損そのものの値に依存する\n\n例： - 体重が重い人ほど体重を回答しない\nこの場合、最も扱いが難しい。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>欠損と多重代入</span>"
+    ]
+  },
+  {
+    "objectID": "09_missing_data_and_multiple_imputation.html#complete-case-analysis",
+    "href": "09_missing_data_and_multiple_imputation.html#complete-case-analysis",
+    "title": "10  欠損と多重代入",
+    "section": "10.3 complete case analysis",
+    "text": "10.3 complete case analysis\n最も単純な方法は、\n\n欠損のないデータだけを使う方法\n\nである。\nこれを complete case analysis（CCA）という。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>欠損と多重代入</span>"
+    ]
+  },
+  {
+    "objectID": "09_missing_data_and_multiple_imputation.html#complete-case-analysis-の問題",
+    "href": "09_missing_data_and_multiple_imputation.html#complete-case-analysis-の問題",
+    "title": "10  欠損と多重代入",
+    "section": "10.4 complete case analysis の問題",
+    "text": "10.4 complete case analysis の問題\nCCAには以下の問題がある：\n\nサンプルサイズが減る\nバイアスが生じる可能性\nMARでも偏ることがある\n\nそのため、一般的には推奨されない場合が多い。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>欠損と多重代入</span>"
+    ]
+  },
+  {
+    "objectID": "09_missing_data_and_multiple_imputation.html#単純代入の問題",
+    "href": "09_missing_data_and_multiple_imputation.html#単純代入の問題",
+    "title": "10  欠損と多重代入",
+    "section": "10.5 単純代入の問題",
+    "text": "10.5 単純代入の問題\n欠損を平均値などで埋める方法もあるが：\n\n分散が過小評価される\n不確実性が無視される\n推定が歪む\n\nため、基本的には推奨されない。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>欠損と多重代入</span>"
+    ]
+  },
+  {
+    "objectID": "09_missing_data_and_multiple_imputation.html#多重代入multiple-imputation",
+    "href": "09_missing_data_and_multiple_imputation.html#多重代入multiple-imputation",
+    "title": "10  欠損と多重代入",
+    "section": "10.6 多重代入（multiple imputation）",
+    "text": "10.6 多重代入（multiple imputation）\n多重代入は、欠損を扱う代表的な方法である。\n考え方は：\n\n欠損値を1つではなく複数の妥当な値で補完する\n\nことである。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>欠損と多重代入</span>"
+    ]
+  },
+  {
+    "objectID": "09_missing_data_and_multiple_imputation.html#多重代入の基本構造",
+    "href": "09_missing_data_and_multiple_imputation.html#多重代入の基本構造",
+    "title": "10  欠損と多重代入",
+    "section": "10.7 多重代入の基本構造",
+    "text": "10.7 多重代入の基本構造\n多重代入では：\n\n欠損を複数回補完する（m回）\n各データセットで解析する\n結果を統合する（pooling）\n\nという手順をとる。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>欠損と多重代入</span>"
+    ]
+  },
+  {
+    "objectID": "09_missing_data_and_multiple_imputation.html#なぜ複数回代入するのか",
+    "href": "09_missing_data_and_multiple_imputation.html#なぜ複数回代入するのか",
+    "title": "10  欠損と多重代入",
+    "section": "10.8 なぜ複数回代入するのか",
+    "text": "10.8 なぜ複数回代入するのか\n欠損値には不確実性があるため、\n\n1つの値で埋めると過信になる\n\nそのため、複数の可能性を反映させる必要がある。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>欠損と多重代入</span>"
+    ]
+  },
+  {
+    "objectID": "09_missing_data_and_multiple_imputation.html#rubins-rules",
+    "href": "09_missing_data_and_multiple_imputation.html#rubins-rules",
+    "title": "10  欠損と多重代入",
+    "section": "10.9 Rubin’s rules",
+    "text": "10.9 Rubin’s rules\n多重代入後の結果は、\n\nRubin’s rules\n\nにより統合される。\nこれにより：\n\n推定値\n標準誤差\n\nが適切に反映される。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>欠損と多重代入</span>"
+    ]
+  },
+  {
+    "objectID": "09_missing_data_and_multiple_imputation.html#多重代入の利点",
+    "href": "09_missing_data_and_multiple_imputation.html#多重代入の利点",
+    "title": "10  欠損と多重代入",
+    "section": "10.10 多重代入の利点",
+    "text": "10.10 多重代入の利点\n\nサンプルサイズを維持できる\nバイアスを減らせる可能性がある\n不確実性を反映できる",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>欠損と多重代入</span>"
+    ]
+  },
+  {
+    "objectID": "09_missing_data_and_multiple_imputation.html#多重代入の前提",
+    "href": "09_missing_data_and_multiple_imputation.html#多重代入の前提",
+    "title": "10  欠損と多重代入",
+    "section": "10.11 多重代入の前提",
+    "text": "10.11 多重代入の前提\n多重代入は通常、\n\nMAR（Missing At Random）\n\nを仮定する。\nそのため、\n\n欠損メカニズムの理解\n適切な補完モデル\n\nが重要である。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>欠損と多重代入</span>"
+    ]
+  },
+  {
+    "objectID": "09_missing_data_and_multiple_imputation.html#補完モデルに含めるべき変数",
+    "href": "09_missing_data_and_multiple_imputation.html#補完モデルに含めるべき変数",
+    "title": "10  欠損と多重代入",
+    "section": "10.12 補完モデルに含めるべき変数",
+    "text": "10.12 補完モデルに含めるべき変数\n多重代入では、\n\n解析モデルに使う変数だけでなく、関連する変数も含める\n\nことが推奨される。\n例えば：\n\n年齢\n性別\nアウトカム\n主要な共変量\n\nなどである。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>欠損と多重代入</span>"
+    ]
+  },
+  {
+    "objectID": "09_missing_data_and_multiple_imputation.html#logistic-regressionとの関係",
+    "href": "09_missing_data_and_multiple_imputation.html#logistic-regressionとの関係",
+    "title": "10  欠損と多重代入",
+    "section": "10.13 logistic regressionとの関係",
+    "text": "10.13 logistic regressionとの関係\nロジスティック回帰では：\n\n欠損をそのまま除外するとEPVが減る\n多重代入で安定した推定が可能になる\n\n特にイベント数が少ない場合には重要である。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>欠損と多重代入</span>"
+    ]
+  },
+  {
+    "objectID": "09_missing_data_and_multiple_imputation.html#感度分析",
+    "href": "09_missing_data_and_multiple_imputation.html#感度分析",
+    "title": "10  欠損と多重代入",
+    "section": "10.14 感度分析",
+    "text": "10.14 感度分析\n欠損データの扱いでは、\n\n結果の頑健性（robustness）\n\nを確認するために感度分析を行うことがある。\n例：\n\ncomplete case analysis\nmultiple imputation\n極端な仮定\n\nを比較する。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>欠損と多重代入</span>"
+    ]
+  },
+  {
+    "objectID": "09_missing_data_and_multiple_imputation.html#実務上の注意",
+    "href": "09_missing_data_and_multiple_imputation.html#実務上の注意",
+    "title": "10  欠損と多重代入",
+    "section": "10.15 実務上の注意",
+    "text": "10.15 実務上の注意\n\n欠損の割合を必ず報告する\n欠損メカニズムを議論する\n方法を明確に記述する\n補完回数（m）を示す",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>欠損と多重代入</span>"
+    ]
+  },
+  {
+    "objectID": "09_missing_data_and_multiple_imputation.html#よくある誤り",
+    "href": "09_missing_data_and_multiple_imputation.html#よくある誤り",
+    "title": "10  欠損と多重代入",
+    "section": "10.16 よくある誤り",
+    "text": "10.16 よくある誤り\n\n10.16.1 欠損を無視する\n最も多い問題である。\n\n\n\n10.16.2 平均値代入\n分散を過小評価しやすい。\n\n\n\n10.16.3 CCAの無批判な使用\nサンプルサイズ低下とバイアスの原因になる。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>欠損と多重代入</span>"
+    ]
+  },
+  {
+    "objectID": "09_missing_data_and_multiple_imputation.html#まとめ",
+    "href": "09_missing_data_and_multiple_imputation.html#まとめ",
+    "title": "10  欠損と多重代入",
+    "section": "10.17 まとめ",
+    "text": "10.17 まとめ\n\n欠損データは多くの研究で発生する\n欠損にはMCAR、MAR、MNARがある\ncomplete case analysisには限界がある\n多重代入は有力な方法である\nRubin’s rulesで統合する\nMARの仮定が重要である\n感度分析が推奨される",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>欠損と多重代入</span>"
+    ]
+  },
+  {
+    "objectID": "10_multinomial_logistic_regression.html",
+    "href": "10_multinomial_logistic_regression.html",
+    "title": "11  多項ロジスティック回帰",
+    "section": "",
+    "text": "11.1 はじめに\nこれまで扱ってきたロジスティック回帰は、\nであった。\nしかし実際の研究では、\nのように、3つ以上のカテゴリを持つアウトカムも多い。\nこのような場合に用いられるのが多項ロジスティック回帰（multinomial logistic regression）である。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>多項ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "10_multinomial_logistic_regression.html#はじめに",
+    "href": "10_multinomial_logistic_regression.html#はじめに",
+    "title": "11  多項ロジスティック回帰",
+    "section": "",
+    "text": "アウトカムが「2値（0/1）」の場合\n\n\n\n\n転倒なし / 転倒1回 / 転倒2回以上\n健康 / 軽度障害 / 重度障害\n非喫煙 / 既往喫煙 / 現在喫煙",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>多項ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "10_multinomial_logistic_regression.html#多項アウトカムとは",
+    "href": "10_multinomial_logistic_regression.html#多項アウトカムとは",
+    "title": "11  多項ロジスティック回帰",
+    "section": "11.2 多項アウトカムとは",
+    "text": "11.2 多項アウトカムとは\n多項アウトカムとは、\n\n順序が必ずしも明確でない複数カテゴリの結果\n\nである。\n例えば：\n\n\n\n状態\nカテゴリ\n\n\n\n\n健康\n0\n\n\n軽度障害\n1\n\n\n重度障害\n2\n\n\n\nこのような場合、単純な二値ロジスティック回帰では対応できない。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>多項ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "10_multinomial_logistic_regression.html#モデルの考え方",
+    "href": "10_multinomial_logistic_regression.html#モデルの考え方",
+    "title": "11  多項ロジスティック回帰",
+    "section": "11.3 モデルの考え方",
+    "text": "11.3 モデルの考え方\n多項ロジスティック回帰では、\n\n基準カテゴリと他のカテゴリを比較する\n\nという形でモデル化する。\n例えば「健康」を基準とすると：\n\n軽度障害 vs 健康\n重度障害 vs 健康\n\nをそれぞれモデル化する。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>多項ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "10_multinomial_logistic_regression.html#数学的表現",
+    "href": "10_multinomial_logistic_regression.html#数学的表現",
+    "title": "11  多項ロジスティック回帰",
+    "section": "11.4 数学的表現",
+    "text": "11.4 数学的表現\nカテゴリ (k) に対して：\n()={0k}+{1k}X_1++_{pk}X_p\nここで：\n\n(Y=0)：基準カテゴリ\n(k)：比較するカテゴリ\n(_k)：カテゴリごとの係数\n\nである。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>多項ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "10_multinomial_logistic_regression.html#オッズ比の解釈",
+    "href": "10_multinomial_logistic_regression.html#オッズ比の解釈",
+    "title": "11  多項ロジスティック回帰",
+    "section": "11.5 オッズ比の解釈",
+    "text": "11.5 オッズ比の解釈\n多項ロジスティック回帰でも、結果はオッズ比として解釈される。\n例えば：\n\n軽度障害 vs 健康\n重度障害 vs 健康\n\nそれぞれに対してオッズ比が推定される。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>多項ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "10_multinomial_logistic_regression.html#例運動と障害レベル",
+    "href": "10_multinomial_logistic_regression.html#例運動と障害レベル",
+    "title": "11  多項ロジスティック回帰",
+    "section": "11.6 例：運動と障害レベル",
+    "text": "11.6 例：運動と障害レベル\n例えば：\n\n説明変数：運動習慣\nアウトカム：障害レベル\n\n結果として：\n\n\n\n比較\nOR\n\n\n\n\n軽度障害 vs 健康\n0.80\n\n\n重度障害 vs 健康\n0.50\n\n\n\nであれば、\n\n運動習慣は障害リスクを段階的に低下させる可能性がある\n\nと解釈できる。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>多項ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "10_multinomial_logistic_regression.html#二値ロジスティック回帰との違い",
+    "href": "10_multinomial_logistic_regression.html#二値ロジスティック回帰との違い",
+    "title": "11  多項ロジスティック回帰",
+    "section": "11.7 二値ロジスティック回帰との違い",
+    "text": "11.7 二値ロジスティック回帰との違い\n\n\n\n手法\nアウトカム\n\n\n\n\nロジスティック回帰\n2値\n\n\n多項ロジスティック回帰\n3値以上\n\n\n\nまた、多項ロジスティック回帰では：\n\n複数の比較が同時に行われる\n各カテゴリごとに係数が異なる\n\nという特徴がある。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>多項ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "10_multinomial_logistic_regression.html#順序ロジスティック回帰との違い",
+    "href": "10_multinomial_logistic_regression.html#順序ロジスティック回帰との違い",
+    "title": "11  多項ロジスティック回帰",
+    "section": "11.8 順序ロジスティック回帰との違い",
+    "text": "11.8 順序ロジスティック回帰との違い\n多項ロジスティック回帰は、\n\nカテゴリ間に順序を仮定しない\n\n一方で、\n\n軽度 &lt; 重度\n\nのような順序が明確な場合は、\n\n順序ロジスティック回帰（ordinal logistic regression）\n\nを用いることがある。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>多項ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "10_multinomial_logistic_regression.html#順序がある場合の注意",
+    "href": "10_multinomial_logistic_regression.html#順序がある場合の注意",
+    "title": "11  多項ロジスティック回帰",
+    "section": "11.9 順序がある場合の注意",
+    "text": "11.9 順序がある場合の注意\n順序がある場合でも、\n\nproportional odds assumption\n\nが成り立たない場合は、多項ロジスティック回帰を使うことがある。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>多項ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "10_multinomial_logistic_regression.html#多項ロジスティック回帰の利点",
+    "href": "10_multinomial_logistic_regression.html#多項ロジスティック回帰の利点",
+    "title": "11  多項ロジスティック回帰",
+    "section": "11.10 多項ロジスティック回帰の利点",
+    "text": "11.10 多項ロジスティック回帰の利点\n\n3つ以上のカテゴリを扱える\n柔軟なモデル化が可能\n順序が不要",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>多項ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "10_multinomial_logistic_regression.html#限界",
+    "href": "10_multinomial_logistic_regression.html#限界",
+    "title": "11  多項ロジスティック回帰",
+    "section": "11.11 限界",
+    "text": "11.11 限界\n\nパラメータ数が増える\nサンプルサイズが多く必要\n解釈が複雑になる\n過学習のリスクが高い",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>多項ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "10_multinomial_logistic_regression.html#サンプルサイズの重要性",
+    "href": "10_multinomial_logistic_regression.html#サンプルサイズの重要性",
+    "title": "11  多項ロジスティック回帰",
+    "section": "11.12 サンプルサイズの重要性",
+    "text": "11.12 サンプルサイズの重要性\n多項ロジスティック回帰では、\n\nカテゴリごとに推定が必要\n\nであるため、通常のロジスティック回帰よりも多くのデータが必要になる。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>多項ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "10_multinomial_logistic_regression.html#実務での使い方",
+    "href": "10_multinomial_logistic_regression.html#実務での使い方",
+    "title": "11  多項ロジスティック回帰",
+    "section": "11.13 実務での使い方",
+    "text": "11.13 実務での使い方\n多項ロジスティック回帰は、\n\n障害度分類\n生活状態分類\n行動パターン分類\n\nなどで用いられる。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>多項ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "10_multinomial_logistic_regression.html#モデルの解釈の注意",
+    "href": "10_multinomial_logistic_regression.html#モデルの解釈の注意",
+    "title": "11  多項ロジスティック回帰",
+    "section": "11.14 モデルの解釈の注意",
+    "text": "11.14 モデルの解釈の注意\n結果は複数のオッズ比として出るため、\n\nどのカテゴリと比較しているか\n基準カテゴリは何か\n\nを明確にする必要がある。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>多項ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "10_multinomial_logistic_regression.html#例喫煙状態",
+    "href": "10_multinomial_logistic_regression.html#例喫煙状態",
+    "title": "11  多項ロジスティック回帰",
+    "section": "11.15 例：喫煙状態",
+    "text": "11.15 例：喫煙状態\n\n\n\nカテゴリ\n説明\n\n\n\n\n0\n非喫煙\n\n\n1\n既往喫煙\n\n\n2\n現在喫煙\n\n\n\nこの場合：\n\n既往喫煙 vs 非喫煙\n現在喫煙 vs 非喫煙\n\nの2つのモデルが同時に推定される。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>多項ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "10_multinomial_logistic_regression.html#まとめ",
+    "href": "10_multinomial_logistic_regression.html#まとめ",
+    "title": "11  多項ロジスティック回帰",
+    "section": "11.16 まとめ",
+    "text": "11.16 まとめ\n\n多項ロジスティック回帰は3つ以上のカテゴリを扱う\n基準カテゴリとの比較でモデル化される\n各カテゴリごとにオッズ比が推定される\n順序がある場合は順序ロジスティック回帰も検討される\nサンプルサイズが重要である\n解釈には基準カテゴリの明示が必須である",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>多項ロジスティック回帰</span>"
+    ]
+  },
+  {
+    "objectID": "11_propensity_score.html",
+    "href": "11_propensity_score.html",
+    "title": "12  傾向スコア",
+    "section": "",
+    "text": "12.1 はじめに\n観察研究では、\nという特徴がある。\nそのため、\nなどが、介入の有無とアウトカムの両方に影響する可能性がある。\nこのような状況では、単純なロジスティック回帰だけでは交絡を十分に調整できないことがある。\nそこで用いられる方法の一つが傾向スコア（propensity score）である。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>傾向スコア</span>"
+    ]
+  },
+  {
+    "objectID": "11_propensity_score.html#はじめに",
+    "href": "11_propensity_score.html#はじめに",
+    "title": "12  傾向スコア",
+    "section": "",
+    "text": "介入（exposure）はランダムに割り付けられない\n\n\n\n\n年齢\n性別\n疾患重症度\n社会経済状況",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>傾向スコア</span>"
+    ]
+  },
+  {
+    "objectID": "11_propensity_score.html#傾向スコアとは",
+    "href": "11_propensity_score.html#傾向スコアとは",
+    "title": "12  傾向スコア",
+    "section": "12.2 傾向スコアとは",
+    "text": "12.2 傾向スコアとは\n傾向スコアとは、\n\n「ある介入を受ける確率」\n\nである。\n例えば：\n\n運動習慣あり（1）\n運動習慣なし（0）\n\nという介入があるとき、\ne(X)=P(T=1X)\nここで：\n\n(T)：介入の有無\n(X)：共変量（年齢・性別など）\n\nである。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>傾向スコア</span>"
+    ]
+  },
+  {
+    "objectID": "11_propensity_score.html#なぜ傾向スコアを使うのか",
+    "href": "11_propensity_score.html#なぜ傾向スコアを使うのか",
+    "title": "12  傾向スコア",
+    "section": "12.3 なぜ傾向スコアを使うのか",
+    "text": "12.3 なぜ傾向スコアを使うのか\n通常のロジスティック回帰では、\n\n多くの共変量を直接モデルに入れる必要がある\nサンプルサイズが小さいと不安定になる\nモデル依存性が強い\n\nという問題がある。\n傾向スコアは、\n\n多数の共変量を1つのスコアに要約する\n\nという利点がある。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>傾向スコア</span>"
+    ]
+  },
+  {
+    "objectID": "11_propensity_score.html#傾向スコアの推定",
+    "href": "11_propensity_score.html#傾向スコアの推定",
+    "title": "12  傾向スコア",
+    "section": "12.4 傾向スコアの推定",
+    "text": "12.4 傾向スコアの推定\n傾向スコアは通常、\n\nロジスティック回帰\n\nを用いて推定する。\n例えば：\n\n介入（運動習慣）を目的変数\n年齢・性別・BMIなどを説明変数\n\nとしてモデルを構築する。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>傾向スコア</span>"
+    ]
+  },
+  {
+    "objectID": "11_propensity_score.html#傾向スコアの使い方",
+    "href": "11_propensity_score.html#傾向スコアの使い方",
+    "title": "12  傾向スコア",
+    "section": "12.5 傾向スコアの使い方",
+    "text": "12.5 傾向スコアの使い方\n傾向スコアは主に3つの方法で使われる。\n\n\n12.5.1 1. マッチング（matching）\n傾向スコアが似ている人同士をペアにする方法である。\n例：\n\n運動あり群となし群で\n同じような傾向スコアの人を比較\n\n\n\n\n12.5.2 2. 層別化（stratification）\n傾向スコアをいくつかの層に分けて比較する方法である。\n例：\n\n傾向スコアを5分位に分割\n各層で効果を評価\n\n\n\n\n12.5.3 3. 重み付け（IPTW）\nInverse Probability of Treatment Weighting による方法である。\nw_i = (T=1), w_i = (T=0)\nこれにより、擬似的なランダム化に近い状況を作ることができる。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>傾向スコア</span>"
+    ]
+  },
+  {
+    "objectID": "11_propensity_score.html#ロジスティック回帰との関係",
+    "href": "11_propensity_score.html#ロジスティック回帰との関係",
+    "title": "12  傾向スコア",
+    "section": "12.6 ロジスティック回帰との関係",
+    "text": "12.6 ロジスティック回帰との関係\n傾向スコア分析では、ロジスティック回帰が2回登場することが多い：\n\n傾向スコア推定（介入モデル）\nアウトカム解析（効果推定）\n\nこの点が重要である。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>傾向スコア</span>"
+    ]
+  },
+  {
+    "objectID": "11_propensity_score.html#傾向スコアの利点",
+    "href": "11_propensity_score.html#傾向スコアの利点",
+    "title": "12  傾向スコア",
+    "section": "12.7 傾向スコアの利点",
+    "text": "12.7 傾向スコアの利点\n\n多数の交絡因子を要約できる\nモデル依存性を減らせる\n観察研究での比較可能性を高める",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>傾向スコア</span>"
+    ]
+  },
+  {
+    "objectID": "11_propensity_score.html#限界",
+    "href": "11_propensity_score.html#限界",
+    "title": "12  傾向スコア",
+    "section": "12.8 限界",
+    "text": "12.8 限界\n傾向スコアには以下の限界がある：\n\n未測定交絡には対応できない\nモデルの仕様に依存する\n極端なスコアで不安定になる",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>傾向スコア</span>"
+    ]
+  },
+  {
+    "objectID": "11_propensity_score.html#overlap共通サポート",
+    "href": "11_propensity_score.html#overlap共通サポート",
+    "title": "12  傾向スコア",
+    "section": "12.9 overlap（共通サポート）",
+    "text": "12.9 overlap（共通サポート）\n傾向スコア分析では、\n\n介入群と対照群の分布が重なっていること\n\nが重要である。\nこれを overlap（共通サポート）という。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>傾向スコア</span>"
+    ]
+  },
+  {
+    "objectID": "11_propensity_score.html#バランスの確認",
+    "href": "11_propensity_score.html#バランスの確認",
+    "title": "12  傾向スコア",
+    "section": "12.10 バランスの確認",
+    "text": "12.10 バランスの確認\n傾向スコアを用いた後は、\n\nstandardized mean difference（SMD）\n\nなどを用いて共変量のバランスを確認する。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>傾向スコア</span>"
+    ]
+  },
+  {
+    "objectID": "11_propensity_score.html#実務的な考え方",
+    "href": "11_propensity_score.html#実務的な考え方",
+    "title": "12  傾向スコア",
+    "section": "12.11 実務的な考え方",
+    "text": "12.11 実務的な考え方\n傾向スコアは万能ではなく、\n\n回帰調整\n感度分析\n\nと併用されることが多い。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>傾向スコア</span>"
+    ]
+  },
+  {
+    "objectID": "11_propensity_score.html#例運動と転倒",
+    "href": "11_propensity_score.html#例運動と転倒",
+    "title": "12  傾向スコア",
+    "section": "12.12 例：運動と転倒",
+    "text": "12.12 例：運動と転倒\n例として：\n\n介入：運動習慣\nアウトカム：転倒\n\nを考える。\n傾向スコアにより：\n\n年齢\n性別\nBMI\n既往歴\n\nをまとめて調整し、比較可能性を高める。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>傾向スコア</span>"
+    ]
+  },
+  {
+    "objectID": "11_propensity_score.html#傾向スコアと因果推論",
+    "href": "11_propensity_score.html#傾向スコアと因果推論",
+    "title": "12  傾向スコア",
+    "section": "12.13 傾向スコアと因果推論",
+    "text": "12.13 傾向スコアと因果推論\n傾向スコアは、\n\n観察研究における因果推論の重要なツール\n\nである。\nただし、\n\nランダム化試験の代替ではない\n仮定に依存する\n\nことに注意が必要である。",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>傾向スコア</span>"
+    ]
+  },
+  {
+    "objectID": "11_propensity_score.html#まとめ",
+    "href": "11_propensity_score.html#まとめ",
+    "title": "12  傾向スコア",
+    "section": "12.14 まとめ",
+    "text": "12.14 まとめ\n\n傾向スコアは介入を受ける確率である\n多数の共変量を1つのスコアに要約する\nマッチング・層別化・重み付けで使用する\nロジスティック回帰が基盤となる\n未測定交絡には対応できない\n共通サポートとバランス確認が重要である",
+    "crumbs": [
+      "Part 3: Practical Issues",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>傾向スコア</span>"
+    ]
+  },
+  {
+    "objectID": "12_sensitivity_and_specificity.html",
+    "href": "12_sensitivity_and_specificity.html",
+    "title": "13  感度と特異度",
+    "section": "",
+    "text": "13.1 はじめに\nロジスティック回帰や予測モデルを用いると、\nを確率として予測することができる。\nしかし実際の臨床や公衆衛生では、\nという「分類」が必要になる場面が多い。\nこのとき重要になるのが、\nである。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>感度と特異度</span>"
+    ]
+  },
+  {
+    "objectID": "12_sensitivity_and_specificity.html#はじめに",
+    "href": "12_sensitivity_and_specificity.html#はじめに",
+    "title": "13  感度と特異度",
+    "section": "",
+    "text": "「この人は病気であるかどうか」\n\n\n\n\n陽性か陰性か\n病気か非病気か\n\n\n\n\n感度（sensitivity）\n特異度（specificity）",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>感度と特異度</span>"
+    ]
+  },
+  {
+    "objectID": "12_sensitivity_and_specificity.html#混同行列confusion-matrix",
+    "href": "12_sensitivity_and_specificity.html#混同行列confusion-matrix",
+    "title": "13  感度と特異度",
+    "section": "13.2 混同行列（confusion matrix）",
+    "text": "13.2 混同行列（confusion matrix）\nまず基本となるのが混同行列である。\n\n\n\n\n実際に病気あり\n実際に病気なし\n\n\n\n\n検査陽性\n真陽性（TP）\n偽陽性（FP）\n\n\n検査陰性\n偽陰性（FN）\n真陰性（TN）\n\n\n\nこの表をもとに各指標を定義する。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>感度と特異度</span>"
+    ]
+  },
+  {
+    "objectID": "12_sensitivity_and_specificity.html#感度sensitivity",
+    "href": "12_sensitivity_and_specificity.html#感度sensitivity",
+    "title": "13  感度と特異度",
+    "section": "13.3 感度（sensitivity）",
+    "text": "13.3 感度（sensitivity）\n感度とは、\n\n「病気の人を正しく陽性と判定できる割合」\n\nである。\n = \n感度が高いほど、\n\n病気を見逃しにくい\n\nことを意味する。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>感度と特異度</span>"
+    ]
+  },
+  {
+    "objectID": "12_sensitivity_and_specificity.html#特異度specificity",
+    "href": "12_sensitivity_and_specificity.html#特異度specificity",
+    "title": "13  感度と特異度",
+    "section": "13.4 特異度（specificity）",
+    "text": "13.4 特異度（specificity）\n特異度とは、\n\n「病気でない人を正しく陰性と判定できる割合」\n\nである。\n = \n特異度が高いほど、\n\n偽陽性が少ない\n\nことを意味する。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>感度と特異度</span>"
+    ]
+  },
+  {
+    "objectID": "12_sensitivity_and_specificity.html#感度と特異度のトレードオフ",
+    "href": "12_sensitivity_and_specificity.html#感度と特異度のトレードオフ",
+    "title": "13  感度と特異度",
+    "section": "13.5 感度と特異度のトレードオフ",
+    "text": "13.5 感度と特異度のトレードオフ\n一般に、\n\n感度と特異度は同時に最大にはならない\n\nというトレードオフが存在する。\n例えば：\n\n閾値を下げる → 感度↑、特異度↓\n閾値を上げる → 感度↓、特異度↑",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>感度と特異度</span>"
+    ]
+  },
+  {
+    "objectID": "12_sensitivity_and_specificity.html#ロジスティック回帰との関係",
+    "href": "12_sensitivity_and_specificity.html#ロジスティック回帰との関係",
+    "title": "13  感度と特異度",
+    "section": "13.6 ロジスティック回帰との関係",
+    "text": "13.6 ロジスティック回帰との関係\nロジスティック回帰では、\n\n予測確率 p\n\nが得られる。\nこの p に対して閾値（cut-off）を設定し、\n\np ≥ 0.5 → 陽性\np &lt; 0.5 → 陰性\n\nのように分類する。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>感度と特異度</span>"
+    ]
+  },
+  {
+    "objectID": "12_sensitivity_and_specificity.html#陽性的中率ppv",
+    "href": "12_sensitivity_and_specificity.html#陽性的中率ppv",
+    "title": "13  感度と特異度",
+    "section": "13.7 陽性的中率（PPV）",
+    "text": "13.7 陽性的中率（PPV）\n陽性的中率は、\n\n陽性と判定された人のうち、実際に病気である割合\n\nである。\n =",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>感度と特異度</span>"
+    ]
+  },
+  {
+    "objectID": "12_sensitivity_and_specificity.html#陰性的中率npv",
+    "href": "12_sensitivity_and_specificity.html#陰性的中率npv",
+    "title": "13  感度と特異度",
+    "section": "13.8 陰性的中率（NPV）",
+    "text": "13.8 陰性的中率（NPV）\n陰性的中率は、\n\n陰性と判定された人のうち、実際に病気でない割合\n\nである。\n =",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>感度と特異度</span>"
+    ]
+  },
+  {
+    "objectID": "12_sensitivity_and_specificity.html#有病率の影響",
+    "href": "12_sensitivity_and_specificity.html#有病率の影響",
+    "title": "13  感度と特異度",
+    "section": "13.9 有病率の影響",
+    "text": "13.9 有病率の影響\n感度・特異度は比較的安定した指標であるが、\nPPVとNPVは有病率に強く依存する。\n例えば：\n\n有病率が高い → PPV上昇\n有病率が低い → NPV上昇",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>感度と特異度</span>"
+    ]
+  },
+  {
+    "objectID": "12_sensitivity_and_specificity.html#スクリーニング検査の考え方",
+    "href": "12_sensitivity_and_specificity.html#スクリーニング検査の考え方",
+    "title": "13  感度と特異度",
+    "section": "13.10 スクリーニング検査の考え方",
+    "text": "13.10 スクリーニング検査の考え方\nスクリーニング検査では通常、\n\n感度を重視（見逃しを減らす）\n特異度はやや犠牲になることもある\n\n例：\n\nがん検診\n認知症スクリーニング",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>感度と特異度</span>"
+    ]
+  },
+  {
+    "objectID": "12_sensitivity_and_specificity.html#臨床診断との違い",
+    "href": "12_sensitivity_and_specificity.html#臨床診断との違い",
+    "title": "13  感度と特異度",
+    "section": "13.11 臨床診断との違い",
+    "text": "13.11 臨床診断との違い\n\n\n\n目的\n重視する指標\n\n\n\n\nスクリーニング\n感度\n\n\n確定診断\n特異度",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>感度と特異度</span>"
+    ]
+  },
+  {
+    "objectID": "12_sensitivity_and_specificity.html#roc曲線との関係",
+    "href": "12_sensitivity_and_specificity.html#roc曲線との関係",
+    "title": "13  感度と特異度",
+    "section": "13.12 ROC曲線との関係",
+    "text": "13.12 ROC曲線との関係\n感度と特異度はROC曲線の基礎となる。\nROC曲線では：\n\n感度（TPR）\n1 − 特異度（FPR）\n\nをプロットする。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>感度と特異度</span>"
+    ]
+  },
+  {
+    "objectID": "12_sensitivity_and_specificity.html#閾値の選び方",
+    "href": "12_sensitivity_and_specificity.html#閾値の選び方",
+    "title": "13  感度と特異度",
+    "section": "13.13 閾値の選び方",
+    "text": "13.13 閾値の選び方\nカットオフの選択には以下が使われる：\n\nYouden index\n臨床的判断\nコスト（偽陽性・偽陰性）",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>感度と特異度</span>"
+    ]
+  },
+  {
+    "objectID": "12_sensitivity_and_specificity.html#ロジスティック回帰との統合",
+    "href": "12_sensitivity_and_specificity.html#ロジスティック回帰との統合",
+    "title": "13  感度と特異度",
+    "section": "13.14 ロジスティック回帰との統合",
+    "text": "13.14 ロジスティック回帰との統合\nロジスティック回帰は：\n\n確率を出すモデル\n感度・特異度はその結果の評価\n\nという関係にある。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>感度と特異度</span>"
+    ]
+  },
+  {
+    "objectID": "12_sensitivity_and_specificity.html#まとめ",
+    "href": "12_sensitivity_and_specificity.html#まとめ",
+    "title": "13  感度と特異度",
+    "section": "13.15 まとめ",
+    "text": "13.15 まとめ\n\n感度は病気を見つける能力である\n特異度は病気でない人を正しく除外する能力である\n両者にはトレードオフがある\nPPVとNPVは有病率に依存する\nROC曲線は感度と特異度に基づく評価指標である\nロジスティック回帰はこれらの基礎となる予測モデルである",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>感度と特異度</span>"
+    ]
+  },
+  {
+    "objectID": "13_roc_curve.html",
+    "href": "13_roc_curve.html",
+    "title": "14  ROC曲線",
+    "section": "",
+    "text": "14.1 はじめに\nロジスティック回帰などの予測モデルでは、\nを出力することができる。\nしかし実際の運用では、その確率を使って\nを分類する必要がある。\nこのとき重要になるのがROC曲線（Receiver Operating Characteristic curve）である。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>ROC曲線</span>"
+    ]
+  },
+  {
+    "objectID": "13_roc_curve.html#はじめに",
+    "href": "13_roc_curve.html#はじめに",
+    "title": "14  ROC曲線",
+    "section": "",
+    "text": "ある人が「病気である確率」\n\n\n\n\n陽性か陰性か\nリスクが高いか低いか",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>ROC曲線</span>"
+    ]
+  },
+  {
+    "objectID": "13_roc_curve.html#roc曲線とは",
+    "href": "13_roc_curve.html#roc曲線とは",
+    "title": "14  ROC曲線",
+    "section": "14.2 ROC曲線とは",
+    "text": "14.2 ROC曲線とは\nROC曲線とは、\n\n感度と特異度の関係を可視化した曲線\n\nである。\nより正確には、\n\n縦軸：感度（True Positive Rate）\n横軸：1 − 特異度（False Positive Rate）\n\nをプロットしたものである。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>ROC曲線</span>"
+    ]
+  },
+  {
+    "objectID": "13_roc_curve.html#roc曲線の構造",
+    "href": "13_roc_curve.html#roc曲線の構造",
+    "title": "14  ROC曲線",
+    "section": "14.3 ROC曲線の構造",
+    "text": "14.3 ROC曲線の構造\nROC曲線は、異なるカットオフ値ごとに計算される。\n例えばロジスティック回帰の予測確率 (p) に対して：\n\n0.9以上 → 陽性\n0.8以上 → 陽性\n0.7以上 → 陽性\n\nというように閾値を変えていく。\nそのたびに：\n\n感度\n特異度\n\nが変化する。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>ROC曲線</span>"
+    ]
+  },
+  {
+    "objectID": "13_roc_curve.html#roc曲線の意味",
+    "href": "13_roc_curve.html#roc曲線の意味",
+    "title": "14  ROC曲線",
+    "section": "14.4 ROC曲線の意味",
+    "text": "14.4 ROC曲線の意味\nROC曲線は、\n\nモデルの分類性能全体を表す図\n\nである。\n理想的なモデルは：\n\n左上に近い曲線（高感度・高特異度）\n\nとなる。\n一方、ランダム分類は対角線になる。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>ROC曲線</span>"
+    ]
+  },
+  {
+    "objectID": "13_roc_curve.html#aucarea-under-the-curve",
+    "href": "13_roc_curve.html#aucarea-under-the-curve",
+    "title": "14  ROC曲線",
+    "section": "14.5 AUC（Area Under the Curve）",
+    "text": "14.5 AUC（Area Under the Curve）\nROC曲線の下の面積をAUCという。\nAUC = _0^1 TPR() , d()\nAUCは、\n\nモデルの識別能力を1つの数値で表した指標\n\nである。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>ROC曲線</span>"
+    ]
+  },
+  {
+    "objectID": "13_roc_curve.html#aucの解釈",
+    "href": "13_roc_curve.html#aucの解釈",
+    "title": "14  ROC曲線",
+    "section": "14.6 AUCの解釈",
+    "text": "14.6 AUCの解釈\nAUCの値は通常0.5〜1の範囲をとる。\n\n\n\nAUC\n解釈\n\n\n\n\n0.5\nランダム\n\n\n0.6–0.7\n低い性能\n\n\n0.7–0.8\n中程度\n\n\n0.8–0.9\n良い\n\n\n0.9以上\n非常に良い",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>ROC曲線</span>"
+    ]
+  },
+  {
+    "objectID": "13_roc_curve.html#roc曲線の利点",
+    "href": "13_roc_curve.html#roc曲線の利点",
+    "title": "14  ROC曲線",
+    "section": "14.7 ROC曲線の利点",
+    "text": "14.7 ROC曲線の利点\nROC曲線の利点は：\n\nカットオフに依存しない\n感度と特異度を同時に評価できる\nモデル比較が可能\n\nである。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>ROC曲線</span>"
+    ]
+  },
+  {
+    "objectID": "13_roc_curve.html#roc曲線の限界",
+    "href": "13_roc_curve.html#roc曲線の限界",
+    "title": "14  ROC曲線",
+    "section": "14.8 ROC曲線の限界",
+    "text": "14.8 ROC曲線の限界\nROC曲線にはいくつかの限界もある。\n\n14.8.1 有病率に依存しない\nROC曲線は有病率に依存しないため、\n\n臨床的な実用性を反映しないことがある\n\n\n\n\n14.8.2 PPV/NPVを反映しない\nROC曲線は：\n\n陽性的中率\n陰性的中率\n\nを直接反映しない。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>ROC曲線</span>"
+    ]
+  },
+  {
+    "objectID": "13_roc_curve.html#感度特異度との関係",
+    "href": "13_roc_curve.html#感度特異度との関係",
+    "title": "14  ROC曲線",
+    "section": "14.9 感度・特異度との関係",
+    "text": "14.9 感度・特異度との関係\nROC曲線は、\n\n感度（sensitivity）\n特異度（specificity）\n\nの全ての組み合わせをまとめたものである。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>ROC曲線</span>"
+    ]
+  },
+  {
+    "objectID": "13_roc_curve.html#最適カットオフの選択",
+    "href": "13_roc_curve.html#最適カットオフの選択",
+    "title": "14  ROC曲線",
+    "section": "14.10 最適カットオフの選択",
+    "text": "14.10 最適カットオフの選択\nROC曲線を用いて、\n\n最適な閾値（cut-off）\n\nを選ぶことができる。\n代表的な方法は：\n\nYouden index（感度 + 特異度 − 1）\n臨床的コスト最小化\n感度重視・特異度重視の設定",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>ROC曲線</span>"
+    ]
+  },
+  {
+    "objectID": "13_roc_curve.html#ロジスティック回帰との関係",
+    "href": "13_roc_curve.html#ロジスティック回帰との関係",
+    "title": "14  ROC曲線",
+    "section": "14.11 ロジスティック回帰との関係",
+    "text": "14.11 ロジスティック回帰との関係\nロジスティック回帰は：\n\n確率を出力するモデル\n\nである。\nROC曲線は：\n\nその確率の分類性能を評価する方法\n\nである。\nつまり、\n\nロジスティック回帰 → 予測\nROC曲線 → 評価\n\nという関係にある。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>ROC曲線</span>"
+    ]
+  },
+  {
+    "objectID": "13_roc_curve.html#モデル比較",
+    "href": "13_roc_curve.html#モデル比較",
+    "title": "14  ROC曲線",
+    "section": "14.12 モデル比較",
+    "text": "14.12 モデル比較\nROC曲線とAUCを用いることで、\n\n異なるロジスティック回帰モデル\n他の機械学習モデル\n\nを比較することができる。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>ROC曲線</span>"
+    ]
+  },
+  {
+    "objectID": "13_roc_curve.html#例転倒予測",
+    "href": "13_roc_curve.html#例転倒予測",
+    "title": "14  ROC曲線",
+    "section": "14.13 例：転倒予測",
+    "text": "14.13 例：転倒予測\n例えば転倒予測モデルで：\n\n年齢\nBMI\n運動習慣\n\nを使った場合、\nAUCが0.78であれば：\n\n中程度の識別性能を持つモデル\n\nと解釈できる。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>ROC曲線</span>"
+    ]
+  },
+  {
+    "objectID": "13_roc_curve.html#まとめ",
+    "href": "13_roc_curve.html#まとめ",
+    "title": "14  ROC曲線",
+    "section": "14.14 まとめ",
+    "text": "14.14 まとめ\n\nROC曲線は感度と特異度の関係を表す\n横軸は1−特異度、縦軸は感度である\nAUCはモデルの識別能力を示す指標である\nROCはカットオフに依存しない評価方法である\n有病率やPPV/NPVは直接反映しない\nロジスティック回帰の性能評価に広く使われる",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>ROC曲線</span>"
+    ]
+  },
+  {
+    "objectID": "14_risk_score_development.html",
+    "href": "14_risk_score_development.html",
+    "title": "15  リスクスコア開発",
+    "section": "",
+    "text": "15.1 はじめに\nロジスティック回帰を用いると、\nを推定することができる。\nしかし臨床や現場では、確率そのものよりも、\nの方が使いやすいことが多い。\nこのような目的で作成されるのがリスクスコア（risk score）である。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>リスクスコア開発</span>"
+    ]
+  },
+  {
+    "objectID": "14_risk_score_development.html#はじめに",
+    "href": "14_risk_score_development.html#はじめに",
+    "title": "15  リスクスコア開発",
+    "section": "",
+    "text": "個人ごとの「発生確率」\n\n\n\n\nスコア化されたリスク\n簡便なチェックリスト\nスクリーニングツール",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>リスクスコア開発</span>"
+    ]
+  },
+  {
+    "objectID": "14_risk_score_development.html#リスクスコアとは",
+    "href": "14_risk_score_development.html#リスクスコアとは",
+    "title": "15  リスクスコア開発",
+    "section": "15.2 リスクスコアとは",
+    "text": "15.2 リスクスコアとは\nリスクスコアとは、\n\n複数のリスク因子を点数化して合計することで、リスクを評価する方法\n\nである。\n例えば：\n\n年齢\n性別\n既往歴\n生活習慣\n\nなどを点数化し、合計点でリスクを評価する。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>リスクスコア開発</span>"
+    ]
+  },
+  {
+    "objectID": "14_risk_score_development.html#ロジスティック回帰との関係",
+    "href": "14_risk_score_development.html#ロジスティック回帰との関係",
+    "title": "15  リスクスコア開発",
+    "section": "15.3 ロジスティック回帰との関係",
+    "text": "15.3 ロジスティック回帰との関係\nリスクスコアは通常、\n\nロジスティック回帰モデルから構築される\n\nロジスティック回帰の係数は：\n\n各変数の重み\n\nとして解釈できるため、それを簡略化してスコア化する。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>リスクスコア開発</span>"
+    ]
+  },
+  {
+    "objectID": "14_risk_score_development.html#スコア化の基本手順",
+    "href": "14_risk_score_development.html#スコア化の基本手順",
+    "title": "15  リスクスコア開発",
+    "section": "15.4 スコア化の基本手順",
+    "text": "15.4 スコア化の基本手順\n一般的な流れは以下である：\n\nロジスティック回帰モデルを構築する\n回帰係数（β）を取得する\nβを基に点数化する\n合計スコアを作成する\nリスク確率に変換する",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>リスクスコア開発</span>"
+    ]
+  },
+  {
+    "objectID": "14_risk_score_development.html#点数化の方法",
+    "href": "14_risk_score_development.html#点数化の方法",
+    "title": "15  リスクスコア開発",
+    "section": "15.5 点数化の方法",
+    "text": "15.5 点数化の方法\n回帰係数をそのまま使うのではなく、\n\n実用性のために整数化する\n\nことが多い。\n例えば：\n\nβ = 0.2 → 1点\nβ = 0.5 → 2〜3点\n\nのように丸める。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>リスクスコア開発</span>"
+    ]
+  },
+  {
+    "objectID": "14_risk_score_development.html#例簡易リスクスコア",
+    "href": "14_risk_score_development.html#例簡易リスクスコア",
+    "title": "15  リスクスコア開発",
+    "section": "15.6 例：簡易リスクスコア",
+    "text": "15.6 例：簡易リスクスコア\n例えば転倒リスクのスコアとして：\n\n\n\n因子\n点数\n\n\n\n\n75歳以上\n2点\n\n\n男性\n1点\n\n\nBMI &lt; 18.5\n1点\n\n\n過去1年の転倒歴\n3点\n\n\n歩行速度低下\n2点\n\n\n\n合計点が高いほどリスクが高い。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>リスクスコア開発</span>"
+    ]
+  },
+  {
+    "objectID": "14_risk_score_development.html#リスクスコアの目的",
+    "href": "14_risk_score_development.html#リスクスコアの目的",
+    "title": "15  リスクスコア開発",
+    "section": "15.7 リスクスコアの目的",
+    "text": "15.7 リスクスコアの目的\nリスクスコアの目的は：\n\n臨床判断の補助\nスクリーニングの効率化\n現場での簡便な使用\n患者説明の容易化\n\nである。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>リスクスコア開発</span>"
+    ]
+  },
+  {
+    "objectID": "14_risk_score_development.html#カットオフの設定",
+    "href": "14_risk_score_development.html#カットオフの設定",
+    "title": "15  リスクスコア開発",
+    "section": "15.8 カットオフの設定",
+    "text": "15.8 カットオフの設定\nリスクスコアでは、\n\nどの点数以上を「高リスク」とするか\n\nを決める必要がある。\nこの決定には：\n\nROC曲線\n感度・特異度のバランス\n臨床的判断\n\nが用いられる。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>リスクスコア開発</span>"
+    ]
+  },
+  {
+    "objectID": "14_risk_score_development.html#rocとの関係",
+    "href": "14_risk_score_development.html#rocとの関係",
+    "title": "15  リスクスコア開発",
+    "section": "15.9 ROCとの関係",
+    "text": "15.9 ROCとの関係\nリスクスコアの性能評価にはROC曲線が用いられる。\n\nスコアごとに感度・特異度を計算\nROC曲線を作成\nAUCで全体性能を評価",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>リスクスコア開発</span>"
+    ]
+  },
+  {
+    "objectID": "14_risk_score_development.html#キャリブレーション",
+    "href": "14_risk_score_development.html#キャリブレーション",
+    "title": "15  リスクスコア開発",
+    "section": "15.10 キャリブレーション",
+    "text": "15.10 キャリブレーション\nリスクスコアでは、\n\n予測確率と実際の発生率の一致\n\nも重要である。\nこれをキャリブレーション（calibration）という。\n例えば：\n\n予測リスク10% → 実際も約10%\n\nであることが望ましい。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>リスクスコア開発</span>"
+    ]
+  },
+  {
+    "objectID": "14_risk_score_development.html#過学習の問題",
+    "href": "14_risk_score_development.html#過学習の問題",
+    "title": "15  リスクスコア開発",
+    "section": "15.11 過学習の問題",
+    "text": "15.11 過学習の問題\nリスクスコア開発では、\n\n変数が多い\nサンプルが少ない\n\n場合に過学習が起こりやすい。\nその結果：\n\n開発データでは高精度\n外部データでは低精度\n\nとなる。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>リスクスコア開発</span>"
+    ]
+  },
+  {
+    "objectID": "14_risk_score_development.html#内部検証と外部検証",
+    "href": "14_risk_score_development.html#内部検証と外部検証",
+    "title": "15  リスクスコア開発",
+    "section": "15.12 内部検証と外部検証",
+    "text": "15.12 内部検証と外部検証\nリスクスコアの評価には：\n\n15.12.1 内部検証（internal validation）\n\nbootstrap\ncross-validation\n\n\n\n\n15.12.2 外部検証（external validation）\n\n別地域データ\n別施設データ\n別時期データ\n\nが重要である。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>リスクスコア開発</span>"
+    ]
+  },
+  {
+    "objectID": "14_risk_score_development.html#スコアの単純化と精度",
+    "href": "14_risk_score_development.html#スコアの単純化と精度",
+    "title": "15  リスクスコア開発",
+    "section": "15.13 スコアの単純化と精度",
+    "text": "15.13 スコアの単純化と精度\nリスクスコアは：\n\n単純化すると使いやすい\nしかし精度は低下する可能性がある\n\nというトレードオフがある。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>リスクスコア開発</span>"
+    ]
+  },
+  {
+    "objectID": "14_risk_score_development.html#臨床での利用",
+    "href": "14_risk_score_development.html#臨床での利用",
+    "title": "15  リスクスコア開発",
+    "section": "15.14 臨床での利用",
+    "text": "15.14 臨床での利用\nリスクスコアは：\n\nスクリーニング\nトリアージ\n介入対象の選定\n\nなどに用いられる。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>リスクスコア開発</span>"
+    ]
+  },
+  {
+    "objectID": "14_risk_score_development.html#例高齢者転倒スコア",
+    "href": "14_risk_score_development.html#例高齢者転倒スコア",
+    "title": "15  リスクスコア開発",
+    "section": "15.15 例：高齢者転倒スコア",
+    "text": "15.15 例：高齢者転倒スコア\n例えば：\n\n5点以上：高リスク\n3〜4点：中リスク\n0〜2点：低リスク\n\nのように分類することで現場で利用できる。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>リスクスコア開発</span>"
+    ]
+  },
+  {
+    "objectID": "14_risk_score_development.html#ロジスティック回帰との違い",
+    "href": "14_risk_score_development.html#ロジスティック回帰との違い",
+    "title": "15  リスクスコア開発",
+    "section": "15.16 ロジスティック回帰との違い",
+    "text": "15.16 ロジスティック回帰との違い\n\n\n\n項目\nロジスティック回帰\nリスクスコア\n\n\n\n\n目的\n統計的推定\n実用的判断\n\n\n出力\nOR・確率\n点数\n\n\n複雑さ\n高い\n低い",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>リスクスコア開発</span>"
+    ]
+  },
+  {
+    "objectID": "14_risk_score_development.html#まとめ",
+    "href": "14_risk_score_development.html#まとめ",
+    "title": "15  リスクスコア開発",
+    "section": "15.17 まとめ",
+    "text": "15.17 まとめ\n\nリスクスコアはリスク因子を点数化したものである\nロジスティック回帰から構築されることが多い\nROC曲線で性能評価を行う\nキャリブレーションが重要である\n過学習を避ける必要がある\n内部・外部検証が必須である\n臨床では実用性が重視される",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>リスクスコア開発</span>"
+    ]
+  },
+  {
+    "objectID": "15_machine_learning.html",
+    "href": "15_machine_learning.html",
+    "title": "16  機械学習",
+    "section": "",
+    "text": "16.1 はじめに\nロジスティック回帰は、\nである一方、近年ではより複雑な機械学習（machine learning）手法が広く使われている。\n機械学習は主に、\nを目的とする。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>機械学習</span>"
+    ]
+  },
+  {
+    "objectID": "15_machine_learning.html#はじめに",
+    "href": "15_machine_learning.html#はじめに",
+    "title": "16  機械学習",
+    "section": "",
+    "text": "統計モデルとしての予測手法\n\n\n\n\n予測精度の向上\n非線形関係の表現\n大規模データへの対応",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>機械学習</span>"
+    ]
+  },
+  {
+    "objectID": "15_machine_learning.html#ロジスティック回帰との位置づけ",
+    "href": "15_machine_learning.html#ロジスティック回帰との位置づけ",
+    "title": "16  機械学習",
+    "section": "16.2 ロジスティック回帰との位置づけ",
+    "text": "16.2 ロジスティック回帰との位置づけ\nロジスティック回帰は機械学習の一種としても扱われるが、\n\n解釈性が高い\n仮定が明確\n統計的推論が可能\n\nという特徴を持つ。\n一方、機械学習モデルは：\n\n精度重視\nブラックボックス化しやすい\n柔軟性が高い\n\nという特徴がある。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>機械学習</span>"
+    ]
+  },
+  {
+    "objectID": "15_machine_learning.html#主な機械学習手法",
+    "href": "15_machine_learning.html#主な機械学習手法",
+    "title": "16  機械学習",
+    "section": "16.3 主な機械学習手法",
+    "text": "16.3 主な機械学習手法\n分類問題における代表的な手法は以下である：\n\n決定木（decision tree）\nランダムフォレスト（random forest）\n勾配ブースティング（gradient boosting）\nサポートベクターマシン（SVM）\nニューラルネットワーク（neural network）",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>機械学習</span>"
+    ]
+  },
+  {
+    "objectID": "15_machine_learning.html#決定木",
+    "href": "15_machine_learning.html#決定木",
+    "title": "16  機械学習",
+    "section": "16.4 決定木",
+    "text": "16.4 決定木\n決定木は、\n\nルールベースでデータを分割する方法\n\nである。\n例：\n\n年齢 &gt; 75\n→ 高リスク\nそうでなければ次の条件へ\n\nというように階層的に分類する。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>機械学習</span>"
+    ]
+  },
+  {
+    "objectID": "15_machine_learning.html#ランダムフォレスト",
+    "href": "15_machine_learning.html#ランダムフォレスト",
+    "title": "16  機械学習",
+    "section": "16.5 ランダムフォレスト",
+    "text": "16.5 ランダムフォレスト\nランダムフォレストは、\n\n複数の決定木を組み合わせたモデル\n\nである。\n特徴：\n\n過学習に強い\n非線形関係を扱える\n変数重要度を出せる",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>機械学習</span>"
+    ]
+  },
+  {
+    "objectID": "15_machine_learning.html#勾配ブースティング",
+    "href": "15_machine_learning.html#勾配ブースティング",
+    "title": "16  機械学習",
+    "section": "16.6 勾配ブースティング",
+    "text": "16.6 勾配ブースティング\n勾配ブースティングは、\n\n誤差を逐次修正しながら学習する方法\n\nである。\n代表例：\n\nXGBoost\nLightGBM\nCatBoost\n\nこれらは高い予測性能を持つことが多い。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>機械学習</span>"
+    ]
+  },
+  {
+    "objectID": "15_machine_learning.html#svmサポートベクターマシン",
+    "href": "15_machine_learning.html#svmサポートベクターマシン",
+    "title": "16  機械学習",
+    "section": "16.7 SVM（サポートベクターマシン）",
+    "text": "16.7 SVM（サポートベクターマシン）\nSVMは、\n\nクラス間の境界を最大化する方法\n\nである。\n特徴：\n\n高次元データに強い\nカーネル法により非線形対応可能\n解釈性は低い",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>機械学習</span>"
+    ]
+  },
+  {
+    "objectID": "15_machine_learning.html#ニューラルネットワーク",
+    "href": "15_machine_learning.html#ニューラルネットワーク",
+    "title": "16  機械学習",
+    "section": "16.8 ニューラルネットワーク",
+    "text": "16.8 ニューラルネットワーク\nニューラルネットワークは、\n\n多層構造で複雑な関係を学習するモデル\n\nである。\n特徴：\n\n非線形性を強く表現可能\n大規模データで高性能\nブラックボックス性が強い",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>機械学習</span>"
+    ]
+  },
+  {
+    "objectID": "15_machine_learning.html#ロジスティック回帰との比較",
+    "href": "15_machine_learning.html#ロジスティック回帰との比較",
+    "title": "16  機械学習",
+    "section": "16.9 ロジスティック回帰との比較",
+    "text": "16.9 ロジスティック回帰との比較\n\n\n\n項目\nロジスティック回帰\n機械学習\n\n\n\n\n解釈性\n高い\n低い場合が多い\n\n\n予測性能\n中程度\n高い場合がある\n\n\n前提\n明確\n柔軟\n\n\n推論\n可能\n限定的",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>機械学習</span>"
+    ]
+  },
+  {
+    "objectID": "15_machine_learning.html#過学習と汎化性能",
+    "href": "15_machine_learning.html#過学習と汎化性能",
+    "title": "16  機械学習",
+    "section": "16.10 過学習と汎化性能",
+    "text": "16.10 過学習と汎化性能\n機械学習では、\n\n過学習（overfitting）\n\nが重要な問題である。\nモデルが複雑になるほど、\n\n学習データには適合する\n新しいデータには弱くなる\n\n可能性がある。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>機械学習</span>"
+    ]
+  },
+  {
+    "objectID": "15_machine_learning.html#クロスバリデーション",
+    "href": "15_machine_learning.html#クロスバリデーション",
+    "title": "16  機械学習",
+    "section": "16.11 クロスバリデーション",
+    "text": "16.11 クロスバリデーション\n機械学習の評価では、\n\nクロスバリデーション（cross-validation）\n\nが標準的である。\nデータを分割し、\n\n学習\n評価\n\nを繰り返すことで汎化性能を評価する。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>機械学習</span>"
+    ]
+  },
+  {
+    "objectID": "15_machine_learning.html#rocとauc",
+    "href": "15_machine_learning.html#rocとauc",
+    "title": "16  機械学習",
+    "section": "16.12 ROCとAUC",
+    "text": "16.12 ROCとAUC\n機械学習でも評価にはROC曲線とAUCが用いられる。\nただし：\n\nROCはランキング性能を評価\nAUCは識別能力を要約\n\nする指標である。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>機械学習</span>"
+    ]
+  },
+  {
+    "objectID": "15_machine_learning.html#キャリブレーション",
+    "href": "15_machine_learning.html#キャリブレーション",
+    "title": "16  機械学習",
+    "section": "16.13 キャリブレーション",
+    "text": "16.13 キャリブレーション\n予測モデルでは、\n\n確率の正確さ（calibration）\n\nも重要である。\n特に医療分野では：\n\n予測確率＝実際の発生率\n\nであることが望ましい。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>機械学習</span>"
+    ]
+  },
+  {
+    "objectID": "15_machine_learning.html#変数重要度",
+    "href": "15_machine_learning.html#変数重要度",
+    "title": "16  機械学習",
+    "section": "16.14 変数重要度",
+    "text": "16.14 変数重要度\n機械学習では、\n\nどの変数が重要か\n\nを評価することができる。\n例：\n\nfeature importance\npermutation importance\nSHAP値\n\nただし解釈には注意が必要である。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>機械学習</span>"
+    ]
+  },
+  {
+    "objectID": "15_machine_learning.html#医療分野での利用",
+    "href": "15_machine_learning.html#医療分野での利用",
+    "title": "16  機械学習",
+    "section": "16.15 医療分野での利用",
+    "text": "16.15 医療分野での利用\n機械学習は以下に応用される：\n\n疾患予測\n画像診断\nリスク分類\nスクリーニング支援",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>機械学習</span>"
+    ]
+  },
+  {
+    "objectID": "15_machine_learning.html#ロジスティック回帰との使い分け",
+    "href": "15_machine_learning.html#ロジスティック回帰との使い分け",
+    "title": "16  機械学習",
+    "section": "16.16 ロジスティック回帰との使い分け",
+    "text": "16.16 ロジスティック回帰との使い分け\n一般的に：\n\n説明・推論 → ロジスティック回帰\n高精度予測 → 機械学習\n\nという使い分けがされる。\nただし、\n\n医療では解釈性が非常に重要\n\nであるため、単純に機械学習が優れるとは限らない。",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>機械学習</span>"
+    ]
+  },
+  {
+    "objectID": "15_machine_learning.html#まとめ",
+    "href": "15_machine_learning.html#まとめ",
+    "title": "16  機械学習",
+    "section": "16.17 まとめ",
+    "text": "16.17 まとめ\n\n機械学習は高い予測性能を目指す手法群である\nロジスティック回帰は解釈性に優れる統計モデルである\n決定木・RF・GBM・SVM・NNなどが代表的手法である\n過学習の管理が重要である\nクロスバリデーションで評価する\nROCやAUCは共通の評価指標である\n医療では解釈性と予測性能のバランスが重要である",
+    "crumbs": [
+      "Part 4: Evaluation and Extensions",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>機械学習</span>"
+    ]
+  },
+  {
     "objectID": "summary.html",
     "href": "summary.html",
-    "title": "9  Summary",
+    "title": "17  Summary",
     "section": "",
     "text": "In summary, this book has no content whatsoever.\n\n1 + 1\n\n[1] 2",
     "crumbs": [
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Summary</span>"
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Summary</span>"
     ]
   }
 ]
