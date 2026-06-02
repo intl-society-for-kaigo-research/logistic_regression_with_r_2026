@@ -73,6 +73,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -386,13 +415,13 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="数学的表現" class="level2" data-number="11.4">
 <h2 data-number="11.4" class="anchored" data-anchor-id="数学的表現"><span class="header-section-number">11.4</span> 数学的表現</h2>
-<p>カテゴリ (k) に対して：</p>
-<p>()=<em>{0k}+</em>{1k}X_1++_{pk}X_p</p>
+<p>カテゴリ <span class="math display">\[k\]</span> に対して：</p>
+<p><span class="math display">\[ \log\left(\frac{P(Y=k)}{P(Y=0)}\right)=\beta_{0k}+\beta_{1k}X_1+\cdots+\beta_{pk}X_p \]</span></p>
 <p>ここで：</p>
 <ul>
-<li>(Y=0)：基準カテゴリ</li>
-<li>(k)：比較するカテゴリ</li>
-<li>(_k)：カテゴリごとの係数</li>
+<li><span class="math display">\[Y=0\]</span>：基準カテゴリ</li>
+<li><span class="math display">\[k\]</span>：比較するカテゴリ</li>
+<li><span class="math display">\[\beta_k\]</span>：カテゴリごとの係数</li>
 </ul>
 <p>である。</p>
 <hr>

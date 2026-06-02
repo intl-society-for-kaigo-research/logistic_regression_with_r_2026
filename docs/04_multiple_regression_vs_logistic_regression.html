@@ -73,6 +73,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -375,7 +404,7 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p>などである。</p>
 <p>モデルは：</p>
-<p>Y=_0+_1X_1+_2X_2++_pX_p</p>
+<p><span class="math display">\[ Y=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p \]</span></p>
 <p>で表される。</p>
 <hr>
 </section>
@@ -389,12 +418,12 @@ ul.task-list li input[type="checkbox"] {
 <p>例えば：</p>
 <ul>
 <li>死亡したか</li>
-<li>転倒したか</li>
+<li>転倒したことがあるか</li>
 <li>糖尿病があるか</li>
 </ul>
 <p>などである。</p>
 <p>モデルは：</p>
-<p>()=_0+_1X_1+_2X_2++_pX_p</p>
+<p><span class="math display">\[ \log\left(\frac{p}{1-p}\right)=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p \]</span></p>
 <p>で表される。</p>
 <hr>
 </section>
@@ -476,7 +505,7 @@ ul.task-list li input[type="checkbox"] {
 </ul></li>
 </ul>
 <p>この場合：</p>
-<p>[ = 3.2 ]</p>
+<p><span class="math display">\[ \beta = 3.2 \]</span></p>
 <p>であれば、</p>
 <blockquote class="blockquote">
 <p>BMIが1増えると、血圧が3.2 mmHg高くなる</p>
@@ -497,7 +526,7 @@ ul.task-list li input[type="checkbox"] {
 </ul></li>
 </ul>
 <p>この場合：</p>
-<p>[ OR = 1.20 ]</p>
+<p><span class="math display">\[ OR = 1.20 \]</span></p>
 <p>であれば、</p>
 <blockquote class="blockquote">
 <p>BMIが1増えると、転倒オッズが1.20倍になる</p>

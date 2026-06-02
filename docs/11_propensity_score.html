@@ -73,6 +73,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -354,11 +383,11 @@ ul.task-list li input[type="checkbox"] {
 <li>運動習慣なし（0）</li>
 </ul>
 <p>という介入があるとき、</p>
-<p>e(X)=P(T=1X)</p>
+<p><span class="math display">\[ e(X)=P(T=1\mid X) \]</span></p>
 <p>ここで：</p>
 <ul>
-<li>(T)：介入の有無</li>
-<li>(X)：共変量（年齢・性別など）</li>
+<li><span class="math display">\[ T \]</span>：介入の有無</li>
+<li><span class="math display">\[ X \]</span>：共変量（年齢・性別など）</li>
 </ul>
 <p>である。</p>
 <hr>
