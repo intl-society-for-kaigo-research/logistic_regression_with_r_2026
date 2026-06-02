@@ -1,0 +1,248 @@
+---
+title: "単純集計を超えて"
+author: "馬場美彦"
+---
+
+```{r include=FALSE}
+library(readxl) 
+library(DT) 
+library(dplyr) 
+library(ggplot2) 
+library(colorspace) 
+library(gt) 
+library(gtsummary) 
+library(labelled) 
+dfQuest <- read_excel("quest.xlsx")
+
+var_label(dfQuest$Overall) <- "全体評価"
+val_labels(dfQuest$Overall) <- c(
+  "よくなかった" = 1,
+  "あまりよくなかった" = 2,
+  "ふつう" = 3,
+  "すこしよかった" = 4,
+  "よかった" = 5
+)
+
+var_label(dfQuest$Sex) <- "性別"
+val_labels(dfQuest$Sex) <- c(
+  "男性" = 0,
+  "女性" = 1
+)
+
+var_label(dfQuest$Age) <- "年代"
+val_labels(dfQuest$Age) <- c(
+  "30代" = 30,
+  "40代" = 40,
+  "50代" = 50,
+  "60代" = 60
+)
+```
+
+## はじめに
+
+## アンケートの単純集計
+
+```{r eval=FALSE}
+DT::datatable(dfQuest)
+```
+
+
+単純集計（統計学では記述統計などと言われます）では、以下のように行います。
+
+性別
+
+```{r dev="ragg_png"}
+ggplot(
+  dfQuest,
+  aes(x = "", fill = to_factor(Sex))
+) +
+  geom_bar(width = 1, color = "white") +
+  coord_polar(theta = "y") +
+  labs(fill = var_label(dfQuest$Sex)) +
+  theme_void()
+```
+
+年齢層
+
+```{r dev="ragg_png"}
+ggplot(
+  dfQuest,
+  aes(x = "", fill = to_factor(Age))
+) +
+  geom_bar(width = 1, color = "white") +
+  coord_polar(theta = "y") +
+  scale_fill_brewer(palette = "Blues") +
+  labs(fill = var_label(dfQuest$Age)) +
+  theme_void()
+```
+
+全体評価
+
+```{r dev="ragg_png"}
+ggplot(
+  dfQuest,
+  aes(x = "", fill = to_factor(Overall))
+) +
+  geom_bar(width = 1, color = "white") +
+  coord_polar(theta = "y") +
+  scale_fill_discrete_sequential(palette = "BluGrn") +
+  labs(fill = var_label(dfQuest$Overall)) +
+  theme_void()
+```
+
+## クロス集計
+
+```{r}
+dfShow <- dfQuest
+dfShow$Riyousha_ID <- NULL
+
+dfShow$Sex <- to_factor(dfShow$Sex)
+dfShow$Age <- to_factor(dfShow$Age)
+dfShow$Overall <- to_factor(dfShow$Overall)
+
+tbl_summary(
+  data = dfShow,
+  by = Sex
+)
+```
+
+## クロス集計の統計
+
+大学で学ぶのは、カイ二乗検定と Fisher の正確性検定です。これを行うと、 p 値が計算されます。
+
+```{r}
+dfShow <- dfQuest
+dfShow$Riyousha_ID <- NULL
+
+dfShow$Sex <- to_factor(dfShow$Sex)
+dfShow$Age <- to_factor(dfShow$Age)
+dfShow$Overall <- to_factor(dfShow$Overall)
+
+tbl <- tbl_summary(
+  data = dfShow,
+  by = Sex
+)
+tbl <- add_p(tbl)
+tbl
+```
+
+ここから解釈できることは、
+
+- 性別と全体評価に有意差があった
+- 性別と年代に有意差があった
+
+となります。
+
+## 研究とは
+
+このアンケートを、研究にアップグレードしましょう。
+
+注：本来は、データより先に行うべきことを、今回はデータ収集後に行っています。
+
+まず、上の例では、男女で分けています。なぜでしょうか？おそらく特に意味はないのでしょう。
+
+### 仮説を決める
+
+研究では仮説を決めてから、分析をします。
+
+例: 全体評価 (= $y$) が低いのは、年代 (= $x$) と関係があるのではないか？
+
+### y を一つだけに決め、２値 (生/死, YES/NO) にする
+
+- y を 全体評価 とする
+- 「よかった」「すこしよかった」を「高評価」、それ以外を「低評価」
+- y で分類する
+
+```{r}
+dfShow <- dfQuest
+dfShow$Riyousha_ID <- NULL
+dfShow$OverallHigh <- ifelse(as.numeric(dfShow$Overall) >= 4, 1, 0)
+dfShow$Overall <- NULL
+
+
+var_label(dfShow$OverallHigh) <- "全体評価"
+val_labels(dfShow$OverallHigh) <- c(
+  "低評価" = 0,
+  "高評価" = 1
+)
+
+dfShow$OverallHigh <- to_factor(dfShow$OverallHigh)
+dfShow$Sex <- to_factor(dfShow$Sex)
+dfShow$Age <- to_factor(dfShow$Age)
+
+tbl <- tbl_summary(
+  data = dfShow,
+  by = OverallHigh
+)
+tbl <- add_p(tbl)
+tbl
+```
+
+### 何倍？
+
+女性は 25/31 が高評価
+
+男性は 2/23 が高評価
+
+$$ リスク比 =  \dfrac{ \dfrac{25}{31} }{ \dfrac{2}{33} } = 13.3... $$
+
+女性の方が10倍以上高評価だったことになります。
+
+$$ オッズ比 =  \dfrac{ \dfrac{25}{6} }{ \dfrac{2}{31} } = 96.8... $$
+
+### ロジスティック回帰
+
+```{r}
+fit <- glm(
+  OverallHigh ~ Sex,
+  family = binomial,
+  data = dfShow
+)
+
+library(gtsummary)
+
+tbl_regression(
+  fit,
+  exponentiate = TRUE
+)
+```
+
+### 他の要素を考慮したオッズ比
+
+```{r}
+fit <- glm(
+  OverallHigh ~ Sex + Age,
+  family = binomial,
+  data = dfShow
+)
+
+library(gtsummary)
+
+tbl_regression(
+  fit,
+  exponentiate = TRUE
+)
+```
+
+- 男性より女性の方が高評価 (オッズ比 71.3)
+- 30代より60代の方が高評価に見えていたが、有意差はなかった
+- 年代ごとに性別の差があったため！
+
+ここで「仮説」に戻ります。
+
+例: 全体評価 (= $y$) が低いのは、年代 (= $x$) と関係があるのではないか？
+
+これが、違ったということになります。
+
+## 統計について補足
+
+もっと厳密にいうと
+
+仮説: 全体評価 (= $y$) が低いのは、年代 (= $x$) と関係がある
+
+を立てた後で、
+
+帰無仮説: 全体評価 (= $y$) が低いのは、年代 (= $x$) と関係はない
+
+という仮説を棄却することになりますが、こんかいは棄却できなかった、ということになります。
+
