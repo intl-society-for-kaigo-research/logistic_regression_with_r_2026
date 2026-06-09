@@ -159,7 +159,7 @@ $$ -\infty \sim +\infty $$
 
 回帰係数を指数変換すると：
 
-OR=e\^{\beta}
+$$ OR=e^{\beta} $$
 
 となる。
 

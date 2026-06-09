@@ -5,3 +5,8 @@
 
 /.quarto/
 **/*.quarto_ipynb
+
+*.toc
+*.tex
+*.log
+*.aux

@@ -54,7 +54,8 @@ format:
       - cosmo
       - brand
   pdf:
-    documentclass: scrreprt
+    pdf-engine: lualatex
+    documentclass: ltjsarticle 
 
 editor: source
 
