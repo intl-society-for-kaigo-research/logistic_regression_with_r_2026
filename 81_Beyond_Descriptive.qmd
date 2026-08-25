@@ -12,38 +12,38 @@ library(colorspace)
 library(gt) 
 library(gtsummary) 
 library(labelled) 
-dfQuest <- read_excel("quest.xlsx")
+df <- read_excel("KIHON.xlsx", sheet = "仮説データ")
 
-var_label(dfQuest$Overall) <- "全体評価"
-val_labels(dfQuest$Overall) <- c(
-  "よくなかった" = 1,
-  "あまりよくなかった" = 2,
-  "ふつう" = 3,
-  "すこしよかった" = 4,
-  "よかった" = 5
-)
-
-var_label(dfQuest$Sex) <- "性別"
-val_labels(dfQuest$Sex) <- c(
-  "男性" = 0,
-  "女性" = 1
-)
-
-var_label(dfQuest$Age) <- "年代"
-val_labels(dfQuest$Age) <- c(
-  "30代" = 30,
-  "40代" = 40,
-  "50代" = 50,
-  "60代" = 60
-)
 ```
 
 ## はじめに
 
+- 13:00 アンケート論文を読んでみよう
+  - 廣田ら, ロジスティック回帰分析法を活用した保険薬局における患者満足度の要因分析, 医療薬学, 45 巻 (2019) 4 号
+  - https://doi.org/10.5649/jjphcs.45.214
+- 13:20 計算してみよう
+  - Ａ群は20%、B群は10%。Ａ群はＢ群の何倍？
+  - ○○比＝１とは、１倍のこと
+- 13:40 ロジスティック回帰の簡単な紹介
+- 14:00 アンケート論文を解釈してみよう
+- 14:20 アンケートを集計から研究に！
+  - 主要アウトカム（従属変数、目的変数）は何？
+  - 独立変数（共変量）は何？
+- 14:40 AI でロジスティック回帰
+- 15:00 JAMOVI でロジスティック回帰
+- 15:20 英語論文も読んでみよう
+  - Liu W, Puts M, Jian F, Zhou C, Tang S and Chen S (2020) Physical frailty and its associated factors among elderly nursing home residents in China
+  - https://kyorin.pages.dev/crosssectional_liu.html
+- 15:40 論文を書こう - STROBE 声明
+- 16:00 終わり
+
+
+
+
 ## アンケートの単純集計
 
 ```{r eval=FALSE}
-DT::datatable(dfQuest)
+DT::datatable(df)
 ```
 
 
@@ -53,78 +53,23 @@ DT::datatable(dfQuest)
 
 ```{r dev="ragg_png"}
 ggplot(
-  dfQuest,
-  aes(x = "", fill = to_factor(Sex))
+  df,
+  aes(x = "", fill = to_factor(性別))
 ) +
   geom_bar(width = 1, color = "white") +
   coord_polar(theta = "y") +
-  labs(fill = var_label(dfQuest$Sex)) +
+  labs(fill = var_label(df$性別)) +
   theme_void()
 ```
 
-年齢層
-
-```{r dev="ragg_png"}
-ggplot(
-  dfQuest,
-  aes(x = "", fill = to_factor(Age))
-) +
-  geom_bar(width = 1, color = "white") +
-  coord_polar(theta = "y") +
-  scale_fill_brewer(palette = "Blues") +
-  labs(fill = var_label(dfQuest$Age)) +
-  theme_void()
-```
-
-全体評価
-
-```{r dev="ragg_png"}
-ggplot(
-  dfQuest,
-  aes(x = "", fill = to_factor(Overall))
-) +
-  geom_bar(width = 1, color = "white") +
-  coord_polar(theta = "y") +
-  scale_fill_discrete_sequential(palette = "BluGrn") +
-  labs(fill = var_label(dfQuest$Overall)) +
-  theme_void()
-```
 
 ## クロス集計
-
-```{r}
-dfShow <- dfQuest
-dfShow$Riyousha_ID <- NULL
-
-dfShow$Sex <- to_factor(dfShow$Sex)
-dfShow$Age <- to_factor(dfShow$Age)
-dfShow$Overall <- to_factor(dfShow$Overall)
-
-tbl_summary(
-  data = dfShow,
-  by = Sex
-)
-```
 
 ## クロス集計の統計
 
 大学で学ぶのは、カイ二乗検定と Fisher の正確性検定です。これを行うと、 p 値が計算されます。
 
-```{r}
-dfShow <- dfQuest
-dfShow$Riyousha_ID <- NULL
 
-dfShow$Sex <- to_factor(dfShow$Sex)
-dfShow$Age <- to_factor(dfShow$Age)
-dfShow$Overall <- to_factor(dfShow$Overall)
-
-tbl <- tbl_summary(
-  data = dfShow,
-  by = Sex
-)
-tbl <- add_p(tbl)
-tbl
-```
 
 ここから解釈できることは、
 
@@ -153,30 +98,6 @@ tbl
 - 「よかった」「すこしよかった」を「高評価」、それ以外を「低評価」
 - y で分類する
 
-```{r}
-dfShow <- dfQuest
-dfShow$Riyousha_ID <- NULL
-dfShow$OverallHigh <- ifelse(as.numeric(dfShow$Overall) >= 4, 1, 0)
-dfShow$Overall <- NULL
-
-
-var_label(dfShow$OverallHigh) <- "全体評価"
-val_labels(dfShow$OverallHigh) <- c(
-  "低評価" = 0,
-  "高評価" = 1
-)
-
-dfShow$OverallHigh <- to_factor(dfShow$OverallHigh)
-dfShow$Sex <- to_factor(dfShow$Sex)
-dfShow$Age <- to_factor(dfShow$Age)
-
-tbl <- tbl_summary(
-  data = dfShow,
-  by = OverallHigh
-)
-tbl <- add_p(tbl)
-tbl
-```
 
 ### 何倍？
 
@@ -192,37 +113,11 @@ $$ オッズ比 =  \dfrac{ \dfrac{25}{6} }{ \dfrac{2}{31} } = 96.8... $$
 
 ### ロジスティック回帰
 
-```{r}
-fit <- glm(
-  OverallHigh ~ Sex,
-  family = binomial,
-  data = dfShow
-)
 
-library(gtsummary)
-
-tbl_regression(
-  fit,
-  exponentiate = TRUE
-)
-```
 
 ### 他の要素を考慮したオッズ比
 
-```{r}
-fit <- glm(
-  OverallHigh ~ Sex + Age,
-  family = binomial,
-  data = dfShow
-)
 
-library(gtsummary)
-
-tbl_regression(
-  fit,
-  exponentiate = TRUE
-)
-```
 
 - 男性より女性の方が高評価 (オッズ比 71.3)
 - 30代より60代の方が高評価に見えていたが、有意差はなかった
@@ -245,4 +140,47 @@ tbl_regression(
 帰無仮説: 全体評価 (= $y$) が低いのは、年代 (= $x$) と関係はない
 
 という仮説を棄却することになりますが、こんかいは棄却できなかった、ということになります。
+
+## 研究しよう
+
+目的：介護の仕事を「辞めたいと思ったことがある」と関連のある項目を明らかにする。
+
+関連があると仮定する項目：
+
+- 介護福祉士
+- 取得後何年
+- 就職して何か月
+- 養成校を卒業
+- 人間関係が良くない
+- 身体的につらい
+
+調整因子：関連があるが、変えられない項目
+
+- 年齢
+- 性別
+
+**ここまで考えてから、アンケートの質問項目を考える。**
+
+## AI でロジスティック回帰
+
+エクセルファイルをアップするので、「辞めたいと思ったことがある~介護福祉士+取得後何年+年齢+性別+就職して何か月+養成校を卒業」で、ロジスティック回帰して。
+
+
+主要アウトカム：辞めたいと思ったことがある
+
+関連すると仮定している項目：介護福祉士, 取得後何年, 就職して何か月, 養成校を卒業
+
+調整因子：年齢, 性別
+
+
+## JAMOVI でロジスティック回帰
+
+Windows 版があります。
+
+GMAIL など、ウェブメールを使っている人は、インストールせずにすぐに使うこともできますが、英語版のみです。
+
+
+
+
+
 
