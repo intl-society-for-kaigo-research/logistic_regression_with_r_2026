@@ -2,10 +2,14 @@ project:
   type: book
   output-dir: docs
 
+resources:
+  - KIHON.xlsx
+
 book:
   title: "Logistic Regression with R"
   subtitle: "医療・福祉・スポーツ科学のための実践ガイド"
-  date: "2026-05-28"
+  author: "馬場美彦 (新潟医療福祉大学, 東京都介護福祉士会)"
+  date: "2026-08-29"
   chapters:
     - index.qmd
 
@@ -41,6 +45,7 @@ book:
         - 14_risk_score_development.qmd
         - 15_machine_learning.qmd
 
+    - 81_Beyond_Descriptive.qmd
     - summary.qmd
     - references.qmd
 
