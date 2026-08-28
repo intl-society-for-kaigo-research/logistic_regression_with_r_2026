@@ -1,54 +1,55 @@
 project:
   type: book
   output-dir: docs
+  render:
+    - event/index.qmd
 
 resources:
-  - KIHON.xlsx
+  - data/KIHON.xlsx
 
 book:
   title: "Logistic Regression with R"
   subtitle: "医療・福祉・スポーツ科学のための実践ガイド"
   author: "馬場美彦 (新潟医療福祉大学, 東京都介護福祉士会)"
   date: "2026-08-29"
+
   chapters:
     - index.qmd
 
     # Part 1: Foundations
     - part: "Part 1: Foundations"
       chapters:
-        - intro.qmd
-        - 01_risk_ratio_and_odds_ratio.qmd
-        - 02_prevalence.qmd
-        - 03_logistic_regression.qmd
-        - 04_multiple_regression_vs_logistic_regression.qmd
+        - book/intro.qmd
+        - book/01_risk_ratio_and_odds_ratio.qmd
+        - book/02_prevalence.qmd
+        - book/03_logistic_regression.qmd
+        - book/04_multiple_regression_vs_logistic_regression.qmd
 
     # Part 2: Model Building
     - part: "Part 2: Model Building"
       chapters:
-        - 05_variable_selection.qmd
-        - 06_sample_size.qmd
-        - 07_interaction.qmd
-        - 08_reporting_logistic_regression.qmd
+        - book/05_variable_selection.qmd
+        - book/06_sample_size.qmd
+        - book/07_interaction.qmd
+        - book/08_reporting_logistic_regression.qmd
 
     # Part 3: Practical Issues
     - part: "Part 3: Practical Issues"
       chapters:
-        - 09_missing_data_and_multiple_imputation.qmd
-        - 10_multinomial_logistic_regression.qmd
-        - 11_propensity_score.qmd
+        - book/09_missing_data_and_multiple_imputation.qmd
+        - book/10_multinomial_logistic_regression.qmd
+        - book/11_propensity_score.qmd
 
     # Part 4: Evaluation and Extensions
     - part: "Part 4: Evaluation and Extensions"
       chapters:
-        - 12_sensitivity_and_specificity.qmd
-        - 13_roc_curve.qmd
-        - 14_risk_score_development.qmd
-        - 15_machine_learning.qmd
+        - book/12_sensitivity_and_specificity.qmd
+        - book/13_roc_curve.qmd
+        - book/14_risk_score_development.qmd
+        - book/15_machine_learning.qmd
 
-    - 81_Beyond_Descriptive.qmd
-    - summary.qmd
-    - references.qmd
-
+    - book/summary.qmd
+    - book/references.qmd
 
 bibliography: references.bib
 
@@ -58,9 +59,9 @@ format:
     theme:
       - cosmo
       - brand
+
   pdf:
     pdf-engine: lualatex
-    documentclass: ltjsarticle 
+    documentclass: ltjsarticle
 
 editor: source
-

@@ -1,0 +1,15 @@
+project:
+  type: website
+  output-dir: ../docs/event
+
+resources:
+  - ../data/KIHON.xlsx
+
+website:
+  title: "Event"
+
+format:
+  html:
+    theme:
+      - cosmo
+      - brand

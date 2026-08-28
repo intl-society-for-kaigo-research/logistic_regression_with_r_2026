@@ -1,8 +1,8 @@
 ---
 title: "介護研究: 基本の「き」:単純集計だけではもったいない"
-number-sections: false
-#author: "馬場美彦 (新潟医療福祉大学, 東京都介護福祉士会)"
-#date: "2026年8月29日"
+subtitle: "熊本県介護福祉士会"
+author: "馬場美彦 (新潟医療福祉大学, 東京都介護福祉士会)"
+date: "2026年8月29日"
 ---
 
 ```{r include=FALSE}
@@ -14,7 +14,7 @@ library(colorspace)
 library(gt) 
 library(gtsummary) 
 library(labelled) 
-df <- read_excel("KIHON.xlsx", sheet = "仮説データ")
+df <- read_excel("../data/KIHON.xlsx", sheet = "仮説データ")
 
 ```
 
