@@ -309,12 +309,36 @@ GMAIL など、ウェブメールを使っている人は、インストール�
 可能であれば、インストールしましょう。オンライン参加者は、佐々木（兵庫県立大）がサポートします。
 
 ![](../images/JAMOVI_01.png)
+
+
 ![](../images/JAMOVI_02.png)
+
+
 ![](../images/JAMOVI_03.png)
 ![](../images/JAMOVI_04.png)
+
+患者背景などを表にするモジュール Summary Table をインストールしましょう。
+まずは、右上の Module をクリックします。
+Summary Table を検索して、インストールします。
+
 ![](../images/JAMOVI_05_install_module.png)
+
+「分析」タブに、Summary Tables が出てきます。
+ここで、Grouping Variable に、この研究の目的で設定した**主要アウトカム** (従属変数, 目的変数) を設定します。
+
+独立変数は、数値は Continuous Variables、男女のような因子型は Categorical Variables に入れます。
+入れるたびに、表が変わっていくのが見えるかと思います。
+
 ![](../images/JAMOVI_06_sumtab.png)
+
+最後に、ロジスティック回帰を実行してみましょう。
+Regression から 2 Outcomes を選択します。
+
 ![](../images/JAMOVI_07_LR.png)
+
+モデル係数のところで、「オッズ比」にチェックを入れておきます。
+あとは、Summary Tables と同様に変数を右に設定します。
+
 ![](../images/JAMOVI_08_LR.png)
 
 ::: {.takehome-box}
