@@ -6,6 +6,7 @@ project:
 
 resources:
   - data/KIHON.xlsx
+  - images/*.png
 
 book:
   title: "Logistic Regression with R"

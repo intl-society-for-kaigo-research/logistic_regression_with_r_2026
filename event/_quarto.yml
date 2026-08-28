@@ -4,12 +4,12 @@ project:
 
 resources:
   - ../data/KIHON.xlsx
+  - ../images/*.png
+  - lecture.css
 
 website:
   title: "Event"
 
 format:
   html:
-    theme:
-      - cosmo
-      - brand
+    css: lecture.css
