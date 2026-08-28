@@ -13,3 +13,5 @@ website:
 format:
   html:
     css: lecture.css
+    toc: true
+    reference-location: margin
