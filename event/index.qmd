@@ -388,15 +388,16 @@ Regression から 2 Outcomes を選択します。
 
 ![変数を追加していく](../images/JAMOVI_08_LR.png)
 
-::: {.takehome-box}
 
 ## 論文の書き方
+
+::: {.takehome-box}
 
 ### アンケートには STROBE 声明
 
 [https://www.equator-network.org/wp-content/uploads/2015/10/STROBE-Exp-JAPANESE.pdf](https://www.equator-network.org/wp-content/uploads/2015/10/STROBE-Exp-JAPANESE.pdf)
 
-いちぶを抜粋
+一部を抜粋
 
 - 1. タイトルと抄録
   - 1(a)タイトルまたは抄録の中で研究デザインを一般に用いられている用語で明示する。
