@@ -391,8 +391,6 @@ Regression から 2 Outcomes を選択します。
 
 ## 論文の書き方
 
-::: {.takehome-box}
-
 ### アンケートには STROBE 声明
 
 [https://www.equator-network.org/wp-content/uploads/2015/10/STROBE-Exp-JAPANESE.pdf](https://www.equator-network.org/wp-content/uploads/2015/10/STROBE-Exp-JAPANESE.pdf)
@@ -405,7 +403,9 @@ Regression から 2 Outcomes を選択します。
 - 16. おもな結果 (main results)
   - 16(a)調整前 (unadjust) の推定値、該当する場合は交絡因子での調整後の推定値、および、それらの精度（例：95%信頼区間）を記述する。どの交絡因子がなぜ調整されたかを明確にする。
   - 16(b) 連 続 変 数 が カ テ ゴ リ ー 化 さ れ て い る と き は カ テ ゴ リ ー の 境 界 値 (category boundaries) を報告する。
-  
+
+::: {.takehome-box}
+
 ## 今日、持ち帰ってほしい 5 つ
 
 01　目的を決める
